@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "399461112481",
+    "firebase_url": "https://mcalendar-f115d.firebaseio.com",
+    "project_id": "mcalendar-f115d",
+    "storage_bucket": "mcalendar-f115d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:399461112481:android:55b1924f3a73ee19",
+        "android_client_info": {
+          "package_name": "com.roopre.mcalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "399461112481-jnol08qncc7078h75o66cu8b1sog9h7j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKKVSiE-bvQH-1kYt4N3TL0w-YbDGGfkk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

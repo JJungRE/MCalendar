@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/border">
+
+    <TextView
+        android:id="@+id/set_used_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_used_tv"
+        android:textSize="15dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+    <EditText
+        android:id="@+id/used_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="50,000"
+        android:layout_marginBottom="30dp"
+
+        />
+
+    <TextView
+        android:id="@+id/used_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="20dp"
+        android:text="@string/used_tv" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ex_used_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:text="5,000"
+            android:textColor="@color/Red50"
+            android:textSize="25dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:textSize="20dp"
+            android:text="입니다." />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="40dp">
+
+        <Button
+            android:id="@+id/used_close_bt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border_button_grey"
+            android:text="닫기"
+            android:layout_marginRight="20dp"
+            />
+
+        <Button
+            android:id="@+id/used_set_bt"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/border_button_orange"
+            android:text="사용처리"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

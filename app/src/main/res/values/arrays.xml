@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="class_category">
+
+        <item >LTE 요금제</item>
+        <item >3G</item>
+        <item >일반폰</item>
+        <item >태블릿/스마트기기</item>
+
+    </string-array>
+
+    <string-array name="class_type">
+        <item >LTE 55</item>
+
+    </string-array>
+
+    <string-array name="class_year">
+        <item >사용기간</item>
+        <item >2년 미만</item>
+        <item >2년 이상 ~ 5년 미만</item>
+        <item >5년 이상</item>
+
+    </string-array>
+
+    <string-array name="reg_month">
+        <item >8월</item>
+
+    </string-array>
+
+    <string-array name="reg_day">
+        <item >14일</item>
+
+    </string-array>
+
+    <string-array name="reg_category">
+        <item >쇼핑</item>
+
+    </string-array>
+
+    <string-array name="reg_title">
+        <item >11번가</item>
+
+    </string-array>
+
+
+    
+</resources>

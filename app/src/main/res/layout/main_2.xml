@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFE0B2"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:weightSum="1">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_half_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/month_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.3"
+            android:text="8월"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/point_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="right|center_vertical"
+            android:text="보유포인트: "
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/num_point_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2"
+            android:gravity="right|center_vertical"
+            android:text="54000"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/gridView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+        android:layout_weight="0.6"
+        android:background="@drawable/border_all_line_black"
+        android:gravity="center"
+        android:horizontalSpacing="0dp"
+        android:numColumns="1"
+        android:stretchMode="columnWidth" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_half_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
+        android:layout_weight="0.4"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/all_benefit_bt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginRight="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button_blue"
+                android:text="전체 혜택 보기"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/main_large_text_size"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/set_sd_bt"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="2dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_button_orange2"
+                android:text="일정 등록"
+                android:textColor="@color/main_black"
+                android:textSize="@dimen/main_large_text_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_black"
+                android:gravity="top|left"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_half_horizontal_margin"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/category_sd_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="쇼핑"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_large_text_size"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_sd_imav"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.2"
+                    android:src="@mipmap/ic_launcher" />
+
+                <TextView
+                    android:id="@+id/content_sd_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
+                    android:text="노트북 구입"
+                    android:gravity="left|center_vertical"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_large_text_size"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/use_sd_bt"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.2"
+                    android:background="@drawable/border_button_blue"
+                    android:text="사용"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_large_text_size"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_half_horizontal_margin"
+    android:background="@color/Orange100"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FB8C00"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="전체 포인트"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+            <TextView
+                android:id="@+id/all_point"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:hint="0P"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="올해 사용 포인트"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+            <TextView
+                android:id="@+id/used_years_point_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:hint="0P"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="P"
+                android:textSize="@dimen/main_xlarge_text_size"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:text="남은 포인트"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+            <TextView
+                android:id="@+id/remain_point_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginTop="15dp"
+                android:gravity="right"
+                android:text="0P"
+                android:textColor="@color/White"
+                android:textSize="@dimen/main_xlarge_text_size" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:fillViewport="true">
+            <LinearLayout
+                android:id="@+id/main_cll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+
