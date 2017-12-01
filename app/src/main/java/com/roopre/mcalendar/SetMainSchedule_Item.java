@@ -15,7 +15,15 @@ public class SetMainSchedule_Item {
     public Bitmap img;
     public String memo;
     public String used;
+    public String schedule_seq;
 
+    public String getSchedule_seq() {
+        return schedule_seq;
+    }
+
+    public void setSchedule_seq(String schedule_seq) {
+        this.schedule_seq = schedule_seq;
+    }
 
     public String getCategory() {
         return category;

@@ -48,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:text="올해 사용 포인트"
                 android:textSize="@dimen/main_xlarge_text_size" />
 
@@ -57,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="55dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
                 android:gravity="right"
                 android:hint="0P"
                 android:textSize="@dimen/main_xlarge_text_size" />
@@ -72,13 +74,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/remain_point_ll"
+            android:visibility="gone"
+            >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="15dp"
                 android:text="남은 포인트"
                 android:textSize="@dimen/main_xlarge_text_size" />
 
@@ -88,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
                 android:layout_marginRight="55dp"
-                android:layout_marginTop="15dp"
                 android:gravity="right"
                 android:text="0P"
                 android:textColor="@color/White"

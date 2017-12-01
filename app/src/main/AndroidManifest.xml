@@ -87,7 +87,8 @@
         <activity
             android:name=".UsedActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.MyDialog"
+            android:windowSoftInputMode="stateHidden"></activity>
         <activity
             android:name=".ViewBenefitActivity"
             android:screenOrientation="portrait"

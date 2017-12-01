@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
     ArrayList<WeekDayVO> weekDays = new ArrayList<WeekDayVO>();
     MonthDayVO monthDayVO = new MonthDayVO();
     WeekDayVO weekDayVO = new WeekDayVO();
-    int mYear, mMonth, mDay, mWeekDay;
+    int mYear, mMonth, mDay, mWeekDay, schedule_seq;
     LinearLayout monthLinear;
 
     NavigationView main_drawer2;
@@ -160,15 +160,15 @@ public class MainActivity extends AppCompatActivity
 
         String server_url = "load_used_schedule.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
-        send_arg.put("userid", Se_Application.Localdb.get_dataS("id"));
+        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
         send_arg.put("month", Integer.toString(Se_Application.mMonth));
 
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
 
-        Log.d(TAG + "now", result);
+        Log.d(TAG + "now", result+","+Se_Application.Localdb.get_dataS("userid"));
 
-        if (result.equals("null")) {
+        if (result.equals("null") || result.equals("error data")) {
             Toast.makeText(MainActivity.this, "Schdule 내역이 없습니다.", Toast.LENGTH_SHORT).show();
 
             schedule_null = (Button) findViewById(R.id.schedule_null);
@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity
                 JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = null;
 
-                Log.d("now jarray.length()", Integer.toString(jarray.length()));
+                Log.d("now result: ", result);
 
                 for (int i = 0; i < jarray.length(); i++) {
 
@@ -192,12 +192,15 @@ public class MainActivity extends AppCompatActivity
 
                     category = jObject.getString("category");
                     logo_img = jObject.getString("logo_img");
-                    memo = jObject.getString("title");
+                    memo = jObject.getString("memo");
                     bt_confirm = jObject.getString("used");
+                    schedule_seq = jObject.getInt("seq");
 
                     subURL = logo_img.substring(logo_img.indexOf("mcalendar/") + 10, logo_img.length());
 
-                    Log.d("now subURL: ", subURL);
+                    send_arg.put("schedule_seq", Integer.toString(schedule_seq));
+
+                    Log.d("now schedule_seq: ", send_arg.get("schedule_seq"));
 
                     //img_url Connecting..
 
@@ -239,7 +242,7 @@ public class MainActivity extends AppCompatActivity
                         // 메인 스레드가 작업 스레드가 종료될 때까지 기다리도록 합니다.
 
                         mThread.join();
-                        mMyAdapter.addItem(category, bitmap, memo, bt_confirm);
+                        mMyAdapter.addItem(category, bitmap, memo, bt_confirm, Integer.toString(schedule_seq));
 
                         // 이제 작업 스레드에서 이미지를 불러오는 작업을 완료했기에
                         // UI 작업을 할 수 있는 메인스레드에서 이미지뷰에 이미지를 지정합니다.
@@ -460,7 +463,11 @@ public class MainActivity extends AppCompatActivity
 
                 point_ = jObject.getString("point_");
 
-                num_point_tv.setText(point_);
+                if (point_.equals("11")) {
+                    num_point_tv.setText("무제한");
+                } else {
+                    num_point_tv.setText(point_);
+                }
                 header_main_id.setText(jObject.getString("userid"));
 
             } catch (JSONException e) {

@@ -7,22 +7,22 @@
     <string name="action_settings">Settings</string>
     <string name="loading">Loading..</string>
     <string name="version">1.0.0</string>
-    <string name="service_login_text">로그인이 필요합니다.</string>
+    <string name="service_login_text">로그인이 필요합니다</string>
     <string name="sign_up_text">회원가입</string>
     <string name="email_text">이메일을 입력해주세요</string>
     <string name="pw_edit_text">암호를 입력해주세요</string>
     <string name="pw2_edit_text">다시 한번 입력해주세요</string>
     <string name="nick_edit_text">닉네임을 입력해주세요</string>
 
-    <string name="set_company_text">사용중인 통신사를 선택하세요.</string>
-    <string name="set_category_text">사용중인 요금제를 선택하세요.</string>
+    <string name="set_company_text">사용중인 통신사를 선택하세요</string>
+    <string name="set_category_text">사용중인 요금제를 선택하세요</string>
 
     <string name="category_text">요금제 종류</string>
     <string name="type_text">요금제</string>
     <string name="year_text">사용기간</string>
     <string name="class_text">맴버십 등급</string>
 
-    <string name="set_used_tv">결제금액을 적어주세요.</string>
+    <string name="set_used_tv">결제금액을 적어주세요</string>
     <string name="used_tv">예상 사용포인트는</string>
     <string name="reg_sd_text">일정 등록하기</string>
     <string name="mod_sb_text">일정 수정하기</string>

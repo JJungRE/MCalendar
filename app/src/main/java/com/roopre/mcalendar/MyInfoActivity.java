@@ -1018,51 +1018,51 @@ public class MyInfoActivity extends AppCompatActivity
             } else {
 */
 
-                String tempUserId = null;
-                String tempNickName = null;
-                String tempCategory = null;
-                String tempType = null;
-                String tempClass = null;
+            String tempUserId = null;
+            String tempNickName = null;
+            String tempCategory = null;
+            String tempType = null;
+            String tempClass = null;
 
-                Log.d(TAG, "doInbackground -> try before");
-                try {
-                    tempUserId = URLEncoder.encode(userid, "UTF-8");
-                    tempNickName = URLEncoder.encode(nickname, "UTF-8");
-                    tempCategory = URLEncoder.encode(category, "UTF-8");
-                    tempType = URLEncoder.encode(type, "UTF-8");
-                    tempClass = URLEncoder.encode(class_, "UTF-8");
-                    Log.d(TAG, "doInbackground -> try inner");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
+            Log.d(TAG, "doInbackground -> try before");
+            try {
+                tempUserId = URLEncoder.encode(userid, "UTF-8");
+                tempNickName = URLEncoder.encode(nickname, "UTF-8");
+                tempCategory = URLEncoder.encode(category, "UTF-8");
+                tempType = URLEncoder.encode(type, "UTF-8");
+                tempClass = URLEncoder.encode(class_, "UTF-8");
+                Log.d(TAG, "doInbackground -> try inner");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
             Log.d(TAG, "doInbackground -> try before");
 
-                String serverURL = "http://52.79.209.10/update_userinfo.php";
-                String postParameters = "?company=" + company + "&group_=" + group + "&category=" + tempCategory + "&type=" + tempType + "&pay=" + pay + "&class_=" + tempClass
-                        + "&point_=" + point_ + "&userid=" + tempUserId + "&nickname=" + tempNickName + "&year=" + year;
+            String serverURL = "http://52.79.209.10/update_userinfo.php";
+            String postParameters = "?company=" + company + "&group_=" + group + "&category=" + tempCategory + "&type=" + tempType + "&pay=" + pay + "&class_=" + tempClass
+                    + "&point_=" + point_ + "&userid=" + tempUserId + "&nickname=" + tempNickName + "&year=" + year;
 
-                BufferedReader bufferedReader = null;
+            BufferedReader bufferedReader = null;
 
-                try {
-                    URL url = new URL(serverURL + postParameters);
-                    Log.d("LOAD_CLASS_URL", url.toString());
+            try {
+                URL url = new URL(serverURL + postParameters);
+                Log.d("LOAD_CLASS_URL", url.toString());
 
-                    //php url에 접속
-                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
-                    //그곳에 나오는 echo를 읽어
-                    bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    //그걸 읽어온 값
-                    String result = bufferedReader.readLine();
-                    //출력
-                    Log.d("php result", "[doInBackgroud] " + result);
+                //php url에 접속
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                //그곳에 나오는 echo를 읽어
+                bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                //그걸 읽어온 값
+                String result = bufferedReader.readLine();
+                //출력
+                Log.d("php result", "[doInBackgroud] " + result);
 
-                    return result;
+                return result;
 
-                } catch (Exception e) {
-                    Log.d(TAG, "SetClassData: Error ", e);
-                    return new String("Error: " + e.getMessage());
-                }
-          //  }
+            } catch (Exception e) {
+                Log.d(TAG, "SetClassData: Error ", e);
+                return new String("Error: " + e.getMessage());
+            }
+            //  }
 
         }
 
@@ -1131,7 +1131,7 @@ public class MyInfoActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 

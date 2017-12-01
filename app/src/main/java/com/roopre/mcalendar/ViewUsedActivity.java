@@ -13,6 +13,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +68,12 @@ public class ViewUsedActivity extends AppCompatActivity
             JSONArray jarray = new JSONArray(result);
             JSONObject jObject = jarray.getJSONObject(0);
             point_ = jObject.getString("point_");
-            all_point.setText(point_ + "P");
+            if (point_.equals("11")) {
+                all_point.setText("무제한");
+                point_ = "0";
+            } else {
+                all_point.setText(point_);
+            }
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -80,7 +86,7 @@ public class ViewUsedActivity extends AppCompatActivity
 
         String server_url = "load_used_info.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
-        send_arg.put("userid", Se_Application.Localdb.get_dataS("id"));
+        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
         send_arg.put("year", Integer.toString(Se_Application.mYear));
 
         Server_con serverCon = new Server_con(server_url, send_arg);
@@ -191,7 +197,6 @@ public class ViewUsedActivity extends AppCompatActivity
                         monthpoint = monthpoint + jsonObject.getInt("used_point");
                         used_years_point = used_years_point + jsonObject.getInt("used_point");
                         month_point_tv2.setText(Integer.toString(monthpoint));
-
 
                         con_cll2.addView(num_tv2);
                         con_cll2.addView(date_tv2);
@@ -450,7 +455,13 @@ public class ViewUsedActivity extends AppCompatActivity
         remain_point = Integer.parseInt(point_) - used_years_point;
 
         TextView remain_point_tv = (TextView) findViewById(R.id.remain_point_tv);
-        remain_point_tv.setText(Integer.toString(remain_point) + "P");
+
+        if(remain_point <= 0){
+            remain_point_tv.setVisibility(View.VISIBLE);
+        }else{
+            remain_point_tv.setText(Integer.toString(remain_point) + "P");
+        }
+
 
     }
 
@@ -483,7 +494,7 @@ public class ViewUsedActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+//        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
