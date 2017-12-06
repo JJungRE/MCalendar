@@ -11,6 +11,7 @@ public class SetMainSchedule_Item {
 
     //리스트 정보를 담고 있을 객체 생성
 
+    public String num;
     public String category;
     public Bitmap img;
     public String memo;
@@ -23,6 +24,14 @@ public class SetMainSchedule_Item {
 
     public void setSchedule_seq(String schedule_seq) {
         this.schedule_seq = schedule_seq;
+    }
+
+    public String getNum() {
+        return num;
+    }
+
+    public void setNum(String num) {
+        this.num = num;
     }
 
     public String getCategory() {

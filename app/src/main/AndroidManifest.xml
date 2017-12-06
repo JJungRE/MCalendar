@@ -32,16 +32,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MyInfoActivity"
-            android:label="내 정보"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-
-        </activity>
 
         <activity
             android:name=".NoticeActivity"
@@ -53,20 +43,6 @@
 
         </activity>
         <activity
-            android:name=".RegScheduleActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"></activity>
-        <activity
-            android:name=".SetClassActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog">
-
-        </activity>
-        <activity
-            android:name=".SetCompanyActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"></activity>
-        <activity
             android:name=".SetupActivity"
             android:label="설정"
             android:screenOrientation="portrait">
@@ -75,37 +51,9 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".SignupActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name=".UsedActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
             android:name=".ViewBenefitActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ViewScheduleActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".ViewUsedActivity"
-            android:label="사용내역"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-
-        </activity>
 
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>

@@ -238,8 +238,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_half_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
         android:orientation="horizontal">
 
         <Button
@@ -277,7 +277,8 @@
     <Button
         android:id="@+id/schedule_null"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
         android:layout_margin="@dimen/activity_half_horizontal_margin"
         android:background="@drawable/border_black"
         android:textAlignment="center"
@@ -289,12 +290,12 @@
     <ListView
         android:id="@+id/set_main_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/activity_half_horizontal_margin"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:layout_margin="@dimen/activity_quarter_horizontal_margin"
         android:background="@drawable/border_black"
-        android:padding="@dimen/activity_half_horizontal_margin"
+        android:padding="@dimen/activity_quarter_horizontal_margin"
         android:visibility="gone">
-
 
     </ListView>
 

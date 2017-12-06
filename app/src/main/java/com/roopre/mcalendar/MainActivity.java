@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         cal = Calendar.getInstance();
-
+        schedule_null = (Button) findViewById(R.id.schedule_null);
         startCal = (Calendar) Se_Application.startCal.clone();
         endCal = (Calendar) Se_Application.endCal.clone();
         //2017-11-29 종민추가
@@ -118,7 +118,6 @@ public class MainActivity extends AppCompatActivity
         viewBenefitBtn.setOnClickListener(this);
 
         // 아이템 추가 및 어댑터 등록
-        dataSetting();
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -151,116 +150,129 @@ public class MainActivity extends AppCompatActivity
         header_main_id = (TextView) headerView.findViewById(R.id.header_main_id);
 
         header_linear.setOnClickListener(this);
-
-
     }
 
     private void dataSetting() {
-        final SetMainScheduleAdapter mMyAdapter = new SetMainScheduleAdapter();
+        if (Se_Application.Localdb.get_dataB("login")) {
 
-        String server_url = "load_used_schedule.php";
-        HashMap<String, String> send_arg = new HashMap<String, String>();
-        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-        send_arg.put("month", Integer.toString(Se_Application.mMonth));
+            final SetMainScheduleAdapter mMyAdapter = new SetMainScheduleAdapter();
 
-        Server_con serverCon = new Server_con(server_url, send_arg);
-        String result = serverCon.Receive_Server();
+            String server_url = "load_used_schedule.php";
+            HashMap<String, String> send_arg = new HashMap<String, String>();
+            send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+            if (Se_Application.Localdb.get_dataS("month_week").equals("") || Se_Application.Localdb.get_dataS("month_week").equals("month")) {
+                send_arg.put("month_week", Se_Application.Localdb.get_dataS("month_week"));
+                send_arg.put("month", Integer.toString(cal.get(Calendar.MONTH) + 1));
+            } else if (Se_Application.Localdb.get_dataS("month_week").equals("week")) {
+                send_arg.put("month_week", Se_Application.Localdb.get_dataS("month_week"));
+                send_arg.put("smonth", Integer.toString(startCal.get(Calendar.MONTH) + 1));
+                send_arg.put("sday", startCal.get(Calendar.DATE) + "");
+                send_arg.put("emonth", Integer.toString(endCal.get(Calendar.MONTH) + 1));
+                send_arg.put("eday", endCal.get(Calendar.DATE) + "");
+            }
 
-        Log.d(TAG + "now", result+","+Se_Application.Localdb.get_dataS("userid"));
 
-        if (result.equals("null") || result.equals("error data")) {
-            Toast.makeText(MainActivity.this, "Schdule 내역이 없습니다.", Toast.LENGTH_SHORT).show();
+            Server_con serverCon = new Server_con(server_url, send_arg);
+            String result = serverCon.Receive_Server();
 
-            schedule_null = (Button) findViewById(R.id.schedule_null);
-            schedule_null.setVisibility(View.VISIBLE);
+            Log.d(TAG, "result = " + result);
 
-            schedule_null.setText("등록된 일정이 없습니다.");
+            if (result.equals("null") || result.equals("error data")) {
+                Toast.makeText(MainActivity.this, "Schdule 내역이 없습니다.", Toast.LENGTH_SHORT).show();
+                schedule_null.setVisibility(View.VISIBLE);
+                mListView.setVisibility(View.GONE);
+                schedule_null.setText("등록된 일정이 없습니다.");
 
-        } else {
+            } else {
 
-            mListView.setVisibility(View.VISIBLE);
-            try {
+                mListView.setVisibility(View.VISIBLE);
+                schedule_null.setVisibility(View.GONE);
 
-                JSONArray jarray = new JSONArray(result);
-                JSONObject jObject = null;
+                try {
 
-                Log.d("now result: ", result);
+                    JSONArray jarray = new JSONArray(result);
+                    JSONObject jObject = null;
 
-                for (int i = 0; i < jarray.length(); i++) {
+                    Log.d("now result: ", result);
 
-                    jObject = jarray.getJSONObject(i);
+                    for (int i = 0; i < jarray.length(); i++) {
 
-                    category = jObject.getString("category");
-                    logo_img = jObject.getString("logo_img");
-                    memo = jObject.getString("memo");
-                    bt_confirm = jObject.getString("used");
-                    schedule_seq = jObject.getInt("seq");
+                        jObject = jarray.getJSONObject(i);
 
-                    subURL = logo_img.substring(logo_img.indexOf("mcalendar/") + 10, logo_img.length());
+                        category = jObject.getString("category");
+                        logo_img = jObject.getString("logo_img");
+                        memo = jObject.getString("memo");
+                        bt_confirm = jObject.getString("used");
+                        schedule_seq = jObject.getInt("seq");
 
-                    send_arg.put("schedule_seq", Integer.toString(schedule_seq));
+                        subURL = logo_img.substring(logo_img.indexOf("mcalendar/") + 10, logo_img.length());
 
-                    Log.d("now schedule_seq: ", send_arg.get("schedule_seq"));
+                        send_arg.put("schedule_seq", Integer.toString(schedule_seq));
 
-                    //img_url Connecting..
+                        Log.d("now schedule_seq: ", send_arg.get("schedule_seq"));
 
-                    // 안드로이드에서 네트워크 관련 작업을 할 때는
-                    // 반드시 메인 스레드가 아닌 별도의 작업 스레드에서 작업해야 합니다.
+                        //img_url Connecting..
 
-                    Thread mThread = new Thread() {
+                        // 안드로이드에서 네트워크 관련 작업을 할 때는
+                        // 반드시 메인 스레드가 아닌 별도의 작업 스레드에서 작업해야 합니다.
 
-                        @Override
-                        public void run() {
+                        Thread mThread = new Thread() {
 
-                            try {
+                            @Override
+                            public void run() {
 
-                                //  URL 주소를 이용해서 URL 객체 생성
-                                URL url = new URL(baseCalendarURL + subURL);
-                                Log.d("now url: ", String.valueOf(url));
+                                try {
 
-                                // 아래 코드는 웹에서 이미지를 가져온 뒤
-                                // 이미지 뷰에 지정할 Bitmap을 생성하는 과정
+                                    //  URL 주소를 이용해서 URL 객체 생성
+                                    URL url = new URL(baseCalendarURL + subURL);
+                                    Log.d("now url: ", String.valueOf(url));
 
-                                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                                conn.setDoInput(true);
-                                conn.connect();
+                                    // 아래 코드는 웹에서 이미지를 가져온 뒤
+                                    // 이미지 뷰에 지정할 Bitmap을 생성하는 과정
 
-                                InputStream is = conn.getInputStream();
-                                bitmap = BitmapFactory.decodeStream(is);
+                                    HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+                                    conn.setDoInput(true);
+                                    conn.connect();
 
-                            } catch (IOException ex) {
+                                    InputStream is = conn.getInputStream();
+                                    bitmap = BitmapFactory.decodeStream(is);
 
+                                } catch (IOException ex) {
+
+                                }
                             }
+                        };
+                        // 웹에서 이미지를 가져오는 작업 스레드 실행.
+                        mThread.start();
+
+                        try {
+                            // 메인 스레드는 작업 스레드가 이미지 작업을 가져올 때까지
+                            // 대기해야 하므로 작업스레드의 join() 메소드를 호출해서
+                            // 메인 스레드가 작업 스레드가 종료될 때까지 기다리도록 합니다.
+
+                            mThread.join();
+                            mMyAdapter.addItem(Integer.toString(i + 1), category, bitmap, memo, bt_confirm, Integer.toString(schedule_seq));
+
+                            // 이제 작업 스레드에서 이미지를 불러오는 작업을 완료했기에
+                            // UI 작업을 할 수 있는 메인스레드에서 이미지뷰에 이미지를 지정합니다.
+
+                        } catch (InterruptedException e) {
+
                         }
-                    };
-                    // 웹에서 이미지를 가져오는 작업 스레드 실행.
-                    mThread.start();
-
-                    try {
-                        // 메인 스레드는 작업 스레드가 이미지 작업을 가져올 때까지
-                        // 대기해야 하므로 작업스레드의 join() 메소드를 호출해서
-                        // 메인 스레드가 작업 스레드가 종료될 때까지 기다리도록 합니다.
-
-                        mThread.join();
-                        mMyAdapter.addItem(category, bitmap, memo, bt_confirm, Integer.toString(schedule_seq));
-
-                        // 이제 작업 스레드에서 이미지를 불러오는 작업을 완료했기에
-                        // UI 작업을 할 수 있는 메인스레드에서 이미지뷰에 이미지를 지정합니다.
-
-                    } catch (InterruptedException e) {
 
                     }
 
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-
+            mListView.setAdapter(mMyAdapter);
+        } else {
+            schedule_null.setVisibility(View.VISIBLE);
+            mListView.setVisibility(View.GONE);
+            schedule_null.setText("로그인이 필요합니다.");
         }
-
-        mListView.setAdapter(mMyAdapter);
-
     }
 
     @Override
@@ -324,7 +336,7 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < mainCal.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
                 monthDayVO = new MonthDayVO();
                 monthDayVO.setDay(Integer.toString(i + 1));
-                Log.d(TAG, "monthDayVO day = " + monthDayVO.getDay());
+                //Log.d(TAG, "monthDayVO day = " + monthDayVO.getDay());
                 monthDays.add(monthDayVO);
             }
 
@@ -359,10 +371,10 @@ public class MainActivity extends AppCompatActivity
             monthDayVO.setTotal("3");
             monthDays.set(30, monthDayVO);
 
-            Log.d(TAG, "monthDays Size = " + monthDays.size());
+            // Log.d(TAG, "monthDays Size = " + monthDays.size());
 
             for (int i = 0; i < monthDays.size(); i++) {
-                Log.d(TAG, "monthdays get Day = " + monthDays.get(i).getDay());
+                //Log.d(TAG, "monthdays get Day = " + monthDays.get(i).getDay());
             }
 
             MonthCalendarAdapter monthCalendarAdapter = new MonthCalendarAdapter(this, monthDays);
@@ -437,6 +449,8 @@ public class MainActivity extends AppCompatActivity
 
 //        final NavigationView logout = (NavigationView) findViewById(R.id.nav_logout);
 
+
+        dataSetting();
         DrawCalendar();
 
         if (Se_Application.Localdb.get_dataB("login")) {
@@ -544,40 +558,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
 
         switch (item.getItemId()) {
-
-            case R.id.nav_information:
-                startActivity(new Intent(MainActivity.this, MyInfoActivity.class));
-                Toast.makeText(getApplicationContext(), "내정보 선택", Toast.LENGTH_SHORT).show();
-                break;
             case R.id.nav_notice:
+
                 startActivity(new Intent(MainActivity.this, NoticeActivity.class));
                 Toast.makeText(getApplicationContext(), "공지사항 선택", Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.nav_usage:
-                startActivity(new Intent(MainActivity.this, ViewUsedActivity.class));
-                Toast.makeText(getApplicationContext(), "사용내역 선택", Toast.LENGTH_SHORT).show();
-                break;
+
             case R.id.nav_score:
                 Toast.makeText(getApplicationContext(), "별점 선택", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.nav_share:
+            case R.id.nav_setup:
+
                 startActivity(new Intent(MainActivity.this, SetupActivity.class));
                 Toast.makeText(getApplicationContext(), "설정 선택", Toast.LENGTH_SHORT).show();
+
                 break;
-            case R.id.nav_logout:
-                if (Se_Application.Localdb.get_dataB("login")) {
-                    Se_Application.Localdb.set_dataB("login", false);
 
-                    Log.d("onNavigationItemSelected: ", Se_Application.Localdb.get_dataB("login") + "");
-                    Toast.makeText(MainActivity.this, "로그아웃 성공", Toast.LENGTH_SHORT).show();
-                    finish();
-
-                    startActivity(new Intent(MainActivity.this, MainActivity.class));
-
-//                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-//                    startActivity(intent);
-                }
-                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -589,40 +586,28 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View view) {
 
         switch (view.getId()) {
-            case R.id.header_linear:
-                drawer.closeDrawer(GravityCompat.START);
-                if (!Se_Application.Localdb.get_dataB("login")) {
-                    Intent intent = new Intent(this, LoginActivity.class);
-                    startActivity(intent);
-                }
-                break;
+
             case R.id.month_left_btn:
                 cal.add(Calendar.MONTH, -1);
-                DrawCalendar();
+                SetInit();
                 //Toast.makeText(this, "Left Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.month_right_btn:
                 cal.add(Calendar.MONTH, 1);
-                DrawCalendar();
+                SetInit();
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.week_left_btn:
                 startCal.add(Calendar.DATE, -7);
                 endCal.add(Calendar.DATE, -7);
-                DrawCalendar();
+                SetInit();
                 //Toast.makeText(this, "Left Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.week_right_btn:
-
                 startCal.add(Calendar.DATE, 7);
                 endCal.add(Calendar.DATE, 7);
-                DrawCalendar();
+                SetInit();
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.set_schedule_btn:
-                Intent intent = new Intent(this, RegScheduleActivity.class);
-                startActivity(intent);
                 break;
             case R.id.view_benefit_btn:
                 break;

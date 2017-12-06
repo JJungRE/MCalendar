@@ -8,6 +8,7 @@
     <color name="main_gray">#666666</color>
     <color name="main_red">@color/RedA700</color>
     <color name="main_blue">@color/BlueA700</color>
+    <color name="main_green">@color/Green500</color>
 
     <color name="bg_color">@color/Orange100</color>
 

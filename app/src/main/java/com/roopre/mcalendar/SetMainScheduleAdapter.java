@@ -1,7 +1,6 @@
 package com.roopre.mcalendar;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -54,18 +53,19 @@ public class SetMainScheduleAdapter extends BaseAdapter {
         }
 
         // 'listView_custom'에 정의된 위젯에 대한 참조 획득
-        TextView category_sd_tv = (TextView) convertView.findViewById(R.id.category_sd_tv);
-        TextView memo_sd_tv = (TextView) convertView.findViewById(R.id.memo_sd_tv);
-        final TextView schedule_seq_tv = (TextView) convertView.findViewById(R.id.schedule_seq_tv);
-        Button use_sd_bt = (Button) convertView.findViewById(R.id.use_sd_bt);
-        Button use_sd_bt_off = (Button) convertView.findViewById(R.id.use_sd_bt_off);
-        ImageView img_sd_imav = (ImageView) convertView.findViewById(R.id.img_sd_imav);
+        TextView num_tv = (TextView) convertView.findViewById(R.id.num_tv);
+        TextView category_sd_tv = (TextView) convertView.findViewById(R.id.category_tv);
+        TextView memo_sd_tv = (TextView) convertView.findViewById(R.id.memo_tv);
+        final TextView schedule_seq_tv = (TextView) convertView.findViewById(R.id.seq_tv);
+        Button use_sd_bt = (Button) convertView.findViewById(R.id.used_btn);
+        ImageView img_sd_imav = (ImageView) convertView.findViewById(R.id.imageView);
 
 
         // 각 리스트에 뿌려줄 아이템을 받아오는데 mMyItem 재활용
         final SetMainSchedule_Item mMyItem = (SetMainSchedule_Item) getItem(position);
 
         // 각 위젯에 세팅된 아이템을 뿌려준다.
+        num_tv.setText(mMyItem.getNum());
         category_sd_tv.setText(mMyItem.getCategory());
 //        img_sd_imav.setImageDrawable(mMyItem.getImg());
         memo_sd_tv.setText(mMyItem.getMemo());
@@ -77,44 +77,40 @@ public class SetMainScheduleAdapter extends BaseAdapter {
 
         // (위젯에 대한 이벤트리스터를 지정하고 싶다면 여기에 작성하면 된다..)
         if (mMyItem.getUsed().equals("0")) {
-            use_sd_bt.setVisibility(View.VISIBLE);
-            use_sd_bt.setText("사용");
+            use_sd_bt.setText("사용하기");
+            use_sd_bt.setBackgroundResource(R.drawable.border_button_blue);
+            use_sd_bt.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context, mMyItem.getSchedule_seq() +  ":schedule_seq", Toast.LENGTH_SHORT).show();
+                    String schedule_seq_value = mMyItem.getSchedule_seq();
+                    HashMap<String, String> send_arg = new HashMap<String, String>();
+                    send_arg.put("schedule_seq", schedule_seq_value);
+                    Log.d("now11", send_arg.get("schedule_seq"));
+
+                }
+
+            });
         } else if (mMyItem.getUsed().equals("1")) {
-            use_sd_bt_off.setVisibility(View.VISIBLE);
-            use_sd_bt_off.setText("사용완료");
+            use_sd_bt.setText("사용완료");
+            use_sd_bt.setBackgroundResource(R.drawable.border_button_grey);
         }
 
         // 위젯에 대한 이벤트리스너를 지정하고 싶다면 여기에 작성하면된다..
         // main_schedule_listview_button
-        use_sd_bt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, mMyItem.getSchedule_seq() +  ":schedule_seq", Toast.LENGTH_SHORT).show();
 
-                String schedule_seq_value = mMyItem.getSchedule_seq();
-
-                HashMap<String, String> send_arg = new HashMap<String, String>();
-                send_arg.put("schedule_seq", schedule_seq_value);
-
-                Log.d("now11", send_arg.get("schedule_seq"));
-
-                Intent intent = new Intent(context, UsedActivity.class);
-                intent.putExtra("schedule_seq", schedule_seq_value);
-                context.startActivity(intent);
-            }
-
-        });
 
 
         return convertView;
     }
 
     // 아이템 데이터 추가를 위한 함수. 자신이 원하는대로 작성
-    public void addItem(String category, Bitmap img, String content, String confirm, String seq) {
+    public void addItem(String num, String category, Bitmap img, String content, String confirm, String seq) {
 
         SetMainSchedule_Item mItem = new SetMainSchedule_Item();
 
         // SetMainSchedule_Item에 아이템을 setting한다.
+        mItem.setNum(num);
         mItem.setCategory(category);
         mItem.setImg(img);
         mItem.setMemo(content);

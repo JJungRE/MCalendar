@@ -56,7 +56,7 @@ public class ViewBenefitActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_score) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_setup) {
 
         } else if (id == R.id.nav_logout) {
 

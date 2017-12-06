@@ -60,8 +60,8 @@ public class MonthCalendarAdapter extends BaseAdapter {
 
         int Height = parent.getHeight();
         int Width = parent.getWidth();
-        Log.d(TAG, "parent Height = " + Height);
-        Log.d(TAG, "parent Width = " + Width);
+        //Log.d(TAG, "parent Height = " + Height);
+        //Log.d(TAG, "parent Width = " + Width);
 
         LinearLayout default_ll, over_ll;
         default_ll = (LinearLayout) convertView.findViewById(R.id.default_ll);
@@ -94,7 +94,7 @@ public class MonthCalendarAdapter extends BaseAdapter {
         }
 
 
-        Log.d(TAG, "day_linear Width =" + day_linear.getWidth());
+        //Log.d(TAG, "day_linear Width =" + day_linear.getWidth());
         day_linear.setLayoutParams(tvparams);
         if ((position + 1) % 7 == 0) {
             day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_black);
@@ -108,11 +108,11 @@ public class MonthCalendarAdapter extends BaseAdapter {
         } else {
             day_tv.setTextColor(mContext.getResources().getColor(R.color.main_black));
         }
-        Log.d(TAG, "day.get("+position+") getDay = "+day.get(position).getDay());
+        //Log.d(TAG, "day.get("+position+") getDay = "+day.get(position).getDay());
         day_tv.setText(day.get(position).getDay());
 
-        Log.d(TAG, "day_tv Width = " + day_tv.getWidth());
-        Log.d(TAG, "day_tv Width *7  = " + day_tv.getWidth() * 7);
+        //Log.d(TAG, "day_tv Width = " + day_tv.getWidth());
+        //Log.d(TAG, "day_tv Width *7  = " + day_tv.getWidth() * 7);
         return convertView;
     }
 

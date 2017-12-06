@@ -1,70 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <LinearLayout
-        android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/activity_quarter_horizontal_margin"
+    android:weightSum="1">
+    <TextView
+        android:id="@+id/num_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.1"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_large_text_size"
+        android:textStyle="bold" />
+    <TextView
+        android:id="@+id/seq_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_large_text_size"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/category_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
         android:gravity="center"
-        android:paddingTop="@dimen/activity_half_horizontal_margin"
-        android:paddingBottom="@dimen/activity_half_horizontal_margin"
-        android:weightSum="1"
-        android:orientation="horizontal">
+        android:text=""
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_large_text_size"
+        android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/schedule_seq_tv"
-            android:layout_weight="0.05"
-            android:visibility="visible"/>
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_gravity="center"
+        android:layout_weight="0.1"
+        android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/category_sd_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.1"
-            android:gravity="center"
-            android:text="NULL" />
+    <TextView
+        android:id="@+id/memo_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3"
+        android:gravity="center"
+        android:text="메모"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_large_text_size"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/img_sd_imav"
-            android:layout_width="0dp"
-            android:layout_height="15dp"
-            android:layout_weight="0.1"
-            android:src="@mipmap/ic_launcher" />
+    <Button
+        android:id="@+id/used_btn"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="0.2"
+        android:background="@drawable/border_button_blue"
+        android:text="사용하기"
+        android:textColor="@color/White"
+        android:textSize="@dimen/main_large_text_size"
+        android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/memo_sd_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.45"
-            android:gravity="center"
-            android:text="NULL" />
-
-        <Button
-            android:id="@+id/use_sd_bt"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="0.3"
-            android:background="@drawable/border_button_blue"
-            android:text="NULL"
-            android:textColor="@color/White"
-            android:visibility="gone"
-
-            />
-
-        <Button
-            android:id="@+id/use_sd_bt_off"
-            android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="0.3"
-            android:background="@drawable/border_button_grey_400"
-            android:textColor="@color/White"
-            android:text="NULL"
-            android:visibility="gone"
-            />
-
-    </LinearLayout>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
