@@ -29,7 +29,7 @@ public class Se_Application extends Application {
     public static String company = "";
 
 
-    String[] days = {"일", "월", "화", "수", "목", "금", "토"};
+    public static String[] days = {"일", "월", "화", "수", "목", "금", "토"};
 
     public static String getYoil(String date) {
 
@@ -119,6 +119,17 @@ public class Se_Application extends Application {
         }
         return true;
     }
+
+    public static String FullDateNotYoil(Calendar c) {
+
+        int ayear = c.get(Calendar.YEAR);
+        int amonth = c.get(Calendar.MONTH) + 1;
+        int aday = c.get(Calendar.DAY_OF_MONTH);
+
+        String fulldate = String.format("%04d", ayear) + "-" + String.format("%02d", amonth) + "-" + String.format("%02d", aday);
+        return fulldate;
+    }
+
     public static String FullDate(Calendar c) {
 
         int ayear = c.get(Calendar.YEAR);

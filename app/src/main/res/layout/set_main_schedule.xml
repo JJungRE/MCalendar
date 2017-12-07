@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:gravity="center"
     android:padding="@dimen/activity_quarter_horizontal_margin"
     android:weightSum="1">
     <TextView
@@ -11,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
         android:textColor="@color/main_black"
+        android:text="1"
         android:textSize="@dimen/main_large_text_size"
         android:textStyle="bold" />
     <TextView
@@ -19,8 +21,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:textColor="@color/main_black"
+        android:text="seq"
         android:textSize="@dimen/main_large_text_size"
         android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.3"
+        android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/category_tv"
@@ -28,38 +39,18 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
         android:gravity="center"
-        android:text=""
+        android:text="cate"
         android:textColor="@color/main_black"
         android:textSize="@dimen/main_large_text_size"
         android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:layout_weight="0.1"
-        android:src="@mipmap/ic_launcher" />
-
     <TextView
-        android:id="@+id/memo_tv"
+        android:id="@+id/title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
         android:gravity="center"
-        android:text="메모"
+        android:text="tt"
         android:textColor="@color/main_black"
-        android:textSize="@dimen/main_large_text_size"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/used_btn"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_weight="0.2"
-        android:background="@drawable/border_button_blue"
-        android:text="사용하기"
-        android:textColor="@color/White"
         android:textSize="@dimen/main_large_text_size"
         android:textStyle="bold" />
 

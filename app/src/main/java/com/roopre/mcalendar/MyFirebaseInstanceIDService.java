@@ -20,6 +20,9 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         sendRegistrationToServer(refreshedToken);
+        Se_Application.Localdb.set_dataS("token", refreshedToken);
+
+
     }
 
     private void sendRegistrationToServer(String token) {

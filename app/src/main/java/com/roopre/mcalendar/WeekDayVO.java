@@ -1,5 +1,9 @@
 package com.roopre.mcalendar;
 
+import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+
 /**
  * Created by munjongmin on 2017. 11. 29..
  */
@@ -9,15 +13,12 @@ public class WeekDayVO {
     private String year = "";
     private String month = "";
     private String day = "";
-    private String imagePath1 = "";
-    private String imagePath2 = "";
-    private String imagePath3 = "";
+    private ArrayList<String> seqList = new ArrayList<String>();
+    private Bitmap image1 = null;
+    private Bitmap image2 = null;
+    private Bitmap image3 = null;
+    private Bitmap image4 = null;
     private String total = "";
-
-    public String getDay() {
-        return day;
-    }
-
 
     public String getYear() {
         return year;
@@ -34,32 +35,53 @@ public class WeekDayVO {
     public void setMonth(String month) {
         this.month = month;
     }
+
+    public String getDay() {
+        return day;
+    }
+
     public void setDay(String day) {
         this.day = day;
     }
 
-    public String getImagePath1() {
-        return imagePath1;
+    public ArrayList<String> getSeqList() {
+        return seqList;
     }
 
-    public void setImagePath1(String imagePath1) {
-        this.imagePath1 = imagePath1;
+    public void setSeqList(ArrayList<String> seqList) {
+        this.seqList = seqList;
     }
 
-    public String getImagePath2() {
-        return imagePath2;
+    public Bitmap getImage1() {
+        return image1;
     }
 
-    public void setImagePath2(String imagePath2) {
-        this.imagePath2 = imagePath2;
+    public void setImage1(Bitmap image1) {
+        this.image1 = image1;
     }
 
-    public String getImagePath3() {
-        return imagePath3;
+    public Bitmap getImage2() {
+        return image2;
     }
 
-    public void setImagePath3(String imagePath3) {
-        this.imagePath3 = imagePath3;
+    public void setImage2(Bitmap image2) {
+        this.image2 = image2;
+    }
+
+    public Bitmap getImage3() {
+        return image3;
+    }
+
+    public void setImage3(Bitmap image3) {
+        this.image3 = image3;
+    }
+
+    public Bitmap getImage4() {
+        return image4;
+    }
+
+    public void setImage4(Bitmap image4) {
+        this.image4 = image4;
     }
 
     public String getTotal() {

@@ -10,11 +10,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="@dimen/activity_half_horizontal_margin"
-        android:paddingLeft="@dimen/activity_half_horizontal_margin"
-        android:paddingRight="@dimen/activity_half_horizontal_margin"
-        android:paddingTop="@dimen/activity_half_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_half_horizontal_margin"
+        android:layout_margin="@dimen/activity_quarter_horizontal_margin"
         android:layout_gravity="center"
         android:weightSum="1">
 
@@ -29,11 +25,11 @@
             android:id="@+id/month_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="11"
             android:textColor="@color/main_black"
-            android:textSize="@dimen/main_large_text_size"
+            android:textSize="@dimen/main_xlarge_text_size"
             android:textStyle="bold" />
 
         <ImageButton
@@ -55,12 +51,12 @@
             android:id="@+id/week_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.4"
+            android:layout_weight="1"
             android:gravity="center"
             android:visibility="gone"
             android:text="11"
             android:textColor="@color/main_black"
-            android:textSize="@dimen/main_large_text_size"
+            android:textSize="@dimen/main_xlarge_text_size"
             android:textStyle="bold" />
 
         <ImageButton
@@ -71,139 +67,9 @@
             android:background="@drawable/bg_edittext"
             android:src="@drawable/ic_chevron_right_black_48dp" />
 
-        <TextView
-            android:id="@+id/point_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:gravity="right|center_vertical"
-            android:text="보유포인트: "
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_large_text_size"
-            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/num_point_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_half_horizontal_margin"
-            android:layout_weight="0.29"
-            android:gravity="right|center_vertical"
-            android:text="0"
-            android:textColor="@color/main_red"
-            android:textSize="@dimen/main_large_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.01"
-            android:text="P"
-            android:textColor="@color/main_red"
-            android:textSize="@dimen/main_large_text_size"
-            android:textStyle="bold" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/month_yoil_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
-        android:background="@drawable/border_all_line_black"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="일"
-            android:textColor="@color/main_red"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="월"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="화"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="수"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="목"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_left_top_bottom_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="금"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/border_all_line_black"
-            android:gravity="center"
-            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-            android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-            android:text="토"
-            android:textColor="@color/main_blue"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <GridView
         android:id="@+id/month_grid_view"
@@ -214,7 +80,6 @@
         android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
         android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
         android:layout_weight="0.6"
-        android:background="@drawable/border_all_line_black"
         android:gravity="center"
         android:horizontalSpacing="0dp"
         android:numColumns="7"
@@ -235,74 +100,38 @@
         android:numColumns="1"
         android:stretchMode="columnWidth" />
 
+
+    <ListView
+        android:id="@+id/main_listview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.4"
+        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+        android:background="@drawable/border_all_line_black"
+        android:padding="@dimen/activity_quarter_horizontal_margin"
+        android:visibility="visible">
+
+    </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
         android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/view_benefit_btn"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="2dp"
-            android:layout_weight="0.5"
+            android:layout_height="40dp"
+            android:layout_weight="1"
             android:background="@drawable/border_button_blue"
             android:text="전체 혜택 보기"
             android:textColor="@color/White"
-            android:textSize="@dimen/main_xlarge_text_size" />
+            android:textSize="@dimen/main_large_text_size" />
 
-        <Button
-            android:id="@+id/set_schedule_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
-            android:background="@drawable/border_button_orange2"
-            android:text="일정 등록"
-            android:textColor="@color/White"
-            android:textSize="@dimen/main_xlarge_text_size" />
     </LinearLayout>
-
-    <!--<ScrollView-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginBottom="@dimen/activity_half_horizontal_margin"-->
-    <!--android:layout_marginLeft="@dimen/activity_half_horizontal_margin"-->
-    <!--android:layout_marginRight="@dimen/activity_half_horizontal_margin"-->
-    <!--android:layout_marginTop="@dimen/activity_half_horizontal_margin"-->
-    <!--android:layout_weight="1"-->
-    <!--android:fillViewport="true">-->
-
-    <Button
-        android:id="@+id/schedule_null"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:layout_margin="@dimen/activity_half_horizontal_margin"
-        android:background="@drawable/border_black"
-        android:textAlignment="center"
-        android:textColor="@color/main_black"
-        android:textSize="@dimen/main_xlarge_text_size"
-        android:textStyle="bold"
-        android:visibility="gone" />
-
-    <ListView
-        android:id="@+id/set_main_schedule"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:layout_margin="@dimen/activity_quarter_horizontal_margin"
-        android:background="@drawable/border_black"
-        android:padding="@dimen/activity_quarter_horizontal_margin"
-        android:visibility="gone">
-
-    </ListView>
-
-    <ImageView
-        android:id="@+id/img_url_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <!--</ScrollView>-->
 </LinearLayout>

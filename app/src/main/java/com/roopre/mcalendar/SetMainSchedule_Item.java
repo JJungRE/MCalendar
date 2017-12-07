@@ -12,19 +12,10 @@ public class SetMainSchedule_Item {
     //리스트 정보를 담고 있을 객체 생성
 
     public String num;
-    public String category;
+    public String seq;
     public Bitmap img;
-    public String memo;
-    public String used;
-    public String schedule_seq;
-
-    public String getSchedule_seq() {
-        return schedule_seq;
-    }
-
-    public void setSchedule_seq(String schedule_seq) {
-        this.schedule_seq = schedule_seq;
-    }
+    public String category;
+    public String title;
 
     public String getNum() {
         return num;
@@ -34,12 +25,12 @@ public class SetMainSchedule_Item {
         this.num = num;
     }
 
-    public String getCategory() {
-        return category;
+    public String getSeq() {
+        return seq;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setSeq(String seq) {
+        this.seq = seq;
     }
 
     public Bitmap getImg() {
@@ -50,21 +41,19 @@ public class SetMainSchedule_Item {
         this.img = img;
     }
 
-    public String getMemo() {
-        return memo;
+    public String getCategory() {
+        return category;
     }
 
-    public void setMemo(String memo) {
-        this.memo = memo;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public String getUsed() {
-        return used;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUsed(String used) {
-        this.used = used;
+    public void setTitle(String title) {
+        this.title = title;
     }
-
-
 }

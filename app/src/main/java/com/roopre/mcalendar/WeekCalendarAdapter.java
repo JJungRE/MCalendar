@@ -5,7 +5,6 @@ package com.roopre.mcalendar;
  */
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,7 @@ public class WeekCalendarAdapter extends BaseAdapter {
     // 2
     @Override
     public int getCount() {
-        Log.d(TAG, "days.size = "+days.size());
+        //Log.d(TAG, "days.size = "+days.size());
         return days.size();
     }
 
@@ -57,16 +56,16 @@ public class WeekCalendarAdapter extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.gridview_week_child, null);
         }
 
-
         int Height = parent.getHeight();
         int Width = parent.getWidth();
 
-        ImageView imageView1, imageView2, imageView3;
+        ImageView imageView1, imageView2, imageView3, imageView4;
         TextView dayTv, totalTv;
 
         imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
         imageView2 = (ImageView) convertView.findViewById(R.id.imageView2);
         imageView3 = (ImageView) convertView.findViewById(R.id.imageView3);
+        imageView4 = (ImageView) convertView.findViewById(R.id.imageView4);
 
         dayTv = (TextView) convertView.findViewById(R.id.day_tv);
         totalTv = (TextView) convertView.findViewById(R.id.total_tv);
@@ -76,29 +75,54 @@ public class WeekCalendarAdapter extends BaseAdapter {
             imageView1.setVisibility(View.INVISIBLE);
             imageView2.setVisibility(View.INVISIBLE);
             imageView3.setVisibility(View.INVISIBLE);
+            imageView4.setVisibility(View.INVISIBLE);
             totalTv.setVisibility(View.INVISIBLE);
         }else if(Integer.parseInt(days.get(position).getTotal())==1){
             imageView1.setVisibility(View.VISIBLE);
+            imageView1.setImageBitmap(days.get(position).getImage1());
             imageView2.setVisibility(View.INVISIBLE);
             imageView3.setVisibility(View.INVISIBLE);
+            imageView4.setVisibility(View.INVISIBLE);
             totalTv.setVisibility(View.INVISIBLE);
         }else if(Integer.parseInt(days.get(position).getTotal())==2){
             imageView1.setVisibility(View.VISIBLE);
+            imageView1.setImageBitmap(days.get(position).getImage1());
             imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageBitmap(days.get(position).getImage2());
             imageView3.setVisibility(View.INVISIBLE);
+            imageView4.setVisibility(View.INVISIBLE);
             totalTv.setVisibility(View.INVISIBLE);
         }else if(Integer.parseInt(days.get(position).getTotal())==3){
             imageView1.setVisibility(View.VISIBLE);
+            imageView1.setImageBitmap(days.get(position).getImage1());
             imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageBitmap(days.get(position).getImage2());
             imageView3.setVisibility(View.VISIBLE);
+            imageView3.setImageBitmap(days.get(position).getImage3());
+            imageView4.setVisibility(View.INVISIBLE);
             totalTv.setVisibility(View.INVISIBLE);
-        }else if(Integer.parseInt(days.get(position).getTotal())>3){
+        }else if(Integer.parseInt(days.get(position).getTotal())==4){
             imageView1.setVisibility(View.VISIBLE);
+            imageView1.setImageBitmap(days.get(position).getImage1());
             imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageBitmap(days.get(position).getImage2());
             imageView3.setVisibility(View.VISIBLE);
+            imageView3.setImageBitmap(days.get(position).getImage3());
+            imageView4.setVisibility(View.VISIBLE);
+            imageView4.setImageBitmap(days.get(position).getImage4());
+            totalTv.setVisibility(View.INVISIBLE);
+        }else if(Integer.parseInt(days.get(position).getTotal())>4){
+            imageView1.setVisibility(View.VISIBLE);
+            imageView1.setImageBitmap(days.get(position).getImage1());
+            imageView2.setVisibility(View.VISIBLE);
+            imageView2.setImageBitmap(days.get(position).getImage2());
+            imageView3.setVisibility(View.VISIBLE);
+            imageView3.setImageBitmap(days.get(position).getImage3());
+            imageView4.setVisibility(View.VISIBLE);
+            imageView4.setImageBitmap(days.get(position).getImage4());
             totalTv.setVisibility(View.VISIBLE);
+            totalTv.setText(Integer.toString(Integer.parseInt(days.get(position).getTotal())-4));
         }
-
 
         AbsListView.LayoutParams tvparams = new AbsListView.LayoutParams(Width, Height / 7);
 
@@ -117,7 +141,7 @@ public class WeekCalendarAdapter extends BaseAdapter {
         } else {
             dayTv.setTextColor(mContext.getResources().getColor(R.color.main_black));
         }
-        Log.d(TAG, "day.get("+position+") getDay = "+days.get(position).getDay());
+        //Log.d(TAG, "day.get("+position+") getDay = "+days.get(position).getDay());
         String tempDate = String.format("%04d",Integer.parseInt(days.get(position).getYear()))+String.format("%02d",Integer.parseInt(days.get(position).getMonth()))+String.format("%02d",Integer.parseInt(days.get(position).getDay()));
         dayTv.setText( String.format("%02d",Integer.parseInt(days.get(position).getMonth()))+"월 "+String.format("%02d",Integer.parseInt(days.get(position).getDay())) +"일("+Se_Application.getYoil(tempDate)+")");
 

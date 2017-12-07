@@ -1,5 +1,7 @@
 package com.roopre.mcalendar;
 
+import java.util.ArrayList;
+
 /**
  * Created by munjongmin on 2017. 11. 29..
  */
@@ -7,9 +9,18 @@ package com.roopre.mcalendar;
 public class MonthDayVO {
 
     private String day = "";
-    private String imagePath1 = "";
-    private String imagePath2 = "";
+    private String title1 = "";
+    private String title2 = "";
     private String total = "";
+    private ArrayList<String> seqList = new ArrayList<String>();
+
+    public ArrayList<String> getSeqList() {
+        return seqList;
+    }
+
+    public void setSeqList(ArrayList<String> seqList) {
+        this.seqList = seqList;
+    }
 
     public String getDay() {
         return day;
@@ -19,20 +30,20 @@ public class MonthDayVO {
         this.day = day;
     }
 
-    public String getImagePath1() {
-        return imagePath1;
+    public String getTitle1() {
+        return title1;
     }
 
-    public void setImagePath1(String imagePath1) {
-        this.imagePath1 = imagePath1;
+    public void setTitle1(String title1) {
+        this.title1 = title1;
     }
 
-    public String getImagePath2() {
-        return imagePath2;
+    public String getTitle2() {
+        return title2;
     }
 
-    public void setImagePath2(String imagePath2) {
-        this.imagePath2 = imagePath2;
+    public void setTitle2(String title2) {
+        this.title2 = title2;
     }
 
     public String getTotal() {

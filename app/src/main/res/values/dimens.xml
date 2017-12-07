@@ -16,7 +16,7 @@
 
     <dimen name="sp10">6sp</dimen>
     <dimen name="dp0">0dp</dimen>
-
+    <dimen name="dp24">24dp</dimen>
     <dimen name="dp40">40dp</dimen>
 
     <dimen name="view_used_left">5dp</dimen>
