@@ -3,7 +3,10 @@ package com.roopre.mcalendar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,12 +40,20 @@ public class NoticeActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
 
-        //actionBar 객체를 가져올 수 있다.
-        ActionBar actionBar = getSupportActionBar();
-
-//        //메뉴바에 '<' 버튼이 생긴다.(두개는 항상 같이다닌다)
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        final ActionBar abar = getSupportActionBar();
+        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
+        textviewTitle.setText("공지사항");
+        abar.setCustomView(viewActionBar, params);
+        abar.setDisplayShowCustomEnabled(true);
+        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayHomeAsUpEnabled(true);
+        abar.setIcon(R.color.transparent);
+        abar.setHomeButtonEnabled(true);
     }
 
     /*

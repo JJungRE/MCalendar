@@ -65,7 +65,7 @@ public class SetupActivity extends AppCompatActivity
     @Override
     public void onResume() {
         super.onResume();
-        SetInit();
+        //SetInit();
     }
 
     private void SetInit() {

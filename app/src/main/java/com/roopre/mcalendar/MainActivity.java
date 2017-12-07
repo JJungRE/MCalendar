@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
 
+    ActionBar actionBar;
+    TextView title_tv;
     Menu menu;
 
     //2017-11-29 종민추가
@@ -114,6 +118,20 @@ public class MainActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
+
+        actionBar = getSupportActionBar();
+        actionBar.setCustomView(viewActionBar, params);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.color.transparent);
+        actionBar.setHomeButtonEnabled(true);
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
