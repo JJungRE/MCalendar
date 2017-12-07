@@ -5,9 +5,13 @@ package com.roopre.mcalendar;
  */
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -49,28 +53,28 @@ public class SetupCategoryAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-//        if (convertView == null) {
-//            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-//            convertView = layoutInflater.inflate(R.layout.gridview_setup_category, null);
-//        }
-//
-//        LinearLayout linearlayout = (LinearLayout) convertView.findViewById(R.id.linear);
-//        TextView title_tv = (TextView) convertView.findViewById(R.id.title_tv);
-//        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageview);
-//
-//        title_tv.setText(category.get(position));
-//
-//        for (int i = 0; i < selected.size(); i++) {
-//            if (selected.get(i).equals("all")) {
-//                linearlayout.setBackgroundResource(R.drawable.bg_category_green);
-//            } else {
-//                if (title_tv.getText().toString().equals(selected.get(i))) {
-//                    linearlayout.setBackgroundResource(R.drawable.bg_category_green);
-//                } else {
-//                    //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
-//                }
-//            }
-//        }
+        if (convertView == null) {
+            final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+            convertView = layoutInflater.inflate(R.layout.gridview_setup_category, null);
+        }
+
+        LinearLayout linearlayout = (LinearLayout) convertView.findViewById(R.id.linear);
+        TextView title_tv = (TextView) convertView.findViewById(R.id.title_tv);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageview);
+
+        title_tv.setText(category.get(position));
+
+        for (int i = 0; i < selected.size(); i++) {
+            if (selected.get(i).equals("all")) {
+                linearlayout.setBackgroundResource(R.drawable.bg_category_green);
+            } else {
+                if (title_tv.getText().toString().equals(selected.get(i))) {
+                    linearlayout.setBackgroundResource(R.drawable.bg_category_green);
+                } else {
+                    //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
+                }
+            }
+        }
         return convertView;
     }
 

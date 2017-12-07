@@ -903,7 +903,8 @@ public class MainActivity extends AppCompatActivity
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_benefit_btn:
-                //startActivity(new Intent(MainActivity.this, NoticeActivity.class));
+                startActivity(new Intent(MainActivity.this, AllBenefitActivity.class));
+
                 break;
         }
     }

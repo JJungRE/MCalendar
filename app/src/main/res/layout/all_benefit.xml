@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <ScrollView
+        android:id="@+id/sc_spots"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border_all_line_black"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_quarter_horizontal_margin">
+
+                <TextView
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="match_parent"
+                    android:text="SKT" />
+
+                <GridView
+                    android:id="@+id/all_benefit_category_gv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
+                    android:numColumns="4"
+                    android:padding="@dimen/activity_quarter_horizontal_margin"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="@dimen/activity_quarter_horizontal_margin" />
+
+                <!--android:layout_gravity="center"-->
+                <!--android:background="@drawable/border_all_line_black"-->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
+                android:background="@drawable/border_all_line_black"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <TextView
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="match_parent"
+                    android:text="KT" />
+
+
+                <GridView
+                    android:id="@+id/all_benefit_category_gv2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
+                    android:numColumns="4"
+                    android:padding="@dimen/activity_quarter_horizontal_margin"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="@dimen/activity_quarter_horizontal_margin" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
+                android:background="@drawable/border_all_line_black"
+                android:orientation="horizontal"
+                android:padding="@dimen/activity_quarter_horizontal_margin">
+
+                <TextView
+                    android:layout_width="@dimen/dp30"
+                    android:layout_height="wrap_content"
+                    android:text="LG" />
+
+
+                <GridView
+                    android:id="@+id/all_benefit_category_gv3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
+                    android:numColumns="4"
+                    android:padding="@dimen/activity_quarter_horizontal_margin"
+                    android:stretchMode="columnWidth"
+                    android:verticalSpacing="@dimen/activity_quarter_horizontal_margin" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</android.support.constraint.ConstraintLayout>
