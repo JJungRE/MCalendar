@@ -3,14 +3,15 @@
 
 
     <item
-        android:id="@+id/nav_setup"
-        android:icon="@drawable/ic_menu_share"
-        android:title="설정" />
+        android:id="@+id/nav_score"
+        android:icon="@drawable/ic_menu_slideshow"
+        android:title="별점" />
 
-    <item
-        android:id="@+id/nav_logout"
-        android:icon="@drawable/phone_iphone_black"
-        android:title="로그아웃" />
+
+    <!--<item-->
+        <!--android:id="@+id/nav_logout"-->
+        <!--android:icon="@drawable/phone_iphone_black"-->
+        <!--android:title="로그아웃" />-->
 
 
     <!--<item

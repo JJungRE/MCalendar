@@ -144,7 +144,6 @@ public class AllBenefitActivity extends AppCompatActivity
                 lg_gridView.setAdapter(setupCategoryAdapter3);
 
 
-
                 skt_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -152,24 +151,9 @@ public class AllBenefitActivity extends AppCompatActivity
                         Log.d(TAG, "Click => " + skt_categoryList.get(position));
 //                        customRadio.setChecked(true);
 
-                        String server_url = "get_title.php";
-                        HashMap<String, String> send_arg = new HashMap<String, String>();
-                        send_arg.put("company", "skt");
-                        send_arg.put("category", category);
-                        Server_con serverCon = new Server_con(server_url, send_arg);
-                        String result = serverCon.Receive_Server();
-                        Log.d(TAG, "result = "+result);
-
                         Intent intent = new Intent(AllBenefitActivity.this, AllDetailActivity.class);
-                        intent.putExtra("compnay", "SKT");
+                        intent.putExtra("company", "SKT");
                         intent.putExtra("category", category);
-
-                        if(result.equals("success")){
-                            Log.d(TAG, "Result -> success");
-                            category = "";
-//                            customRadio.setChecked(true);
-                            SetInit();
-                        }
 
                         startActivity(intent);
 
@@ -182,44 +166,24 @@ public class AllBenefitActivity extends AppCompatActivity
                         Log.d(TAG, "Click => " + kt_categoryList.get(position));
 //                        customRadio.setChecked(true);
 
-                        String server_url = "get_title.php";
-                        HashMap<String, String> send_arg = new HashMap<String, String>();
-                        send_arg.put("company", "kt");
-                        send_arg.put("category", category);
-                        Server_con serverCon = new Server_con(server_url, send_arg);
-                        String result = serverCon.Receive_Server();
-                        Log.d(TAG, "result = "+result);
-
-                        if(result.equals("success")){
-                            Log.d(TAG, "Result -> success");
-                            category = "";
-//                            customRadio.setChecked(true);
-                            SetInit();
-                        }
+                        Intent intent = new Intent(AllBenefitActivity.this, AllDetailActivity.class);
+                        intent.putExtra("company", "KT");
+                        intent.putExtra("category", category);
+                        startActivity(intent);
 
                     }
                 });
                 lg_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
-                        category = skt_categoryList.get(position);
+                        category = lg_categoryList.get(position);
                         Log.d(TAG, "Click => " + lg_categoryList.get(position));
 //                        customRadio.setChecked(true);
 
-                        String server_url = "get_title.php";
-                        HashMap<String, String> send_arg = new HashMap<String, String>();
-                        send_arg.put("company", "lg");
-                        send_arg.put("category", category);
-                        Server_con serverCon = new Server_con(server_url, send_arg);
-                        String result = serverCon.Receive_Server();
-                        Log.d(TAG, "result = "+result);
-
-                        if(result.equals("success")){
-                            Log.d(TAG, "Result -> success");
-                            category = "";
-//                            customRadio.setChecked(true);
-                            SetInit();
-                        }
+                        Intent intent = new Intent(AllBenefitActivity.this, AllDetailActivity.class);
+                        intent.putExtra("company", "LG");
+                        intent.putExtra("category", category);
+                        startActivity(intent);
 
                     }
                 });
