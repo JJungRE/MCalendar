@@ -65,6 +65,7 @@
             android:textStyle="bold" />
     </RelativeLayout>
 
+    <!--
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -136,5 +137,5 @@
             android:stretchMode="columnWidth" />
 
     </RelativeLayout>
-
+-->
 </LinearLayout>

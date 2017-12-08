@@ -249,6 +249,7 @@ public class AllBenefitActivity extends AppCompatActivity
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()) {
+            /*
             case R.id.push_switch:
                 if (isChecked) {
                     Se_Application.Localdb.set_dataB("push", true);
@@ -281,6 +282,7 @@ public class AllBenefitActivity extends AppCompatActivity
                     Log.d(TAG, "custom_radio_btn -> unchecked");
                 }
                 break;
+                */
         }
     }
 

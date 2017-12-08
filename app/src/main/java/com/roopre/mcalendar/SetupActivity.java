@@ -7,6 +7,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -39,10 +41,20 @@ public class SetupActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup);
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
-
+        final ActionBar abar = getSupportActionBar();
+        View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
+                ActionBar.LayoutParams.WRAP_CONTENT,
+                ActionBar.LayoutParams.MATCH_PARENT,
+                Gravity.CENTER);
+        TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
+        textviewTitle.setText("설정");
+        abar.setCustomView(viewActionBar, params);
+        abar.setDisplayShowCustomEnabled(true);
+        abar.setDisplayShowTitleEnabled(false);
+        abar.setDisplayHomeAsUpEnabled(true);
+        abar.setIcon(R.color.transparent);
+        abar.setHomeButtonEnabled(true);
         pushSwitch = (Switch) findViewById(R.id.push_switch);
         pushSwitch.setOnCheckedChangeListener(this);
         if (Se_Application.Localdb.get_dataB("push")) {
@@ -50,15 +62,7 @@ public class SetupActivity extends AppCompatActivity
         } else {
             pushSwitch.setChecked(false);
         }
-        allRadio = (RadioButton) findViewById(R.id.all_radiobtn);
-        customRadio = (RadioButton) findViewById(R.id.custom_radiobtn);
 
-        allRadio.setOnCheckedChangeListener(this);
-        customRadio.setOnCheckedChangeListener(this);
-
-        customRadio.setEnabled(false);
-
-        gridView = (GridView) findViewById(R.id.category_gridview);
 
     }
 
@@ -203,7 +207,8 @@ public class SetupActivity extends AppCompatActivity
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()) {
-            case R.id.push_switch:
+
+                                             /* case R.id.push_switch:
                 if (isChecked) {
                     Se_Application.Localdb.set_dataB("push", true);
                     Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
@@ -239,6 +244,7 @@ public class SetupActivity extends AppCompatActivity
                     Log.d(TAG, "custom_radio_btn -> unchecked");
                 }
                 break;
+                */
         }
     }
 }

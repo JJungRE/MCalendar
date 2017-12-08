@@ -22,7 +22,6 @@ import java.util.Map;
  */
 
 public class Server_con {
-
     String TAG = "Server_con";
     private String Server_Con_Str;
     String RevStr;
@@ -88,6 +87,7 @@ public class Server_con {
     class Server_Con_ATask extends AsyncTask<String, Void, String> {
         protected void onPreExecute() {
             super.onPreExecute();
+            //Se_Application.isLoading(true);
         }
 
         @Override
@@ -126,6 +126,7 @@ public class Server_con {
         }
 
         protected void onPostExecute(String a) {
+            //Se_Application.isLoading(false);
         }
     }
 

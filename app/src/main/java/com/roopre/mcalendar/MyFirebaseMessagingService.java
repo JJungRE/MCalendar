@@ -1,11 +1,10 @@
 package com.roopre.mcalendar;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -17,41 +16,44 @@ import com.google.firebase.messaging.RemoteMessage;
  */
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-
+    Intent intent;
     private static final String TAG = "MyFirebaseMsgService";
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        String title = remoteMessage.getData().get("title");
+        String message = remoteMessage.getData().get("message");
+        String seq = remoteMessage.getData().get("seq");
 
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-        }
+        Log.d(TAG, "Title: " + title);
+        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "seq: " + seq);
 
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+        intent = new Intent(this, MainActivity.class);
+        intent.putExtra("message", message);
+        intent.putExtra("title", title);
+        intent.putExtra("seq", seq);
+        if (Se_Application.Localdb.get_dataB("push")) {
+            sendNewBenefit(title, message);
         }
     }
 
-    private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
-
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+    private void sendNewBenefit(String title, String message) {
+        int notifyID = 1236;
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("FCM Message")
-                .setContentText(messageBody)
+                .setContentTitle(title)
+                .setContentText(message)
                 .setAutoCancel(true)
-                .setSound(defaultSoundUri)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setTicker(title)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(notifyID, mBuilder.build());
     }
 }

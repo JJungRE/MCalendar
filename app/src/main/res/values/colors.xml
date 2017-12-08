@@ -9,6 +9,7 @@
     <color name="main_red">@color/RedA700</color>
     <color name="main_blue">@color/BlueA700</color>
     <color name="main_green">@color/Green500</color>
+    <color name="trans_black">#44000000</color>
 
     <color name="bg_color">@color/Orange100</color>
 

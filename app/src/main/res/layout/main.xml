@@ -1,137 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_marginTop="?android:actionBarSize"
+android:orientation="vertical">
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginTop="?android:actionBarSize"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:layout_margin="@dimen/activity_quarter_horizontal_margin"
+    android:layout_gravity="center"
+    android:weightSum="1">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/month_left_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_edittext"
+        android:src="@drawable/ic_chevron_left_black_48dp" />
+
+    <TextView
+        android:id="@+id/month_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_margin="@dimen/activity_quarter_horizontal_margin"
-        android:layout_gravity="center"
-        android:weightSum="1">
+        android:text="11"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_xlarge_text_size"
+        android:textStyle="bold" />
 
-        <ImageButton
-            android:id="@+id/month_left_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_edittext"
-            android:src="@drawable/ic_chevron_left_black_48dp" />
+    <ImageButton
+        android:id="@+id/month_right_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/bg_edittext"
+        android:src="@drawable/ic_chevron_right_black_48dp" />
 
-        <TextView
-            android:id="@+id/month_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="11"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_xlarge_text_size"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/month_right_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_edittext"
-            android:src="@drawable/ic_chevron_right_black_48dp" />
-
-        <ImageButton
-            android:id="@+id/week_left_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:visibility="gone"
-            android:background="@drawable/bg_edittext"
-            android:src="@drawable/ic_chevron_left_black_48dp" />
-
-        <TextView
-            android:id="@+id/week_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:visibility="gone"
-            android:text="11"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_xlarge_text_size"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/week_right_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:visibility="gone"
-            android:background="@drawable/bg_edittext"
-            android:src="@drawable/ic_chevron_right_black_48dp" />
-
-
-    </LinearLayout>
-
-
-    <GridView
-        android:id="@+id/month_grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:numColumns="7"
-        android:stretchMode="columnWidth" />
-
-    <GridView
-        android:id="@+id/week_grid_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+    <ImageButton
+        android:id="@+id/week_left_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:visibility="gone"
-        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
-        android:layout_weight="0.6"
-        android:gravity="center"
-        android:horizontalSpacing="0dp"
-        android:numColumns="1"
-        android:stretchMode="columnWidth" />
+        android:background="@drawable/bg_edittext"
+        android:src="@drawable/ic_chevron_left_black_48dp" />
 
-
-    <ListView
-        android:id="@+id/main_listview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4"
-        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
-        android:background="@drawable/border_all_line_black"
-        android:padding="@dimen/activity_quarter_horizontal_margin"
-        android:visibility="visible">
-
-    </ListView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/week_tv"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
-        android:orientation="horizontal">
+        android:layout_weight="1"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="11"
+        android:textColor="@color/main_black"
+        android:textSize="@dimen/main_xlarge_text_size"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/view_benefit_btn"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="1"
-            android:background="@drawable/border_button_blue"
-            android:text="전체 혜택 보기"
-            android:textColor="@color/White"
-            android:textSize="@dimen/main_large_text_size" />
+    <ImageButton
+        android:id="@+id/week_right_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:background="@drawable/bg_edittext"
+        android:src="@drawable/ic_chevron_right_black_48dp" />
+</LinearLayout>
 
-    </LinearLayout>
+
+<GridView
+    android:id="@+id/month_grid_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+    android:layout_weight="0.6"
+    android:gravity="center"
+    android:horizontalSpacing="0dp"
+    android:numColumns="7"
+    android:stretchMode="columnWidth" />
+
+<GridView
+    android:id="@+id/week_grid_view"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_gravity="center"
+    android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+    android:visibility="gone"
+    android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+    android:layout_weight="0.6"
+    android:gravity="center"
+    android:horizontalSpacing="0dp"
+    android:numColumns="1"
+    android:stretchMode="columnWidth" />
+
+
+<ListView
+    android:id="@+id/main_listview"
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.4"
+    android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+    android:background="@drawable/border_all_line_black"
+    android:padding="@dimen/activity_quarter_horizontal_margin"
+    android:visibility="visible">
+
+</ListView>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginRight="@dimen/activity_quarter_horizontal_margin"
+    android:layout_marginBottom="@dimen/activity_quarter_horizontal_margin"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/view_benefit_btn"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:background="@drawable/border_button_blue"
+        android:text="전체 혜택 보기"
+        android:textColor="@color/White"
+        android:textSize="@dimen/main_large_text_size" />
+
+</LinearLayout>
 </LinearLayout>

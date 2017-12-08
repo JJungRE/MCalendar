@@ -2,8 +2,14 @@ package com.roopre.mcalendar;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
+
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -23,13 +29,39 @@ public class Se_Application extends Application {
     public static String weekEndday;
     public static Calendar startCal = null, endCal = null;
 
+    public static  AlphaAnimation animation1, animation2;
     public static String userid = "";
     public static String passwd = "";
     public static String nickname = "";
     public static String company = "";
 
+    public static RelativeLayout loading_layout;
+    public static NewtonCradleLoading loading_bar;
 
     public static String[] days = {"일", "월", "화", "수", "목", "금", "토"};
+
+    private static class splashhandler implements Runnable {
+        boolean val = false;
+        public splashhandler(boolean val) {
+            this.val = val;
+        }
+
+        @Override
+        public void run() {
+            if (val) {
+                loading_layout.setVisibility(View.VISIBLE);
+                loading_bar.start();
+            } else {
+                loading_bar.stop();
+                loading_layout.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public static void isLoading(boolean val) {
+        Handler hd = new Handler();
+        hd.postDelayed(new splashhandler(val), 10);
+    }
 
     public static String getYoil(String date) {
 
@@ -64,6 +96,11 @@ public class Se_Application extends Application {
 
     public void Init_Value() {
 
+        animation1 = new AlphaAnimation(1.0F, 0.2F);
+        animation1.setDuration(300);
+        animation2 = new AlphaAnimation(0.2F, 1.0F);
+        animation2.setDuration(300);
+
 
         Localdb = new Se_LocalDbConnector(this.getApplicationContext());
         Server_URL = "http://52.79.209.10/";
@@ -75,7 +112,7 @@ public class Se_Application extends Application {
         mMonth = mMonth + 1;
         mDay = c.get(Calendar.DAY_OF_MONTH);
         mWeekDay = c.get(Calendar.DAY_OF_WEEK) - 1;
-        Log.d(TAG, "year = "+mYear +", month = "+mMonth +", day = "+mDay);
+        Log.d(TAG, "year = " + mYear + ", month = " + mMonth + ", day = " + mDay);
 
         Calendar mainCal = (Calendar) c.clone();
         mainCal.set(Calendar.DAY_OF_MONTH, 1);
@@ -102,7 +139,6 @@ public class Se_Application extends Application {
 
         Log.d(TAG, "WeekStartDay = " + weekStartday);
         Log.d(TAG, "WeekEndDay = " + weekEndday);
-
     }
 
     public static boolean isScreenOn(Context context) {
@@ -143,10 +179,11 @@ public class Se_Application extends Application {
 
         return fulldate + "(" + yoil + "요일)";
     }
+
     public static String FullDate(int year, int month, int day) {
 
         int ayear = year;
-        int amonth = month+1;
+        int amonth = month + 1;
         int aday = day;
 
         String fulldate = String.format("%04d", ayear) + "-" + String.format("%02d", amonth) + "-" + String.format("%02d", aday);

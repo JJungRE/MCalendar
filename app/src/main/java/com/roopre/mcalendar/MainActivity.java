@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -24,8 +26,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.victor.loading.newton.NewtonCradleLoading;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +46,7 @@ import java.util.HashMap;
 import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, View.OnTouchListener {
     SetMainScheduleAdapter mAdapter;
     private String TAG = "MainActivity";
     private ListView mListView;
@@ -76,6 +81,8 @@ public class MainActivity extends AppCompatActivity
     Button viewBenefitBtn;
     private BackPressCloseHandler backPressCloseHandler;
 
+    NewtonCradleLoading loadingBar;
+    RelativeLayout loading_layout;
     //img_url Connecting..
     String subURL;
     private ProgressDialog progressDialog;
@@ -86,6 +93,11 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Se_Application.loading_layout = (RelativeLayout) findViewById(R.id.loading_layout);
+        Se_Application.loading_bar = (NewtonCradleLoading) findViewById(R.id.loading_bar);
+
+
         mAdapter = new SetMainScheduleAdapter();
         cal = Calendar.getInstance();
         startCal = (Calendar) Se_Application.startCal.clone();
@@ -106,6 +118,11 @@ public class MainActivity extends AppCompatActivity
         monthRightBtn.setOnClickListener(this);
         weekLeftBtn.setOnClickListener(this);
         weekRightBtn.setOnClickListener(this);
+
+        monthLeftBtn.setOnTouchListener(this);
+        monthRightBtn.setOnTouchListener(this);
+        weekLeftBtn.setOnTouchListener(this);
+        weekRightBtn.setOnTouchListener(this);
         // 위젯과 멤버변수 참조 획득
         mListView = (ListView) findViewById(R.id.main_listview);
 
@@ -156,10 +173,27 @@ public class MainActivity extends AppCompatActivity
         View headerView = header_drawer.getHeaderView(0);
         header_linear = (LinearLayout) headerView.findViewById(R.id.header_linear);
         header_main_id = (TextView) headerView.findViewById(R.id.header_main_id);
-
+        header_main_id.setText(Se_Application.Localdb.get_dataS("userid"));
         header_linear.setOnClickListener(this);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume");
+        SetInit();
+    }
+
+    private void SetInit() {
+        monthStartPosition = 0;
+        monthEndPosition = 0;
+
+        for (int i = 0; i < mAdapter.getCount(); i++) {
+            mAdapter.getmItems().clear();
+        }
+        dataSetting();
+    }
     private void dataSetting() {
 
         String server_url = "load_event.php";
@@ -195,14 +229,6 @@ public class MainActivity extends AppCompatActivity
             DrawCalendar(result);
         }
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume");
-        SetInit();
-    }
-
     private void CalendarView(String type_) {
         if (type_.equals("month")) {
             monthGridView.setVisibility(View.VISIBLE);
@@ -488,7 +514,6 @@ public class MainActivity extends AppCompatActivity
                     tempCategory = category;
                     tempTitle = title;
                     Log.d(TAG, "category = " + category + ", title = " + title);
-
                 }
 
             } catch (JSONException e) {
@@ -503,7 +528,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-                    if (Se_Application.strNotNull(view.findViewById(R.id.day_linear).getTag().toString())) {
+                    if (monthDays.get(position).getSeqList().toString().length()>2) {
                         Log.d(TAG, "Click Day => " + monthDays.get(position));
                         //Toast.makeText(MainActivity.this, monthDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
@@ -967,9 +992,7 @@ public class MainActivity extends AppCompatActivity
             weekGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView parent, View view, int position, long id) {
-
-                    if (Se_Application.strNotNull(view.findViewById(R.id.day_linear).getTag().toString())) {
-                        Log.d(TAG, "Click Day => " + weekDays.get(position));
+                    if (weekDays.get(position).getSeqList().toString().length()>2) {
                         //Toast.makeText(MainActivity.this, weekDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                         intent.putExtra("seq", weekDays.get(position).getSeqList().toString());
@@ -990,18 +1013,16 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
-    }
-
-    private void SetInit() {
-
-        monthStartPosition = 0;
-        monthEndPosition = 0;
-
-        for (int i = 0; i < mAdapter.getCount(); i++) {
-            mAdapter.getmItems().clear();
+        if(getIntent().hasExtra("seq")){
+            Log.d(TAG, "seq exist");
+            Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
+            intent.putExtra("seq", getIntent().getStringExtra("seq"));
+            getIntent().removeExtra("seq");
+            startActivity(intent);
         }
-        dataSetting();
     }
+
+
 
     //phone 뒤로가기 버튼 코드
     @Override
@@ -1080,11 +1101,14 @@ public class MainActivity extends AppCompatActivity
         switch (view.getId()) {
 
             case R.id.month_left_btn:
+
+                Log.d(TAG, "left");
                 cal.add(Calendar.MONTH, -1);
                 SetInit();
                 //Toast.makeText(this, "Left Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.month_right_btn:
+                Log.d(TAG, "right");
                 cal.add(Calendar.MONTH, 1);
                 SetInit();
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
@@ -1107,4 +1131,20 @@ public class MainActivity extends AppCompatActivity
                 break;
         }
     }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN: {
+                view.getBackground().setColorFilter(0xe0f47521, PorterDuff.Mode.SRC_ATOP);
+                view.invalidate();
+                break;
+            }
+            case MotionEvent.ACTION_UP: {
+                view.getBackground().clearColorFilter();
+                view.invalidate();
+                break;
+            }
+        }
+        return false;    }
 }

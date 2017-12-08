@@ -40,8 +40,8 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private class splashhandler implements Runnable {
-        @Override
-        public void run() {
+            @Override
+            public void run() {
             Log.d(TAG, "splashhandler");
             if (Se_Application.strNotNull(Se_Application.Localdb.get_dataS("token"))) {
                 if (Se_Application.strNotNull(Se_Application.Localdb.get_dataS("userid"))) {

@@ -20,7 +20,28 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <include layout="@layout/main" />
 
+        <RelativeLayout
+            android:id="@+id/loading_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/trans_black"
+            android:visibility="gone"
+            android:orientation="vertical">
+
+            <com.victor.loading.newton.NewtonCradleLoading
+                android:id="@+id/loading_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"/>
+            >
+        </RelativeLayout>
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>
