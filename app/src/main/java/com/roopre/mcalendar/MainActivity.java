@@ -301,6 +301,8 @@ public class MainActivity extends AppCompatActivity
                 JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = null;
 
+                String tempCategory = "", tempTitle = "", tempTitle2 = "";
+                int count = 1;
                 String seq = "", category = "", title = "", startdate = "", enddate = "";
                 for (int i = 0; i < jarray.length(); i++) {
                     jObject = jarray.getJSONObject(i);
@@ -310,7 +312,6 @@ public class MainActivity extends AppCompatActivity
                     enddate = jObject.getString("enddate");
                     category = jObject.getString("event_category");
                     logo_img = jObject.getString("logo_img");
-
 
                     int syear = Integer.parseInt(startdate.substring(0, 4));
                     int smonth = Integer.parseInt(startdate.substring(5, 7));
@@ -323,120 +324,125 @@ public class MainActivity extends AppCompatActivity
 
                     for (int j = monthStartPosition; j < monthEndPosition; j++) {
                         if (cal.get(Calendar.YEAR) == syear) {
-                            if(cal.get(Calendar.MONTH)+1 == smonth){
+                            if (cal.get(Calendar.MONTH) + 1 == smonth) {
                                 monthDayVO = monthDays.get(j);
-                                if(Integer.parseInt(monthDayVO.getDay())>=sday){
-                                    if(cal.get(Calendar.YEAR) < eyear)
-                                    {
+                                if (Integer.parseInt(monthDayVO.getDay()) >= sday) {
+                                    if (cal.get(Calendar.YEAR) < eyear) {
                                         monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
                                         monthDayVO.getSeqList().add(seq);
-                                        if (monthDayVO.getTitle1().equals("")) {
-                                            monthDayVO.setTitle1(title);
-                                        } else if (monthDayVO.getTitle2().equals("")) {
-                                            monthDayVO.setTitle2(title);
-                                        }
-                                        monthDays.set(j, monthDayVO);
-                                    }
-                                    else if(cal.get(Calendar.YEAR) == eyear){
-                                        if(cal.get(Calendar.MONTH)+1 < emonth)
-                                        {
-                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                            monthDayVO.getSeqList().add(seq);
+                                        if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                             if (monthDayVO.getTitle1().equals("")) {
                                                 monthDayVO.setTitle1(title);
                                             } else if (monthDayVO.getTitle2().equals("")) {
                                                 monthDayVO.setTitle2(title);
                                             }
-                                            monthDays.set(j, monthDayVO);
                                         }
-                                        else if(cal.get(Calendar.MONTH)+1 == emonth){
-                                            if(Integer.parseInt(monthDayVO.getDay())<=eday) {
-                                                monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                                monthDayVO.getSeqList().add(seq);
+                                        monthDays.set(j, monthDayVO);
+                                    } else if (cal.get(Calendar.YEAR) == eyear) {
+                                        if (cal.get(Calendar.MONTH) + 1 < emonth) {
+                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                            monthDayVO.getSeqList().add(seq);
+                                            if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                                 if (monthDayVO.getTitle1().equals("")) {
                                                     monthDayVO.setTitle1(title);
                                                 } else if (monthDayVO.getTitle2().equals("")) {
                                                     monthDayVO.setTitle2(title);
+                                                }
+                                            }
+                                            monthDays.set(j, monthDayVO);
+                                        } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
+                                            if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
+                                                monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                                monthDayVO.getSeqList().add(seq);
+                                                if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                                    if (monthDayVO.getTitle1().equals("")) {
+                                                        monthDayVO.setTitle1(title);
+                                                    } else if (monthDayVO.getTitle2().equals("")) {
+                                                        monthDayVO.setTitle2(title);
+                                                    }
                                                 }
                                                 monthDays.set(j, monthDayVO);
                                             }
                                         }
                                     }
                                 }
-                            }
-                            else if(cal.get(Calendar.MONTH)+1 > smonth){
+                            } else if (cal.get(Calendar.MONTH) + 1 > smonth) {
                                 monthDayVO = monthDays.get(j);
-                                if(cal.get(Calendar.YEAR) < eyear)
-                                {
+                                if (cal.get(Calendar.YEAR) < eyear) {
                                     monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
                                     monthDayVO.getSeqList().add(seq);
-                                    if (monthDayVO.getTitle1().equals("")) {
-                                        monthDayVO.setTitle1(title);
-                                    } else if (monthDayVO.getTitle2().equals("")) {
-                                        monthDayVO.setTitle2(title);
-                                    }
-                                    monthDays.set(j, monthDayVO);
-                                }
-                                else if(cal.get(Calendar.YEAR) == eyear){
-                                    if(cal.get(Calendar.MONTH)+1 < emonth)
-                                    {
-                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                        monthDayVO.getSeqList().add(seq);
+                                    if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                         if (monthDayVO.getTitle1().equals("")) {
                                             monthDayVO.setTitle1(title);
                                         } else if (monthDayVO.getTitle2().equals("")) {
                                             monthDayVO.setTitle2(title);
                                         }
-                                        monthDays.set(j, monthDayVO);
                                     }
-                                    else if(cal.get(Calendar.MONTH)+1 == emonth){
-                                        if(Integer.parseInt(monthDayVO.getDay())<=eday) {
-                                            Log.d(TAG, "monthDayVO.getDay() = "+monthDayVO.getDay());
-                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                            monthDayVO.getSeqList().add(seq);
+                                    monthDays.set(j, monthDayVO);
+                                } else if (cal.get(Calendar.YEAR) == eyear) {
+                                    if (cal.get(Calendar.MONTH) + 1 < emonth) {
+                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                        monthDayVO.getSeqList().add(seq);
+                                        if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                             if (monthDayVO.getTitle1().equals("")) {
                                                 monthDayVO.setTitle1(title);
                                             } else if (monthDayVO.getTitle2().equals("")) {
                                                 monthDayVO.setTitle2(title);
+                                            }
+                                        }
+                                        monthDays.set(j, monthDayVO);
+                                    } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
+                                        if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
+                                            Log.d(TAG, "monthDayVO.getDay() = " + monthDayVO.getDay());
+                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                            monthDayVO.getSeqList().add(seq);
+                                            if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                                if (monthDayVO.getTitle1().equals("")) {
+                                                    monthDayVO.setTitle1(title);
+                                                } else if (monthDayVO.getTitle2().equals("")) {
+                                                    monthDayVO.setTitle2(title);
+                                                }
                                             }
                                             monthDays.set(j, monthDayVO);
                                         }
                                     }
                                 }
                             }
-                        } else if(cal.get(Calendar.YEAR) > syear){
+                        } else if (cal.get(Calendar.YEAR) > syear) {
                             monthDayVO = monthDays.get(j);
-                            if(cal.get(Calendar.YEAR) < eyear)
-                            {
+                            if (cal.get(Calendar.YEAR) < eyear) {
                                 monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
                                 monthDayVO.getSeqList().add(seq);
-                                if (monthDayVO.getTitle1().equals("")) {
-                                    monthDayVO.setTitle1(title);
-                                } else if (monthDayVO.getTitle2().equals("")) {
-                                    monthDayVO.setTitle2(title);
-                                }
-                                monthDays.set(j, monthDayVO);
-                            }
-                            else if(cal.get(Calendar.YEAR) == eyear){
-                                if(cal.get(Calendar.MONTH)+1 < emonth)
-                                {
-                                    monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                    monthDayVO.getSeqList().add(seq);
+                                if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                     if (monthDayVO.getTitle1().equals("")) {
                                         monthDayVO.setTitle1(title);
                                     } else if (monthDayVO.getTitle2().equals("")) {
                                         monthDayVO.setTitle2(title);
                                     }
-                                    monthDays.set(j, monthDayVO);
                                 }
-                                else if(cal.get(Calendar.MONTH)+1 == emonth){
-                                    if(Integer.parseInt(monthDayVO.getDay())<=eday) {
-                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                        monthDayVO.getSeqList().add(seq);
+                                monthDays.set(j, monthDayVO);
+                            } else if (cal.get(Calendar.YEAR) == eyear) {
+                                if (cal.get(Calendar.MONTH) + 1 < emonth) {
+                                    monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                    monthDayVO.getSeqList().add(seq);
+                                    if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
                                         if (monthDayVO.getTitle1().equals("")) {
                                             monthDayVO.setTitle1(title);
                                         } else if (monthDayVO.getTitle2().equals("")) {
                                             monthDayVO.setTitle2(title);
+                                        }
+                                    }
+                                    monthDays.set(j, monthDayVO);
+                                } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
+                                    if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
+                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                        monthDayVO.getSeqList().add(seq);
+                                        if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                            if (monthDayVO.getTitle1().equals("")) {
+                                                monthDayVO.setTitle1(title);
+                                            } else if (monthDayVO.getTitle2().equals("")) {
+                                                monthDayVO.setTitle2(title);
+                                            }
                                         }
                                         monthDays.set(j, monthDayVO);
                                     }
@@ -473,7 +479,16 @@ public class MainActivity extends AppCompatActivity
                     // 웹에서 이미지를 가져오는 작업 스레드 실행.
                     mThread.start();
                     mThread.join();
-                    mAdapter.addItem(Integer.toString(i + 1), seq, bitmap, category, title);
+                    if (tempCategory.equals(category) && tempTitle.equals(title)) {
+                        //
+                    } else {
+                        mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
+                        count = count + 1;
+                    }
+                    tempCategory = category;
+                    tempTitle = title;
+                    Log.d(TAG, "category = " + category + ", title = " + title);
+
                 }
 
             } catch (JSONException e) {
@@ -547,6 +562,9 @@ public class MainActivity extends AppCompatActivity
                 String startdate = "";
                 String enddate = "";
                 String logo_img = "";
+                String tempCategory = "", tempTitle = "", tempImg = "";
+                Bitmap tempBmp = null;
+                int count = 1;
                 for (int i = 0; i < jarray.length(); i++) {
 
                     jObject = jarray.getJSONObject(i);
@@ -594,12 +612,33 @@ public class MainActivity extends AppCompatActivity
                                         weekDayVO.getSeqList().add(seq);
                                         if (weekDayVO.getImage1() == null) {
                                             weekDayVO.setImage1(bitmap);
-                                        } else if (weekDayVO.getImage2() == null) {
-                                            weekDayVO.setImage2(bitmap);
-                                        } else if (weekDayVO.getImage3() == null) {
-                                            weekDayVO.setImage3(bitmap);
-                                        } else if (weekDayVO.getImage4() == null) {
-                                            weekDayVO.setImage4(bitmap);
+                                        } else {
+                                            if (weekDayVO.getImage1().equals(tempBmp)) {
+                                            } else {
+                                                if (weekDayVO.getImage2() == null) {
+                                                    weekDayVO.setImage2(bitmap);
+                                                } else {
+                                                    if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                    } else {
+                                                        if (weekDayVO.getImage3() == null) {
+                                                            weekDayVO.setImage3(bitmap);
+                                                        } else {
+                                                            if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                            } else {
+                                                                if (weekDayVO.getImage4() == null) {
+                                                                    weekDayVO.setImage4(bitmap);
+                                                                } else {
+                                                                    if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                            }
                                         }
                                         weekDays.set(j, weekDayVO);
                                     } else if (Integer.parseInt(weekDays.get(j).getYear()) == eyear) {
@@ -609,12 +648,33 @@ public class MainActivity extends AppCompatActivity
                                             weekDayVO.getSeqList().add(seq);
                                             if (weekDayVO.getImage1() == null) {
                                                 weekDayVO.setImage1(bitmap);
-                                            } else if (weekDayVO.getImage2() == null) {
-                                                weekDayVO.setImage2(bitmap);
-                                            } else if (weekDayVO.getImage3() == null) {
-                                                weekDayVO.setImage3(bitmap);
-                                            } else if (weekDayVO.getImage4() == null) {
-                                                weekDayVO.setImage4(bitmap);
+                                            } else {
+                                                if (weekDayVO.getImage1().equals(tempBmp)) {
+                                                } else {
+                                                    if (weekDayVO.getImage2() == null) {
+                                                        weekDayVO.setImage2(bitmap);
+                                                    } else {
+                                                        if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                        } else {
+                                                            if (weekDayVO.getImage3() == null) {
+                                                                weekDayVO.setImage3(bitmap);
+                                                            } else {
+                                                                if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                                } else {
+                                                                    if (weekDayVO.getImage4() == null) {
+                                                                        weekDayVO.setImage4(bitmap);
+                                                                    } else {
+                                                                        if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+
+                                                }
                                             }
                                             weekDays.set(j, weekDayVO);
                                         } else if (Integer.parseInt(weekDays.get(j).getMonth()) == emonth) {
@@ -624,12 +684,33 @@ public class MainActivity extends AppCompatActivity
                                                 weekDayVO.getSeqList().add(seq);
                                                 if (weekDayVO.getImage1() == null) {
                                                     weekDayVO.setImage1(bitmap);
-                                                } else if (weekDayVO.getImage2() == null) {
-                                                    weekDayVO.setImage2(bitmap);
-                                                } else if (weekDayVO.getImage3() == null) {
-                                                    weekDayVO.setImage3(bitmap);
-                                                } else if (weekDayVO.getImage4() == null) {
-                                                    weekDayVO.setImage4(bitmap);
+                                                } else {
+                                                    if (weekDayVO.getImage1().equals(tempBmp)) {
+                                                    } else {
+                                                        if (weekDayVO.getImage2() == null) {
+                                                            weekDayVO.setImage2(bitmap);
+                                                        } else {
+                                                            if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                            } else {
+                                                                if (weekDayVO.getImage3() == null) {
+                                                                    weekDayVO.setImage3(bitmap);
+                                                                } else {
+                                                                    if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                                    } else {
+                                                                        if (weekDayVO.getImage4() == null) {
+                                                                            weekDayVO.setImage4(bitmap);
+                                                                        } else {
+                                                                            if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                            }
+
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+
+
+                                                    }
                                                 }
                                                 weekDays.set(j, weekDayVO);
                                             }
@@ -644,12 +725,33 @@ public class MainActivity extends AppCompatActivity
                                     weekDayVO.getSeqList().add(seq);
                                     if (weekDayVO.getImage1() == null) {
                                         weekDayVO.setImage1(bitmap);
-                                    } else if (weekDayVO.getImage2() == null) {
-                                        weekDayVO.setImage2(bitmap);
-                                    } else if (weekDayVO.getImage3() == null) {
-                                        weekDayVO.setImage3(bitmap);
-                                    } else if (weekDayVO.getImage4() == null) {
-                                        weekDayVO.setImage4(bitmap);
+                                    } else {
+                                        if (weekDayVO.getImage1().equals(tempBmp)) {
+                                        } else {
+                                            if (weekDayVO.getImage2() == null) {
+                                                weekDayVO.setImage2(bitmap);
+                                            } else {
+                                                if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                } else {
+                                                    if (weekDayVO.getImage3() == null) {
+                                                        weekDayVO.setImage3(bitmap);
+                                                    } else {
+                                                        if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                        } else {
+                                                            if (weekDayVO.getImage4() == null) {
+                                                                weekDayVO.setImage4(bitmap);
+                                                            } else {
+                                                                if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+
+                                        }
                                     }
                                     weekDays.set(j, weekDayVO);
                                 } else if (Integer.parseInt(weekDays.get(j).getYear()) == eyear) {
@@ -659,12 +761,33 @@ public class MainActivity extends AppCompatActivity
                                         weekDayVO.getSeqList().add(seq);
                                         if (weekDayVO.getImage1() == null) {
                                             weekDayVO.setImage1(bitmap);
-                                        } else if (weekDayVO.getImage2() == null) {
-                                            weekDayVO.setImage2(bitmap);
-                                        } else if (weekDayVO.getImage3() == null) {
-                                            weekDayVO.setImage3(bitmap);
-                                        } else if (weekDayVO.getImage4() == null) {
-                                            weekDayVO.setImage4(bitmap);
+                                        } else {
+                                            if (weekDayVO.getImage1().equals(tempBmp)) {
+                                            } else {
+                                                if (weekDayVO.getImage2() == null) {
+                                                    weekDayVO.setImage2(bitmap);
+                                                } else {
+                                                    if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                    } else {
+                                                        if (weekDayVO.getImage3() == null) {
+                                                            weekDayVO.setImage3(bitmap);
+                                                        } else {
+                                                            if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                            } else {
+                                                                if (weekDayVO.getImage4() == null) {
+                                                                    weekDayVO.setImage4(bitmap);
+                                                                } else {
+                                                                    if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                            }
                                         }
                                         weekDays.set(j, weekDayVO);
                                     } else if (Integer.parseInt(weekDays.get(j).getMonth()) == emonth) {
@@ -674,12 +797,33 @@ public class MainActivity extends AppCompatActivity
                                             weekDayVO.getSeqList().add(seq);
                                             if (weekDayVO.getImage1() == null) {
                                                 weekDayVO.setImage1(bitmap);
-                                            } else if (weekDayVO.getImage2() == null) {
-                                                weekDayVO.setImage2(bitmap);
-                                            } else if (weekDayVO.getImage3() == null) {
-                                                weekDayVO.setImage3(bitmap);
-                                            } else if (weekDayVO.getImage4() == null) {
-                                                weekDayVO.setImage4(bitmap);
+                                            } else {
+                                                if (weekDayVO.getImage1().equals(tempBmp)) {
+                                                } else {
+                                                    if (weekDayVO.getImage2() == null) {
+                                                        weekDayVO.setImage2(bitmap);
+                                                    } else {
+                                                        if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                        } else {
+                                                            if (weekDayVO.getImage3() == null) {
+                                                                weekDayVO.setImage3(bitmap);
+                                                            } else {
+                                                                if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                                } else {
+                                                                    if (weekDayVO.getImage4() == null) {
+                                                                        weekDayVO.setImage4(bitmap);
+                                                                    } else {
+                                                                        if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+
+
+                                                }
                                             }
                                             weekDays.set(j, weekDayVO);
                                         }
@@ -694,12 +838,33 @@ public class MainActivity extends AppCompatActivity
                                 weekDayVO.getSeqList().add(seq);
                                 if (weekDayVO.getImage1() == null) {
                                     weekDayVO.setImage1(bitmap);
-                                } else if (weekDayVO.getImage2() == null) {
-                                    weekDayVO.setImage2(bitmap);
-                                } else if (weekDayVO.getImage3() == null) {
-                                    weekDayVO.setImage3(bitmap);
-                                } else if (weekDayVO.getImage4() == null) {
-                                    weekDayVO.setImage4(bitmap);
+                                } else {
+                                    if (weekDayVO.getImage1().equals(tempBmp)) {
+                                    } else {
+                                        if (weekDayVO.getImage2() == null) {
+                                            weekDayVO.setImage2(bitmap);
+                                        } else {
+                                            if (weekDayVO.getImage2().equals(tempBmp)) {
+                                            } else {
+                                                if (weekDayVO.getImage3() == null) {
+                                                    weekDayVO.setImage3(bitmap);
+                                                } else {
+                                                    if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                    } else {
+                                                        if (weekDayVO.getImage4() == null) {
+                                                            weekDayVO.setImage4(bitmap);
+                                                        } else {
+                                                            if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                            }
+
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+
+                                    }
                                 }
                                 weekDays.set(j, weekDayVO);
                             } else if (Integer.parseInt(weekDays.get(j).getYear()) == eyear) {
@@ -709,12 +874,33 @@ public class MainActivity extends AppCompatActivity
                                     weekDayVO.getSeqList().add(seq);
                                     if (weekDayVO.getImage1() == null) {
                                         weekDayVO.setImage1(bitmap);
-                                    } else if (weekDayVO.getImage2() == null) {
-                                        weekDayVO.setImage2(bitmap);
-                                    } else if (weekDayVO.getImage3() == null) {
-                                        weekDayVO.setImage3(bitmap);
-                                    } else if (weekDayVO.getImage4() == null) {
-                                        weekDayVO.setImage4(bitmap);
+                                    } else {
+                                        if (weekDayVO.getImage1().equals(tempBmp)) {
+                                        } else {
+                                            if (weekDayVO.getImage2() == null) {
+                                                weekDayVO.setImage2(bitmap);
+                                            } else {
+                                                if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                } else {
+                                                    if (weekDayVO.getImage3() == null) {
+                                                        weekDayVO.setImage3(bitmap);
+                                                    } else {
+                                                        if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                        } else {
+                                                            if (weekDayVO.getImage4() == null) {
+                                                                weekDayVO.setImage4(bitmap);
+                                                            } else {
+                                                                if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                }
+
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+
+
+                                        }
                                     }
                                     weekDays.set(j, weekDayVO);
                                 } else if (Integer.parseInt(weekDays.get(j).getMonth()) == emonth) {
@@ -724,12 +910,33 @@ public class MainActivity extends AppCompatActivity
                                         weekDayVO.getSeqList().add(seq);
                                         if (weekDayVO.getImage1() == null) {
                                             weekDayVO.setImage1(bitmap);
-                                        } else if (weekDayVO.getImage2() == null) {
-                                            weekDayVO.setImage2(bitmap);
-                                        } else if (weekDayVO.getImage3() == null) {
-                                            weekDayVO.setImage3(bitmap);
-                                        } else if (weekDayVO.getImage4() == null) {
-                                            weekDayVO.setImage4(bitmap);
+                                        } else {
+                                            if (weekDayVO.getImage1().equals(tempBmp)) {
+                                            } else {
+                                                if (weekDayVO.getImage2() == null) {
+                                                    weekDayVO.setImage2(bitmap);
+                                                } else {
+                                                    if (weekDayVO.getImage2().equals(tempBmp)) {
+                                                    } else {
+                                                        if (weekDayVO.getImage3() == null) {
+                                                            weekDayVO.setImage3(bitmap);
+                                                        } else {
+                                                            if (weekDayVO.getImage3().equals(tempBmp)) {
+                                                            } else {
+                                                                if (weekDayVO.getImage4() == null) {
+                                                                    weekDayVO.setImage4(bitmap);
+                                                                } else {
+                                                                    if (weekDayVO.getImage4().equals(tempBmp)) {
+                                                                    }
+
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
+
+                                            }
                                         }
                                         weekDays.set(j, weekDayVO);
                                     }
@@ -738,24 +945,22 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
 
-
-                    // 웹에서 이미지를 가져오는 작업 스레드 실행.
-                    mAdapter.addItem(Integer.toString(i + 1), seq, bitmap, category, title);
+                    if (tempCategory.equals(category) && tempTitle.equals(title)) {
+                        //
+                    } else {
+                        mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
+                        count = count + 1;
+                    }
+                    tempBmp = bitmap;
+                    tempCategory = category;
+                    tempTitle = title;
+                    tempImg = logo_img;
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            /*
-            weekDayVO = new WeekDayVO();
-            weekDayVO.setYear("2017");
-            weekDayVO.setMonth("11");
-            weekDayVO.setDay("29");
-            weekDayVO.setTotal("5");
-            weekDays.set(3, weekDayVO);
-            weekDayVO = new WeekDayVO();*/
 
             WeekCalendarAdapter weekCalendarAdapter = new WeekCalendarAdapter(this, weekDays);
             weekGridView.setAdapter(weekCalendarAdapter);
@@ -817,7 +1022,6 @@ public class MainActivity extends AppCompatActivity
             menu.findItem(R.id.month_view_btn).setVisible(true);
             menu.findItem(R.id.week_view_btn).setVisible(false);
         }
-
         return true;
     }
 
@@ -850,22 +1054,17 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-
         switch (item.getItemId()) {
             case R.id.nav_notice:
                 startActivity(new Intent(MainActivity.this, NoticeActivity.class));
                 Toast.makeText(getApplicationContext(), "공지사항 선택", Toast.LENGTH_SHORT).show();
                 break;
-
             case R.id.nav_score:
                 Toast.makeText(getApplicationContext(), "별점 선택", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_setup:
-
                 startActivity(new Intent(MainActivity.this, SetupActivity.class));
                 Toast.makeText(getApplicationContext(), "설정 선택", Toast.LENGTH_SHORT).show();
-
                 break;
 
         }
