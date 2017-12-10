@@ -1,5 +1,6 @@
 package com.roopre.mcalendar;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.RadioButton;
-import android.widget.Switch;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -28,20 +28,20 @@ public class SetupActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, CompoundButton.OnCheckedChangeListener {
 
     private String TAG = "SetupActivity";
-    Switch pushSwitch;
-    RadioButton allRadio, customRadio;
+    RadioButton pushOn, pushOff;
     Menu menu;
 
     String category = "";
     GridView gridView;
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> selectedList = new ArrayList<String>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.setup);
 
-        final ActionBar abar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                 ActionBar.LayoutParams.WRAP_CONTENT,
@@ -49,18 +49,25 @@ public class SetupActivity extends AppCompatActivity
                 Gravity.CENTER);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
         textviewTitle.setText("설정");
-        abar.setCustomView(viewActionBar, params);
-        abar.setDisplayShowCustomEnabled(true);
-        abar.setDisplayShowTitleEnabled(false);
-        abar.setDisplayHomeAsUpEnabled(true);
-        abar.setIcon(R.color.transparent);
-        abar.setHomeButtonEnabled(true);
-        pushSwitch = (Switch) findViewById(R.id.push_switch);
-        pushSwitch.setOnCheckedChangeListener(this);
+        actionBar.setCustomView(viewActionBar, params);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.color.transparent);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
+
+        pushOn = (RadioButton) findViewById(R.id.pushOn);
+        pushOff = (RadioButton) findViewById(R.id.pushOff);
+        pushOn.setOnCheckedChangeListener(this);
         if (Se_Application.Localdb.get_dataB("push")) {
-            pushSwitch.setChecked(true);
+            pushOn.setChecked(true);
+            pushOn.setTextColor(getResources().getColor(R.color.White));
+            pushOff.setTextColor(getResources().getColor(R.color.main_gray));
         } else {
-            pushSwitch.setChecked(false);
+            pushOff.setChecked(true);
+            pushOn.setTextColor(getResources().getColor(R.color.main_gray));
+            pushOff.setTextColor(getResources().getColor(R.color.White));
         }
 
 
@@ -80,24 +87,20 @@ public class SetupActivity extends AppCompatActivity
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
         Log.d(TAG, result);
-        if(Se_Application.strNotNull(result)){
-            try{
+        if (Se_Application.strNotNull(result)) {
+            try {
                 JSONArray jsonArray = new JSONArray(result);
                 selectedList.clear();
-                for(int i =0 ;i<jsonArray.length();i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    if(jsonObject.getString("category").equals("all")){
-                        allRadio.setChecked(true);
+                    if (jsonObject.getString("category").equals("all")) {
                         selectedList.add(jsonObject.getString("category"));
-                    }
-                    else
-                    {
-                        customRadio.setChecked(true);
+                    } else {
                         selectedList.add(jsonObject.getString("category"));
                     }
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -127,7 +130,6 @@ public class SetupActivity extends AppCompatActivity
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
                         category = categoryList.get(position);
                         Log.d(TAG, "Click => " + categoryList.get(position));
-                        customRadio.setChecked(true);
                         String server_url = "set_category.php";
                         HashMap<String, String> send_arg = new HashMap<String, String>();
                         send_arg.put("type_", "custom");
@@ -135,11 +137,10 @@ public class SetupActivity extends AppCompatActivity
                         send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
                         Server_con serverCon = new Server_con(server_url, send_arg);
                         String result = serverCon.Receive_Server();
-                        Log.d(TAG, "result = "+result);
-                        if(result.equals("success")){
+                        Log.d(TAG, "result = " + result);
+                        if (result.equals("success")) {
                             Log.d(TAG, "Result -> success");
                             category = "";
-                            customRadio.setChecked(true);
                             SetInit();
                         }
 
@@ -207,44 +208,33 @@ public class SetupActivity extends AppCompatActivity
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
         switch (compoundButton.getId()) {
-
-                                             /* case R.id.push_switch:
+            case R.id.pushOn:
                 if (isChecked) {
                     Se_Application.Localdb.set_dataB("push", true);
+                    pushOn.setTextColor(getResources().getColor(R.color.White));
+                    pushOff.setTextColor(getResources().getColor(R.color.main_gray));
                     Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 } else {
                     Se_Application.Localdb.set_dataB("push", false);
+                    pushOn.setTextColor(getResources().getColor(R.color.main_gray));
+                    pushOff.setTextColor(getResources().getColor(R.color.White));
+                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                }
+
+                break;
+            case R.id.pushOff:
+                if (isChecked) {
+                    Se_Application.Localdb.set_dataB("push", false);
+                    pushOn.setTextColor(getResources().getColor(R.color.main_gray));
+                    pushOff.setTextColor(getResources().getColor(R.color.White));
+                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                } else {
+                    Se_Application.Localdb.set_dataB("push", true);
+                    pushOn.setTextColor(getResources().getColor(R.color.White));
+                    pushOff.setTextColor(getResources().getColor(R.color.main_gray));
                     Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 }
                 break;
-            case R.id.all_radiobtn:
-                if(isChecked){
-                    Log.d(TAG, "all_radio_btn -> checked");
-                    String server_url = "set_category.php";
-                    HashMap<String, String> send_arg = new HashMap<String, String>();
-                    send_arg.put("type_", "all");
-                    send_arg.put("category", "");
-                    send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-                    Server_con serverCon = new Server_con(server_url, send_arg);
-                    String result = serverCon.Receive_Server();
-                    Log.d(TAG, result);
-                    SetInit();
-                }
-                else
-                {
-                    Log.d(TAG, "all_radio_btn -> unchecked");
-                }
-                break;
-            case R.id.custom_radiobtn:
-                if(isChecked){
-                    Log.d(TAG, "custom_radio_btn -> checked");
-                }
-                else
-                {
-                    Log.d(TAG, "custom_radio_btn -> unchecked");
-                }
-                break;
-                */
         }
     }
 }

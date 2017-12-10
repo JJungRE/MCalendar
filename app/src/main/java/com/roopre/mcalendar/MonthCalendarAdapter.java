@@ -5,6 +5,7 @@ package com.roopre.mcalendar;
  */
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -123,18 +124,22 @@ public class MonthCalendarAdapter extends BaseAdapter {
         if(position<=5){
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.GONE);
-            day_linear.setBackgroundResource(R.drawable.border_left_top_bottom_line_black);
+            day_linear.setBackgroundResource(R.drawable.border_yellow_lefttopbottom_gray);
+            day_linear.setGravity(Gravity.CENTER);
+            day_tv.setTextColor(Color.WHITE);
         }else if(position ==6){
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.GONE);
-            day_linear.setBackgroundResource(R.drawable.border_all_line_black);
+            day_linear.setBackgroundResource(R.drawable.border_yellow_all_line_gray);
+            day_linear.setGravity(Gravity.CENTER);
+            day_tv.setTextColor(Color.WHITE);
         }
         else
         {
             if ((position + 1) % 7 == 0) {
-                day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_black);
+                day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_gray);
             } else {
-                day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_black);
+                day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_gray);
             }
         }
         if(position<=6){

@@ -1,31 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-
     <group android:checkableBehavior="single">
-        <!--<item-->
-            <!--android:id="@+id/nav_information"-->
-            <!--android:icon="@drawable/ic_menu_send"-->
-            <!--android:title="내정보" />-->
         <item
             android:id="@+id/nav_notice"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/g_category_icon_01"
             android:title="공지사항" />
-
-        <!--<item-->
-            <!--android:id="@+id/nav_usage"-->
-            <!--android:icon="@drawable/ic_menu_gallery"-->
-            <!--android:title="사용내역" />-->
-
+    </group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_setup"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/g_category_icon_04"
             android:title="설정" />
 
-        <!--<item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />-->
+    </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_score"
+            android:icon="@drawable/g_category_icon_03"
+            android:title="별점" />
+
     </group>
 
 </menu>

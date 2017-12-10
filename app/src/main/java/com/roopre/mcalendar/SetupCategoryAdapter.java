@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -60,16 +59,13 @@ public class SetupCategoryAdapter extends BaseAdapter {
 
         LinearLayout linearlayout = (LinearLayout) convertView.findViewById(R.id.linear);
         TextView title_tv = (TextView) convertView.findViewById(R.id.title_tv);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.imageview);
-
         title_tv.setText(category.get(position));
-
         for (int i = 0; i < selected.size(); i++) {
             if (selected.get(i).equals("all")) {
-                linearlayout.setBackgroundResource(R.drawable.bg_category_green);
+                linearlayout.setBackgroundResource(R.drawable.border_button_benefit);
             } else {
                 if (title_tv.getText().toString().equals(selected.get(i))) {
-                    linearlayout.setBackgroundResource(R.drawable.bg_category_green);
+                    linearlayout.setBackgroundResource(R.drawable.border_button_benefit);
                 } else {
                     //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
                 }

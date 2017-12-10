@@ -6,12 +6,12 @@
         android:id="@+id/week_view_btn"
         android:orderInCategory="100"
         android:title="주간 보기"
-        android:icon="@drawable/schedule_white"
+        android:icon="@drawable/a_top_icon_02"
         app:showAsAction="always" />
     <item
         android:id="@+id/month_view_btn"
         android:orderInCategory="100"
         android:title="월간 보기"
-        android:icon="@drawable/date_month_white"
+        android:icon="@drawable/a_top_icon_03"
         app:showAsAction="always" />
 </menu>

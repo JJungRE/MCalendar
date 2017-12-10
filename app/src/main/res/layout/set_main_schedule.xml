@@ -11,9 +11,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.1"
-        android:textColor="@color/main_black"
+        android:textColor="@color/main_green"
         android:text="1"
-        android:textSize="@dimen/main_large_text_size"
+        android:textSize="@dimen/main_middle_text_size"
         android:textStyle="bold" />
     <TextView
         android:id="@+id/seq_tv"
@@ -22,8 +22,7 @@
         android:layout_weight="0"
         android:textColor="@color/main_black"
         android:text="seq"
-        android:textSize="@dimen/main_large_text_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/main_middle_text_size" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -39,19 +38,17 @@
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
         android:gravity="center"
-        android:text="cate"
+        android:text=""
         android:textColor="@color/main_black"
-        android:textSize="@dimen/main_large_text_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/main_middle_text_size" />
     <TextView
         android:id="@+id/title_tv"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
         android:gravity="center"
-        android:text="tt"
+        android:text=""
         android:textColor="@color/main_black"
-        android:textSize="@dimen/main_large_text_size"
-        android:textStyle="bold" />
+        android:textSize="@dimen/main_middle_text_size" />
 
 </LinearLayout>

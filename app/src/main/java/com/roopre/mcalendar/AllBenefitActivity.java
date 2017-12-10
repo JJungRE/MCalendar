@@ -1,6 +1,7 @@
 package com.roopre.mcalendar;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,7 +48,7 @@ public class AllBenefitActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_benefit);
-        final ActionBar abar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                 ActionBar.LayoutParams.WRAP_CONTENT,
@@ -55,12 +56,13 @@ public class AllBenefitActivity extends AppCompatActivity
                 Gravity.CENTER);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
         textviewTitle.setText("전체혜택 보기");
-        abar.setCustomView(viewActionBar, params);
-        abar.setDisplayShowCustomEnabled(true);
-        abar.setDisplayShowTitleEnabled(false);
-        abar.setDisplayHomeAsUpEnabled(true);
-        abar.setIcon(R.color.transparent);
-        abar.setHomeButtonEnabled(true);
+        actionBar.setCustomView(viewActionBar, params);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.color.transparent);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
 
         skt_gridView = (GridView) findViewById(R.id.all_benefit_category_gv);
         kt_gridView = (GridView) findViewById(R.id.all_benefit_category_gv2);
@@ -134,7 +136,6 @@ public class AllBenefitActivity extends AppCompatActivity
                     }
 
                 }
-
 
                 SetupCategoryAdapter setupCategoryAdapter = new SetupCategoryAdapter(this, skt_categoryList, selectedList);
                 SetupCategoryAdapter setupCategoryAdapter2 = new SetupCategoryAdapter(this, kt_categoryList, selectedList);

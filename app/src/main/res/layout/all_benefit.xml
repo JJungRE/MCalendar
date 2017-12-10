@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical">
 
     <ScrollView
         android:id="@+id/sc_spots"
@@ -15,25 +15,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="@dimen/activity_half_horizontal_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/border_all_line_black"
+                android:background="@drawable/border_all_line_gray"
                 android:orientation="horizontal"
                 android:padding="@dimen/activity_quarter_horizontal_margin">
 
                 <TextView
                     android:layout_width="@dimen/dp30"
                     android:layout_height="match_parent"
-                    android:text="SKT" />
+                    android:text="SKT"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_middle_text_size"
+                    android:textStyle="bold" />
 
                 <GridView
                     android:id="@+id/all_benefit_category_gv"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
                     android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
                     android:numColumns="4"
@@ -50,14 +53,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
-                android:background="@drawable/border_all_line_black"
+                android:background="@drawable/border_all_line_gray"
                 android:orientation="horizontal"
-                android:padding="5dp">
+                android:padding="@dimen/activity_quarter_horizontal_margin">
 
                 <TextView
                     android:layout_width="@dimen/dp30"
                     android:layout_height="match_parent"
-                    android:text="KT" />
+                    android:text="KT"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_middle_text_size"
+                    android:textStyle="bold" />
 
 
                 <GridView
@@ -77,14 +83,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
-                android:background="@drawable/border_all_line_black"
+                android:background="@drawable/border_all_line_gray"
                 android:orientation="horizontal"
                 android:padding="@dimen/activity_quarter_horizontal_margin">
 
                 <TextView
                     android:layout_width="@dimen/dp30"
                     android:layout_height="wrap_content"
-                    android:text="LG" />
+                    android:text="LG"
+                    android:textColor="@color/main_black"
+                    android:textSize="@dimen/main_middle_text_size"
+                    android:textStyle="bold" />
 
 
                 <GridView
@@ -101,5 +110,4 @@
 
         </LinearLayout>
     </ScrollView>
-
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

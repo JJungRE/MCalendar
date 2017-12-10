@@ -18,8 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        >
+        android:fitsSystemWindows="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,28 +29,17 @@
                 android:id="@+id/header_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#FB8C00"
-                app:headerLayout="@layout/nav_header_main"
-                />
+                android:background="@drawable/border_white_bottom_line_gray"
+                app:headerLayout="@layout/nav_header_main" />
 
             <android.support.design.widget.NavigationView
                 android:id="@+id/main_drawer1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="#EF6C00"
-                app:menu="@menu/activity_main_drawer" />
-
-            <android.support.design.widget.NavigationView
-                android:id="@+id/main_drawer2"
+                app:itemBackground="@drawable/drawer_item_bg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:background="#E65100"
-                app:menu="@menu/activity_main_drawer2" />
-
+                android:layout_weight="1"
+                android:background="@color/White"
+                app:menu="@menu/activity_main_drawer" />
         </LinearLayout>
-
     </android.support.design.widget.NavigationView>
-
-
 </android.support.v4.widget.DrawerLayout>

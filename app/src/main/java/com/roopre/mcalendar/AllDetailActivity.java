@@ -3,10 +3,12 @@ package com.roopre.mcalendar;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,20 +50,21 @@ public class AllDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         company = intent.getStringExtra("company");
         category = intent.getStringExtra("category");
-        final ActionBar abar = getSupportActionBar();
+        final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
                 ActionBar.LayoutParams.WRAP_CONTENT,
                 ActionBar.LayoutParams.MATCH_PARENT,
                 Gravity.CENTER);
         TextView textviewTitle = (TextView) viewActionBar.findViewById(R.id.toolbar_title);
-        textviewTitle.setText("세부혜택 보기("+company+"/"+category+")");
-        abar.setCustomView(viewActionBar, params);
-        abar.setDisplayShowCustomEnabled(true);
-        abar.setDisplayShowTitleEnabled(false);
-        abar.setDisplayHomeAsUpEnabled(true);
-        abar.setIcon(R.color.transparent);
-        abar.setHomeButtonEnabled(true);
+        textviewTitle.setText(company+"-"+category);
+        actionBar.setCustomView(viewActionBar, params);
+        actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setIcon(R.color.transparent);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
         classLinear = (LinearLayout) findViewById(R.id.class_linear);
         main_linear = (LinearLayout) findViewById(R.id.main_linear);
 
@@ -84,8 +87,6 @@ public class AllDetailActivity extends AppCompatActivity {
         String result = serverCon.Receive_Server();
         Log.d(TAG, "result = "+result);
         DrawClass(result);
-
-
         LoadBenefit();
     }
 
@@ -94,21 +95,22 @@ public class AllDetailActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonObject = null;
 
+            int widthMargin = getResources().getDimensionPixelSize(R.dimen.activity_quarter_horizontal_margin);
             for (int i = 0; i < jsonArray.length(); i++) {
                 jsonObject = jsonArray.getJSONObject(i);
 
-                Log.d("now11", "들어옴2");
-
                 Button button = (Button) new Button(AllDetailActivity.this);
                 LinearLayout.LayoutParams btnparams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT);
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
                 btnparams.weight = 1;
+                btnparams.setMargins(widthMargin, 0,widthMargin,0);
                 button.setLayoutParams(btnparams);
                 button.setText(jsonObject.getString("class_"));
                 button.setTag(jsonObject.getString("class_"));
-                button.setBackgroundResource(R.drawable.border_button_grey);
+                button.setBackgroundResource(R.drawable.border_button_white);
+                button.setTextColor(getResources().getColor(R.color.main_666666));
                 button.setLines(1);
-                button.setTextSize(getResources().getDimension(R.dimen.sp10));
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -128,8 +130,10 @@ public class AllDetailActivity extends AppCompatActivity {
         for(int i=0;i<classLinear.getChildCount();i++){
             Button tempBtn = (Button) classLinear.getChildAt(i);
             tempBtn.setBackgroundResource(R.drawable.border_button_grey);
+            tempBtn.setTextColor(getResources().getColor(R.color.main_666666));
             if (class_.equals(tempBtn.getText().toString())) {
-                tempBtn.setBackgroundResource(R.drawable.border_button_orange);
+                tempBtn.setBackgroundResource(R.drawable.bg_category_red);
+                tempBtn.setTextColor(getResources().getColor(R.color.White));
             }
         }
 
@@ -161,7 +165,6 @@ public class AllDetailActivity extends AppCompatActivity {
             int sub_margin = getResources().getDimensionPixelSize(R.dimen.activity_half_horizontal_margin);
             subparams.setMargins(sub_margin, sub_margin, sub_margin, 0);
 
-
             main_linear.removeAllViews();
             for(int i=0;i<jsonArray.length();i++){
                 jsonObject = jsonArray.getJSONObject(i);
@@ -177,9 +180,9 @@ public class AllDetailActivity extends AppCompatActivity {
                 guide_linear = (LinearLayout) sub_linear.findViewById(R.id.guide_linear);
                 contact_tv = (TextView) sub_linear.findViewById(R.id.contact_tv);
 
-
                 category_tv.setText(jsonObject.getString("category"));
                 final JSONObject finalJsonObject = jsonObject;
+
                 Thread mThread = new Thread() {
                     @Override
                     public void run() {

@@ -60,7 +60,7 @@ public class WeekCalendarAdapter extends BaseAdapter {
         int Width = parent.getWidth();
 
         ImageView imageView1, imageView2, imageView3, imageView4;
-        TextView dayTv, totalTv;
+        TextView dayTv, dayTv2, totalTv;
 
         imageView1 = (ImageView) convertView.findViewById(R.id.imageView1);
         imageView2 = (ImageView) convertView.findViewById(R.id.imageView2);
@@ -68,6 +68,7 @@ public class WeekCalendarAdapter extends BaseAdapter {
         imageView4 = (ImageView) convertView.findViewById(R.id.imageView4);
 
         dayTv = (TextView) convertView.findViewById(R.id.day_tv);
+        dayTv2 = (TextView) convertView.findViewById(R.id.day_tv2);
         totalTv = (TextView) convertView.findViewById(R.id.total_tv);
 
 
@@ -130,9 +131,9 @@ public class WeekCalendarAdapter extends BaseAdapter {
         day_linear.setTag(days.get(position).getDay());
         day_linear.setLayoutParams(tvparams);
         if (position == 6) {
-            day_linear.setBackgroundResource(R.drawable.border_all_line_black);
+            day_linear.setBackgroundResource(R.drawable.border_all_line_gray);
         } else {
-            day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_black);
+            day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_gray);
         }
         if (position == 5) {
             dayTv.setTextColor(mContext.getResources().getColor(R.color.main_blue));
@@ -143,8 +144,9 @@ public class WeekCalendarAdapter extends BaseAdapter {
         }
         //Log.d(TAG, "day.get("+position+") getDay = "+days.get(position).getDay());
         String tempDate = String.format("%04d",Integer.parseInt(days.get(position).getYear()))+String.format("%02d",Integer.parseInt(days.get(position).getMonth()))+String.format("%02d",Integer.parseInt(days.get(position).getDay()));
-        dayTv.setText( String.format("%02d",Integer.parseInt(days.get(position).getMonth()))+"월 "+String.format("%02d",Integer.parseInt(days.get(position).getDay())) +"일("+Se_Application.getYoil(tempDate)+")");
+        dayTv.setText( String.format("%02d",Integer.parseInt(days.get(position).getMonth()))+"월 "+String.format("%02d",Integer.parseInt(days.get(position).getDay())) +"일");
 
+        dayTv2.setText(Se_Application.getYoil(tempDate));
         return convertView;
     }
 

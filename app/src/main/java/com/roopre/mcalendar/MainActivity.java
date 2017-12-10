@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -97,7 +98,6 @@ public class MainActivity extends AppCompatActivity
         Se_Application.loading_layout = (RelativeLayout) findViewById(R.id.loading_layout);
         Se_Application.loading_bar = (NewtonCradleLoading) findViewById(R.id.loading_bar);
 
-
         mAdapter = new SetMainScheduleAdapter();
         cal = Calendar.getInstance();
         startCal = (Calendar) Se_Application.startCal.clone();
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setIcon(R.color.transparent);
         actionBar.setHomeButtonEnabled(true);
+        actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -165,16 +166,14 @@ public class MainActivity extends AppCompatActivity
         main_drawer = (NavigationView) findViewById(R.id.main_drawer1);
         main_drawer.setNavigationItemSelectedListener(this);
 
-        main_drawer2 = (NavigationView) findViewById(R.id.main_drawer2);
-        main_drawer2.setNavigationItemSelectedListener(this);
-
-
         //nav_header_main 부분 layout 가져오기
         View headerView = header_drawer.getHeaderView(0);
         header_linear = (LinearLayout) headerView.findViewById(R.id.header_linear);
         header_main_id = (TextView) headerView.findViewById(R.id.header_main_id);
-        header_main_id.setText(Se_Application.Localdb.get_dataS("userid"));
+        header_main_id.setText("ID : "+Se_Application.Localdb.get_dataS("userid"));
         header_linear.setOnClickListener(this);
+
+        SetInit();
     }
 
 
@@ -182,7 +181,6 @@ public class MainActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        SetInit();
     }
 
     private void SetInit() {
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity
             for (int i = 0; i < 7; i++) {
                 monthDayVO = new MonthDayVO();
                 monthDayVO.setTotal("0");
-                monthDayVO.setDay(Se_Application.days[i]);
+                monthDayVO.setDay(Se_Application.daysEng[i]);
                 monthDays.add(monthDayVO);
             }
 

@@ -39,6 +39,7 @@ public class Se_Application extends Application {
     public static NewtonCradleLoading loading_bar;
 
     public static String[] days = {"일", "월", "화", "수", "목", "금", "토"};
+    public static String[] daysEng = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 
     private static class splashhandler implements Runnable {
         boolean val = false;
