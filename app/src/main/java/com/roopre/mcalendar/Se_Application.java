@@ -102,9 +102,8 @@ public class Se_Application extends Application {
         animation2 = new AlphaAnimation(0.2F, 1.0F);
         animation2.setDuration(300);
 
-
         Localdb = new Se_LocalDbConnector(this.getApplicationContext());
-        Server_URL = "http://52.79.209.10/";
+        Server_URL = "http://13.124.29.54/";
 
         Calendar c = Calendar.getInstance();
 

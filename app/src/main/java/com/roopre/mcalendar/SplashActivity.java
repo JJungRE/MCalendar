@@ -1,6 +1,8 @@
 package com.roopre.mcalendar;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
@@ -21,10 +23,10 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        /*Handler hd = new Handler();
+        Handler hd = new Handler();
         hd.postDelayed(new splashhandler(), 1000);
-*/
-        /*versiontv = (TextView) findViewById(R.id.splash_version_tv);
+
+        versiontv = (TextView) findViewById(R.id.splash_version_tv);
         PackageInfo info = null;
         String versionName = "";
         try {
@@ -35,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         versiontv.setText("ver " + versionName);
-*/
+
     }
 
     private class splashhandler implements Runnable {
