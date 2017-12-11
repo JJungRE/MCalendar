@@ -37,14 +37,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener, View.OnTouchListener {
@@ -474,6 +469,8 @@ public class MainActivity extends AppCompatActivity
                             }
                         }
                     }
+
+                    /*
                     Thread mThread = new Thread() {
 
                         @Override
@@ -502,7 +499,11 @@ public class MainActivity extends AppCompatActivity
                     };
                     // 웹에서 이미지를 가져오는 작업 스레드 실행.
                     mThread.start();
-                    mThread.join();
+                    mThread.join();*/
+
+                    int resID =getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
+
                     if (tempCategory.equals(category) && tempTitle.equals(title)) {
                         //
                     } else {
@@ -515,8 +516,6 @@ public class MainActivity extends AppCompatActivity
                 }
 
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
@@ -540,7 +539,6 @@ public class MainActivity extends AppCompatActivity
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView parent, View view, int position, long id) {
-
                     //Toast.makeText(MainActivity.this, mAdapter.getmItems().get(position).getSeq(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                     intent.putExtra("seq", mAdapter.getmItems().get(position).getSeq().toString());
@@ -604,26 +602,8 @@ public class MainActivity extends AppCompatActivity
                     int eyear = Integer.parseInt(enddate.substring(0, 4));
                     int emonth = Integer.parseInt(enddate.substring(5, 7));
                     int eday = Integer.parseInt(enddate.substring(8, 10));
-                    final String finalLogo_img = logo_img;
-                    Thread mThread = new Thread() {
-                        @Override
-                        public void run() {
-                            try {
-                                URL url = new URL(finalLogo_img);
-                                Log.d("now url: ", String.valueOf(url));
-                                HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                                conn.setDoInput(true);
-                                conn.connect();
-                                InputStream is = conn.getInputStream();
-                                bitmap = BitmapFactory.decodeStream(is);
-                            } catch (IOException ex) {
-                                ex.printStackTrace();
-
-                            }
-                        }
-                    };
-                    mThread.start();
-                    mThread.join();
+                    int resID =getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
 
                     for (int j = 0; j < 7; j++) {
                         if (Integer.parseInt(weekDays.get(j).getYear()) == syear) {
@@ -957,8 +937,6 @@ public class MainActivity extends AppCompatActivity
                                                         }
                                                     }
                                                 }
-
-
                                             }
                                         }
                                         weekDays.set(j, weekDayVO);
@@ -980,8 +958,6 @@ public class MainActivity extends AppCompatActivity
                     tempImg = logo_img;
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 

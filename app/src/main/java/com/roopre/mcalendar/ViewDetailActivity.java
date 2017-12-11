@@ -14,15 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class ViewDetailActivity extends AppCompatActivity
         implements View.OnClickListener{
@@ -85,6 +79,7 @@ public class ViewDetailActivity extends AppCompatActivity
             int sub_margin = getResources().getDimensionPixelSize(R.dimen.activity_half_horizontal_margin);
             subparams.setMargins(sub_margin, sub_margin, sub_margin, 0);
 
+            String logo_img = null;
 
             main_linear.removeAllViews();
             for(int i=0;i<jsonArray.length();i++){
@@ -101,30 +96,10 @@ public class ViewDetailActivity extends AppCompatActivity
                 guide_tv = (TextView) sub_linear.findViewById(R.id.guide_tv);
                 contact_tv = (TextView) sub_linear.findViewById(R.id.contact_tv);
 
-
                 category_tv.setText(jsonObject.getString("event_category"));
-                final JSONObject finalJsonObject = jsonObject;
-                Thread mThread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            URL url = new URL(finalJsonObject.getString("logo_img"));
-                            Log.d("now url: ", String.valueOf(url));
-                            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                            conn.setDoInput(true);
-                            conn.connect();
-                            InputStream is = conn.getInputStream();
-                            bitmap = BitmapFactory.decodeStream(is);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                mThread.start();
-                mThread.join();
+                logo_img = jsonObject.getString("logo_img");
+                int resID =getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
                 imageView.setImageBitmap(bitmap);
                 title_tv.setText(jsonObject.getString("event_title"));
                 class_tv.setText(jsonObject.getString("class"));

@@ -19,15 +19,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by jjungre on 2017. 12. 7..
@@ -107,10 +101,11 @@ public class AllDetailActivity extends AppCompatActivity {
                 button.setLayoutParams(btnparams);
                 button.setText(jsonObject.getString("class_"));
                 button.setTag(jsonObject.getString("class_"));
+                button.setSingleLine();
                 button.setBackgroundResource(R.drawable.border_button_white);
                 button.setTextColor(getResources().getColor(R.color.main_666666));
                 button.setLines(1);
-                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 10);
                     button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -158,7 +153,6 @@ public class AllDetailActivity extends AppCompatActivity {
             ImageView imageView;
             TextView category_tv, title_tv, class_tv, benefit_tv, minus_tv, limit_tv, guide_tv, contact_tv;
 
-
             JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonObject = null;
             LinearLayout.LayoutParams subparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -181,29 +175,8 @@ public class AllDetailActivity extends AppCompatActivity {
                 contact_tv = (TextView) sub_linear.findViewById(R.id.contact_tv);
 
                 category_tv.setText(jsonObject.getString("category"));
-                final JSONObject finalJsonObject = jsonObject;
-
-                Thread mThread = new Thread() {
-                    @Override
-                    public void run() {
-                        try {
-                            URL url = new URL(finalJsonObject.getString("logo_img"));
-                            Log.d("now url: ", String.valueOf(url));
-                            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-                            conn.setDoInput(true);
-                            conn.connect();
-                            InputStream is = conn.getInputStream();
-                            bitmap = BitmapFactory.decodeStream(is);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                mThread.start();
-                mThread.join();
+                int resID =getResources().getIdentifier(jsonObject.getString("logo_img"), "drawable", "com.roopre.mcalendar");
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
                 imageView.setImageBitmap(bitmap);
                 title_tv.setText(jsonObject.getString("title"));
                 class_tv.setText(jsonObject.getString("class"));
