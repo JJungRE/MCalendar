@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/splash_bg"
     android:orientation="vertical">
+
+
+
+    <TextView
+        android:id="@+id/splash_version_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/main_black"
+        android:layout_marginRight="@dimen/dp24"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:text=""
+        android:textSize="@dimen/main_middle_text_size"
+        android:textStyle="bold" />
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="85dp" />
+        android:layout_above="@+id/splash_version_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin" />
 
-    <TextView
-        android:id="@+id/splash_version_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="right|bottom"
-        android:gravity="right"
-        android:textColor="@color/main_black"
-        android:textSize="@dimen/main_middle_text_size"
-        android:textStyle="bold" />
-</LinearLayout>
+</RelativeLayout>

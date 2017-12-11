@@ -6,7 +6,9 @@ package com.roopre.mcalendar;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -127,12 +129,16 @@ public class MonthCalendarAdapter extends BaseAdapter {
             day_linear.setBackgroundResource(R.drawable.border_yellow_lefttopbottom_gray);
             day_linear.setGravity(Gravity.CENTER);
             day_tv.setTextColor(Color.WHITE);
+            day_tv.setTypeface(null, Typeface.BOLD);
+            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         }else if(position ==6){
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.GONE);
             day_linear.setBackgroundResource(R.drawable.border_yellow_all_line_gray);
             day_linear.setGravity(Gravity.CENTER);
             day_tv.setTextColor(Color.WHITE);
+            day_tv.setTypeface(null, Typeface.BOLD);
+            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
         }
         else
         {
