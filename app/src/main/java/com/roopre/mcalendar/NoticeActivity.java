@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +24,7 @@ public class NoticeActivity extends AppCompatActivity {
 
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
-    List<String> listDataHeader;
+    List<NoticeVO> listDataHeader, listDataHeader_date;
     HashMap<String, List<String>> listDataChild;
 
     @Override
@@ -29,18 +32,6 @@ public class NoticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notice);
 
-
-
-        // get the listview
-        expListView = (ExpandableListView) findViewById(R.id.notice_el);
-
-        // preparing list data
-        prepareListData();
-
-        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-
-        // setting list adapter
-        expListView.setAdapter(listAdapter);
 
         final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
@@ -58,39 +49,55 @@ public class NoticeActivity extends AppCompatActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
 
+        setInit();
+
+    }
+
+    private void setInit() {
         String server_url = "load_notice.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
-        Log.d(TAG, "result = "+result);
+        Log.d(TAG, "now notice" + result);
+        NoticeProcess(result);
 
     }
 
-    /*
-     * Preparing the list data
-     */
-    private void prepareListData() {
-        listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<String>>();
+    private void NoticeProcess(String result) {
+        try {
+            JSONArray jsonArray = new JSONArray(result);
+            JSONObject jsonObject = null;
 
-        // Adding child data
-        listDataHeader.add("세번째 공지사항 입니다.");
-        listDataHeader.add("두번째 공지사항 입니다.");
-        listDataHeader.add("첫번째 공지사항 입니다.");
+            listDataHeader = new ArrayList<NoticeVO>();
+            listDataChild = new HashMap<String, List<String>>();
 
-        // Adding child data
-        List<String> notice3 = new ArrayList<String>();
-        notice3.add("The Shawshank Redemption");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                jsonObject = jsonArray.getJSONObject(i);
 
-        List<String> notice2 = new ArrayList<String>();
-        notice2.add("The Wolverine");
+                List<String> notice = new ArrayList<String>();
+                notice.add(jsonObject.getString("content"));
 
-        List<String> notice1 = new ArrayList<String>();
-        notice1.add("Europa Report");
+                NoticeVO noticeVO = new NoticeVO();
 
-        listDataChild.put(listDataHeader.get(0), notice3); // Header, Child data
-        listDataChild.put(listDataHeader.get(1), notice2);
-        listDataChild.put(listDataHeader.get(2), notice1);
+                noticeVO.setTitle(jsonObject.getString("subject"));
+                noticeVO.setDate(jsonObject.getString("crt_dt"));
+                listDataHeader.add(noticeVO);
+                listDataChild.put(noticeVO.getTitle(), notice);
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // get the listview
+        expListView = (ExpandableListView) findViewById(R.id.notice_el);
+
+        // preparing list data
+        listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
+
+        // setting list adapter
+        expListView.setAdapter(listAdapter);
     }
+
 }
 
