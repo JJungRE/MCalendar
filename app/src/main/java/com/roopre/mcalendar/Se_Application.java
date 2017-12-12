@@ -17,6 +17,7 @@ import java.util.Calendar;
 
 public class Se_Application extends Application {
 
+    public static String preActivity = "";
     private static String TAG = "Se_Application";
     public static String Server_URL;
     public static int Font_Size;
@@ -35,6 +36,7 @@ public class Se_Application extends Application {
     public static String nickname = "";
     public static String company = "";
 
+    public static  long backKeyPressedTime = 0;
     public static RelativeLayout loading_layout;
     public static NewtonCradleLoading loading_bar;
 

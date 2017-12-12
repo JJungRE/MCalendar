@@ -32,7 +32,6 @@ public class NoticeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notice);
 
-
         final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
@@ -52,7 +51,6 @@ public class NoticeActivity extends AppCompatActivity {
         setInit();
 
     }
-
     private void setInit() {
         String server_url = "load_notice.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
@@ -61,6 +59,17 @@ public class NoticeActivity extends AppCompatActivity {
         Log.d(TAG, "now notice" + result);
         NoticeProcess(result);
 
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     private void NoticeProcess(String result) {
@@ -98,6 +107,5 @@ public class NoticeActivity extends AppCompatActivity {
         // setting list adapter
         expListView.setAdapter(listAdapter);
     }
-
 }
 

@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
         Se_Application.loading_layout = (RelativeLayout) findViewById(R.id.loading_layout);
         Se_Application.loading_bar = (NewtonCradleLoading) findViewById(R.id.loading_bar);
 
@@ -165,12 +168,23 @@ public class MainActivity extends AppCompatActivity
         View headerView = header_drawer.getHeaderView(0);
         header_linear = (LinearLayout) headerView.findViewById(R.id.header_linear);
         header_main_id = (TextView) headerView.findViewById(R.id.header_main_id);
-        header_main_id.setText("ID : "+Se_Application.Localdb.get_dataS("userid"));
+        header_main_id.setText("ID : " + Se_Application.Localdb.get_dataS("userid"));
         header_linear.setOnClickListener(this);
 
         SetInit();
+        setupWindowAnimations();
     }
 
+    private void setupWindowAnimations() {
+        Slide slide = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            slide = new Slide();
+            slide.setDuration(1000);
+            getWindow().setExitTransition(slide);
+
+            getWindow().setReturnTransition(slide);
+        }
+    }
 
     @Override
     public void onResume() {
@@ -187,6 +201,7 @@ public class MainActivity extends AppCompatActivity
         }
         dataSetting();
     }
+
     private void dataSetting() {
 
         String server_url = "load_event.php";
@@ -222,6 +237,7 @@ public class MainActivity extends AppCompatActivity
             DrawCalendar(result);
         }
     }
+
     private void CalendarView(String type_) {
         if (type_.equals("month")) {
             monthGridView.setVisibility(View.VISIBLE);
@@ -501,7 +517,7 @@ public class MainActivity extends AppCompatActivity
                     mThread.start();
                     mThread.join();*/
 
-                    int resID =getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                    int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
 
                     if (tempCategory.equals(category) && tempTitle.equals(title)) {
@@ -525,7 +541,7 @@ public class MainActivity extends AppCompatActivity
                 @Override
                 public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-                    if (monthDays.get(position).getSeqList().toString().length()>2) {
+                    if (monthDays.get(position).getSeqList().toString().length() > 2) {
                         Log.d(TAG, "Click Day => " + monthDays.get(position));
                         //Toast.makeText(MainActivity.this, monthDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
@@ -602,7 +618,7 @@ public class MainActivity extends AppCompatActivity
                     int eyear = Integer.parseInt(enddate.substring(0, 4));
                     int emonth = Integer.parseInt(enddate.substring(5, 7));
                     int eday = Integer.parseInt(enddate.substring(8, 10));
-                    int resID =getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                    int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
                     Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
 
                     for (int j = 0; j < 7; j++) {
@@ -966,7 +982,7 @@ public class MainActivity extends AppCompatActivity
             weekGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView parent, View view, int position, long id) {
-                    if (weekDays.get(position).getSeqList().toString().length()>2) {
+                    if (weekDays.get(position).getSeqList().toString().length() > 2) {
                         //Toast.makeText(MainActivity.this, weekDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                         intent.putExtra("seq", weekDays.get(position).getSeqList().toString());
@@ -987,7 +1003,7 @@ public class MainActivity extends AppCompatActivity
             });
         }
 
-        if(getIntent().hasExtra("seq")){
+        if (getIntent().hasExtra("seq")) {
             Log.d(TAG, "seq exist");
             Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
             intent.putExtra("seq", getIntent().getStringExtra("seq"));
@@ -997,11 +1013,22 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     //phone 뒤로가기 버튼 코드
     @Override
     public void onBackPressed() {
-        backPressCloseHandler.onBackPressed();
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            if (System.currentTimeMillis() > Se_Application.backKeyPressedTime + 2000) {
+                Se_Application.backKeyPressedTime = System.currentTimeMillis();
+                Toast.makeText(this, "\'뒤로\'버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (System.currentTimeMillis() <= Se_Application.backKeyPressedTime + 2000) {
+                finish();
+            }
+        }
     }
 
     //우측 상단 : 이런 모양 최초 선택시 호출
@@ -1052,14 +1079,17 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.nav_notice:
                 startActivity(new Intent(MainActivity.this, NoticeActivity.class));
-                Toast.makeText(getApplicationContext(), "공지사항 선택", Toast.LENGTH_SHORT).show();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //Toast.makeText(getApplicationContext(), "공지사항 선택", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_score:
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 Toast.makeText(getApplicationContext(), "별점 선택", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_setup:
                 startActivity(new Intent(MainActivity.this, SetupActivity.class));
-                Toast.makeText(getApplicationContext(), "설정 선택", Toast.LENGTH_SHORT).show();
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                //Toast.makeText(getApplicationContext(), "설정 선택", Toast.LENGTH_SHORT).show();
                 break;
 
         }
@@ -1100,8 +1130,9 @@ public class MainActivity extends AppCompatActivity
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.view_benefit_btn:
+                Se_Application.preActivity = "Main";
                 startActivity(new Intent(MainActivity.this, AllBenefitActivity.class));
-
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 break;
         }
     }
@@ -1120,5 +1151,6 @@ public class MainActivity extends AppCompatActivity
                 break;
             }
         }
-        return false;    }
+        return false;
+    }
 }

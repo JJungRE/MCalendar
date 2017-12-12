@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -48,6 +46,8 @@ public class AllBenefitActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_benefit);
+
+        Log.d(TAG, "onCreate");
         final ActionBar actionBar = getSupportActionBar();
         View viewActionBar = getLayoutInflater().inflate(R.layout.custom_title, null);
         ActionBar.LayoutParams params = new ActionBar.LayoutParams(//Center the textview in the ActionBar !
@@ -68,14 +68,23 @@ public class AllBenefitActivity extends AppCompatActivity
         kt_gridView = (GridView) findViewById(R.id.all_benefit_category_gv2);
         lg_gridView = (GridView) findViewById(R.id.all_benefit_category_gv3);
 
+        SetInit();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        SetInit();
-    }
+        Log.d(TAG, "onResume");
+        if(Se_Application.preActivity.equals("Main")){
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            Se_Application.preActivity = "";
+        }
+        else{
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+            Se_Application.preActivity = "";
+        }
 
+    }
     private void SetInit() {
 /*
         String server_url = "load_user_pick.php";
@@ -113,7 +122,7 @@ public class AllBenefitActivity extends AppCompatActivity
 //        send_arg = new HashMap<String, String>();
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
-        Log.d(TAG, result);
+        //Log.d(TAG, result);
 
         if (Se_Application.strNotNull(result)) {
             try {
@@ -156,7 +165,7 @@ public class AllBenefitActivity extends AppCompatActivity
                         intent.putExtra("company", "SKT");
                         intent.putExtra("category", category);
 
-                        startActivity(intent);
+                        startActivityForResult(intent,0);
 
                     }
                 });
@@ -196,15 +205,24 @@ public class AllBenefitActivity extends AppCompatActivity
 
 
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        //Log.d(TAG, "onActivityResult");
+        if (requestCode == 0) {
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        }
+    }
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+    }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     @Override

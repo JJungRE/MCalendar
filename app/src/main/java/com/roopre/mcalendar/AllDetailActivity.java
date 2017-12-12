@@ -37,6 +37,18 @@ public class AllDetailActivity extends AppCompatActivity {
 
 
     @Override
+    public void finish() {
+        Log.d(TAG, "finish");
+        super.finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d(TAG, "onBackPressed");
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_detail);
@@ -61,7 +73,6 @@ public class AllDetailActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.main_red)));
         classLinear = (LinearLayout) findViewById(R.id.class_linear);
         main_linear = (LinearLayout) findViewById(R.id.main_linear);
-
 
         Setinit();
     }
