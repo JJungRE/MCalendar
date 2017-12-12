@@ -337,9 +337,10 @@ public class MainActivity extends AppCompatActivity
                 JSONArray jarray = new JSONArray(result);
                 JSONObject jObject = null;
 
-                String tempCategory = "", tempTitle = "", tempTitle2 = "";
+                String tempCategory = "", tempTitle = "", tempTitle2 = "", tempLogoImg = "";
+                Bitmap tempBmp = null;
                 int count = 1;
-                String seq = "", category = "", title = "", startdate = "", enddate = "";
+                String seq = "", category = "", title = "", startdate = "", enddate = "", logo_img = "";
                 for (int i = 0; i < jarray.length(); i++) {
                     jObject = jarray.getJSONObject(i);
                     seq = jObject.getString("seq");
@@ -356,6 +357,8 @@ public class MainActivity extends AppCompatActivity
                     int emonth = Integer.parseInt(enddate.substring(5, 7));
                     int eday = Integer.parseInt(enddate.substring(8, 10));
 
+                    int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
                     Log.d(TAG, "syear = " + syear + ", smonth = " + smonth + " ,  sday = " + sday + ", eyear = " + eyear + " , emonth = " + emonth + " ,eday = " + eday);
 
                     for (int j = monthStartPosition; j < monthEndPosition; j++) {
@@ -518,17 +521,17 @@ public class MainActivity extends AppCompatActivity
                     mThread.start();
                     mThread.join();*/
 
-                    int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
-                    Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
-
-                    if (tempCategory.equals(category) && tempTitle.equals(title)) {
-                        //
+                    if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
+                        Log.d(TAG, "&&& equals = "+category);
                     } else {
+                        Log.d(TAG, "else = "+category);
                         mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
                         count = count + 1;
                     }
+                    tempBmp = bitmap;
                     tempCategory = category;
                     tempTitle = title;
+                    tempLogoImg = logo_img;
                     Log.d(TAG, "category = " + category + ", title = " + title);
                 }
 
@@ -600,7 +603,7 @@ public class MainActivity extends AppCompatActivity
                 String startdate = "";
                 String enddate = "";
                 String logo_img = "";
-                String tempCategory = "", tempTitle = "", tempImg = "";
+                String tempCategory = "", tempTitle = "", tempLogoImg = "";
                 Bitmap tempBmp = null;
                 int count = 1;
                 for (int i = 0; i < jarray.length(); i++) {
@@ -963,7 +966,7 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
 
-                    if (tempCategory.equals(category) && tempTitle.equals(title)) {
+                    if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
                         //
                     } else {
                         mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
@@ -972,7 +975,7 @@ public class MainActivity extends AppCompatActivity
                     tempBmp = bitmap;
                     tempCategory = category;
                     tempTitle = title;
-                    tempImg = logo_img;
+                    tempLogoImg = logo_img;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

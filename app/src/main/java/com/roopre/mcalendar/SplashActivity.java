@@ -3,6 +3,7 @@ package com.roopre.mcalendar;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 
@@ -38,6 +40,7 @@ public class SplashActivity extends AppCompatActivity {
             VersionChecker versionChecker = new VersionChecker();
             latestVersion = versionChecker.execute().get();
 
+            Log.d(TAG, latestVersion);
 
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -52,16 +55,13 @@ public class SplashActivity extends AppCompatActivity {
             Handler hd = new Handler();
             hd.postDelayed(new splashhandler(), 1000);
         } else {
-            /*Toast.makeText(this, "최신 버전은 " + latestVersion + "입니다.\n업데이트를 진행해주세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "최신 버전은 " + latestVersion + "입니다.\n업데이트를 진행해주세요", Toast.LENGTH_SHORT).show();
             final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
             } catch (android.content.ActivityNotFoundException anfe) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-            }*/
-
-            Handler hd = new Handler();
-            hd.postDelayed(new splashhandler(), 1000);
+            }
         }
 
 
@@ -75,7 +75,7 @@ public class SplashActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             try {
-                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "package name" + "&hl=en")
+                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=com.roopre.mcalendar")
                         .timeout(30000)
                         .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
                         .referrer("http://www.google.com")
