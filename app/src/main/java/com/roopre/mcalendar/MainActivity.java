@@ -1038,12 +1038,12 @@ public class MainActivity extends AppCompatActivity
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         this.menu = menu;
-        if (Se_Application.Localdb.get_dataS("month_week").equals("month")) {
-            menu.findItem(R.id.month_view_btn).setVisible(false);
-            menu.findItem(R.id.week_view_btn).setVisible(true);
-        } else {
+        if (Se_Application.Localdb.get_dataS("month_week").equals("week")) {
             menu.findItem(R.id.month_view_btn).setVisible(true);
             menu.findItem(R.id.week_view_btn).setVisible(false);
+        } else {
+            menu.findItem(R.id.month_view_btn).setVisible(false);
+            menu.findItem(R.id.week_view_btn).setVisible(true);
         }
         return true;
     }

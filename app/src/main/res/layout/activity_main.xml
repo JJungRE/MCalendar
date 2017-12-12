@@ -33,9 +33,10 @@
                 app:headerLayout="@layout/nav_header_main" />
 
             <android.support.design.widget.NavigationView
+                android:paddingLeft="@dimen/activity_half_horizontal_margin"
                 android:id="@+id/main_drawer1"
                 app:itemBackground="@drawable/drawer_item_bg"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@color/White"

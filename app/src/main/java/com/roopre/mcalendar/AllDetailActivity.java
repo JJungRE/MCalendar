@@ -53,6 +53,7 @@ public class AllDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_detail);
 
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         Intent intent = getIntent();
         company = intent.getStringExtra("company");
         category = intent.getStringExtra("category");

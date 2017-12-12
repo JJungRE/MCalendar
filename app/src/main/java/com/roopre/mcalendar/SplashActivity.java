@@ -114,6 +114,7 @@ public class SplashActivity extends AppCompatActivity {
                         hd.postDelayed(new splashhandler(), 1000);
                     } else {
                         Se_Application.Localdb.set_dataS("userid", result);
+                        Se_Application.Localdb.set_dataB("push",true);
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
