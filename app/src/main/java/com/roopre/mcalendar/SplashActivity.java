@@ -3,6 +3,7 @@ package com.roopre.mcalendar;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
@@ -11,7 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -23,26 +28,72 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
-        Handler hd = new Handler();
-        hd.postDelayed(new splashhandler(), 1000);
-
         versiontv = (TextView) findViewById(R.id.splash_version_tv);
         PackageInfo info = null;
         String versionName = "";
+        String latestVersion = "";
         try {
             info = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
             versionName = info.versionName;
+            VersionChecker versionChecker = new VersionChecker();
+            latestVersion = versionChecker.execute().get();
+
+
         } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
         versiontv.setText("ver " + versionName);
+        if (versionName.equals(latestVersion)) {
+            Handler hd = new Handler();
+            hd.postDelayed(new splashhandler(), 1000);
+        } else {
+            /*Toast.makeText(this, "최신 버전은 " + latestVersion + "입니다.\n업데이트를 진행해주세요", Toast.LENGTH_SHORT).show();
+            final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+            }*/
+
+            Handler hd = new Handler();
+            hd.postDelayed(new splashhandler(), 1000);
+        }
+
 
     }
 
+    public class VersionChecker extends AsyncTask<String, String, String> {
+
+        String newVersion;
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "package name" + "&hl=en")
+                        .timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                        .select("div[itemprop=softwareVersion]")
+                        .first()
+                        .ownText();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return newVersion;
+        }
+    }
+
     private class splashhandler implements Runnable {
-            @Override
-            public void run() {
+        @Override
+        public void run() {
             Log.d(TAG, "splashhandler");
             if (Se_Application.strNotNull(Se_Application.Localdb.get_dataS("token"))) {
                 if (Se_Application.strNotNull(Se_Application.Localdb.get_dataS("userid"))) {

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -1084,7 +1085,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_score:
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                Toast.makeText(getApplicationContext(), "별점 선택", Toast.LENGTH_SHORT).show();
+                final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+                try {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
+                } catch (android.content.ActivityNotFoundException anfe) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
+                }
+                //Toast.makeText(getApplicationContext(), "별점 선택", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_setup:
                 startActivity(new Intent(MainActivity.this, SetupActivity.class));
