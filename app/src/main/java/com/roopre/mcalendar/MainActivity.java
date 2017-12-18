@@ -9,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -17,6 +18,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +61,8 @@ public class MainActivity extends AppCompatActivity
     ActionBar actionBar;
     TextView title_tv;
     Menu menu;
-
+    private GestureDetectorCompat monthDetector;
+    private GestureDetectorCompat weekDetector;
     //2017-11-29 종민추가
     GridView monthGridView, weekGridView;
     String startdt, enddt;
@@ -105,8 +108,26 @@ public class MainActivity extends AppCompatActivity
         monthGridView = (GridView) findViewById(R.id.month_grid_view);
         weekGridView = (GridView) findViewById(R.id.week_grid_view);
 
+        monthDetector = new GestureDetectorCompat(this, new MonthGestureListener());
+        weekDetector = new GestureDetectorCompat(this, new WeekGestureListener());
+        monthGridView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                monthDetector.onTouchEvent(event);
+                return false;
+            }
+        });
+        weekGridView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                weekDetector.onTouchEvent(event);
+                return false;
+            }
+        });
         month_tv = (TextView) findViewById(R.id.month_tv);
         week_tv = (TextView) findViewById(R.id.week_tv);
+        month_tv.setOnClickListener(this);
+        week_tv.setOnClickListener(this);
 
         monthLeftBtn = (ImageButton) findViewById(R.id.month_left_btn);
         monthRightBtn = (ImageButton) findViewById(R.id.month_right_btn);
@@ -126,7 +147,6 @@ public class MainActivity extends AppCompatActivity
         mListView = (ListView) findViewById(R.id.main_listview);
 
         viewBenefitBtn = (Button) findViewById(R.id.view_benefit_btn);
-
         viewBenefitBtn.setOnClickListener(this);
 
         // 아이템 추가 및 어댑터 등록
@@ -174,6 +194,12 @@ public class MainActivity extends AppCompatActivity
 
         SetInit();
         setupWindowAnimations();
+    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        monthDetector.onTouchEvent(event);
+        weekDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     private void setupWindowAnimations() {
@@ -1117,8 +1143,13 @@ public class MainActivity extends AppCompatActivity
 
         switch (view.getId()) {
 
+            case R.id.month_tv:
+                monthGridView.setVisibility(View.VISIBLE);
+                break;
+            case R.id.week_tv:
+                weekGridView.setVisibility(View.VISIBLE);
+                break;
             case R.id.month_left_btn:
-
                 Log.d(TAG, "left");
                 cal.add(Calendar.MONTH, -1);
                 SetInit();
@@ -1165,5 +1196,123 @@ public class MainActivity extends AppCompatActivity
             }
         }
         return false;
+    }
+
+    class MonthGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+
+            float diffY = event2.getY() - event1.getY();
+            float diffX = event2.getX() - event1.getX();
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        onSwipeRightMonth();
+                    } else {
+                        onSwipeLeftMonth();
+                    }
+                }
+            } else {
+                if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffY > 0) {
+                        onSwipeBottomMonth();
+                    } else {
+                        onSwipeTopMonth();
+                    }
+                }
+            }
+            return true;
+        }
+    }
+    private void onSwipeLeftMonth() {
+        Log.d(TAG, "Month SwipeLeft()");
+        cal.add(Calendar.MONTH, 1);
+        SetInit();
+    }
+
+    private void onSwipeRightMonth() {
+        Log.d(TAG, "Month SwipeRight()");
+        cal.add(Calendar.MONTH, -1);
+        SetInit();
+    }
+
+    private void onSwipeTopMonth() {
+        Log.d(TAG, "Month SwipeTop()");
+        monthGridView.setVisibility(View.GONE);
+    }
+
+    private void onSwipeBottomMonth() {
+        Log.d(TAG, "Month SwipeBottom()");
+        monthGridView.setVisibility(View.VISIBLE);
+    }
+    class WeekGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        private static final int SWIPE_THRESHOLD = 100;
+        private static final int SWIPE_VELOCITY_THRESHOLD = 100;
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+
+            float diffY = event2.getY() - event1.getY();
+            float diffX = event2.getX() - event1.getX();
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        onSwipeRight();
+                    } else {
+                        onSwipeLeft();
+                    }
+                }
+            } else {
+                if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffY > 0) {
+                        onSwipeBottom();
+                    } else {
+                        onSwipeTop();
+                    }
+                }
+            }
+            return true;
+        }
+    }
+
+    private void onSwipeLeft() {
+        Log.d(TAG, "Week SwipeLeft()");
+        startCal.add(Calendar.DATE, 7);
+        endCal.add(Calendar.DATE, 7);
+        SetInit();
+    }
+
+    private void onSwipeRight() {
+        Log.d(TAG, "Week SwipeRight()");
+        startCal.add(Calendar.DATE, -7);
+        endCal.add(Calendar.DATE, -7);
+        SetInit();
+    }
+
+    private void onSwipeTop() {
+        Log.d(TAG, "Week SwipeTop()");
+        weekGridView.setVisibility(View.GONE);
+    }
+
+    private void onSwipeBottom() {
+        Log.d(TAG, "Week SwipeBottom()");
+        weekGridView.setVisibility(View.VISIBLE);
     }
 }
