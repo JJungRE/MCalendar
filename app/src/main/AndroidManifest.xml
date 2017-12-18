@@ -44,6 +44,11 @@
             android:theme="@style/Theme.MyDialog"></activity>
 
         <activity
+            android:name=".ViewListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.MyDialog"></activity>
+
+        <activity
             android:name=".NoticeActivity"
             android:label="공지사항"
             android:screenOrientation="portrait">

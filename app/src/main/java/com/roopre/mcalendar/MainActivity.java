@@ -576,7 +576,7 @@ public class MainActivity extends AppCompatActivity
                             if (monthDays.get(position).getSeqList().toString().length() > 2) {
                                 Log.d(TAG, "Click Day => " + monthDays.get(position));
                                 //Toast.makeText(MainActivity.this, monthDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
+                                Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
                                 intent.putExtra("seq", monthDays.get(position).getSeqList().toString());
                                 startActivity(intent);
                             }
@@ -588,7 +588,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
                             //Toast.makeText(MainActivity.this, mAdapter.getmItems().get(position).getSeq(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
+                            Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
                             intent.putExtra("seq", mAdapter.getmItems().get(position).getSeq().toString());
                             startActivity(intent);
                         }
@@ -1016,7 +1016,7 @@ public class MainActivity extends AppCompatActivity
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
                             if (weekDays.get(position).getSeqList().toString().length() > 2) {
                                 //Toast.makeText(MainActivity.this, weekDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
+                                Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
                                 intent.putExtra("seq", weekDays.get(position).getSeqList().toString());
                                 startActivity(intent);
                             }
@@ -1028,7 +1028,7 @@ public class MainActivity extends AppCompatActivity
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
 
                             //Toast.makeText(MainActivity.this, mAdapter.getmItems().get(position).getSeq(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
+                            Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
                             intent.putExtra("seq", mAdapter.getmItems().get(position).getSeq().toString());
                             startActivity(intent);
                         }
