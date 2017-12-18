@@ -78,10 +78,9 @@ public class ViewListActivity extends AppCompatActivity
             ImageView imageView;
             int sub_margin = getResources().getDimensionPixelSize(R.dimen.activity_half_horizontal_margin);
             int innerPadding = getResources().getDimensionPixelSize(R.dimen.activity_quarter_horizontal_margin);
+
             JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonObject = null;
-            LinearLayout.LayoutParams imageparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            imageparams.setMargins(sub_margin, sub_margin, sub_margin, sub_margin);
             String logo_img = null;
 
             skt_linear.removeAllViews();
@@ -102,12 +101,18 @@ public class ViewListActivity extends AppCompatActivity
                 logo_img = jsonObject.getString("logo_img");
                 int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
-                imageView.setImageBitmap(bitmap);
-                imageView.setLayoutParams(imageparams);
-                imageView.setAdjustViewBounds(true);
-                imageView
-                imageView.setPadding(innerPadding,innerPadding, innerPadding, innerPadding);
+
                 imageView.setBackgroundResource(R.drawable.border_all_line_black);
+                imageView.setAdjustViewBounds(true);
+                imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                imageView.setImageBitmap(bitmap);
+
+
+                LinearLayout.LayoutParams imageparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                imageparams.setMargins(sub_margin, sub_margin, sub_margin, sub_margin);
+                imageView.setLayoutParams(imageparams);
+                imageView.setPadding(10,10,10,10);
+
 
                 if (jsonObject.getString("company").equals("SKT")) {
                     skt_linear.addView(imageView);
@@ -116,7 +121,6 @@ public class ViewListActivity extends AppCompatActivity
                 } else if(jsonObject.getString("company").equals("LG")){
                     lg_linear.addView(imageView);
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();

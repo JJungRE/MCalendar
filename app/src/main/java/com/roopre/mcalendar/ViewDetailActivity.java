@@ -1,6 +1,5 @@
 package com.roopre.mcalendar;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -30,7 +29,7 @@ public class ViewDetailActivity extends AppCompatActivity
     LinearLayout main_linear;
 
     Bitmap bitmap;
-    ImageView closeImage,backImage;
+    ImageView closeImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +44,8 @@ public class ViewDetailActivity extends AppCompatActivity
         main_linear = (LinearLayout) findViewById(R.id.main_linear);
 
         closeImage = (ImageView) findViewById(R.id.close_image);
-        backImage = (ImageView) findViewById(R.id.back_image);
 
         closeImage.setOnClickListener(this);
-        backImage.setOnClickListener(this);
     }
 
     @Override
@@ -142,13 +139,6 @@ public class ViewDetailActivity extends AppCompatActivity
     }
     @Override
     public void onClick(View view) {
-
-        switch(view.getId()){
-            case R.id.back_image:
-                Intent intent = new Intent(ViewDetailActivity.this, ViewListActivity.class);
-                startActivity(intent);
-                finish();
-        }
 
         switch(view.getId()){
             case R.id.close_image:

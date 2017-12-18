@@ -20,17 +20,6 @@
 
         </LinearLayout>
     </ScrollView>
-
-
-    <ImageView
-        android:id="@+id/back_image"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="left|top"
-        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_half_horizontal_margin"
-        android:src="@drawable/ic_keyboard_backspace_2x" />
-
     <ImageView
         android:id="@+id/close_image"
         android:layout_width="30dp"
