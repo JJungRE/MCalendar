@@ -73,8 +73,6 @@ public class SetMainScheduleAdapter extends BaseAdapter {
         category_tv.setText(mMyItem.getCategory());
         title_tv.setText(mMyItem.getTitle());
 
-
-
         return convertView;
     }
 
