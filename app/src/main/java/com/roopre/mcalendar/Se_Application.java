@@ -55,9 +55,7 @@ public class Se_Application extends Application {
         public void run() {
             if (val) {
                 loading_layout.setVisibility(View.VISIBLE);
-                loading_bar.start();
             } else {
-                loading_bar.stop();
                 loading_layout.setVisibility(View.GONE);
             }
         }
