@@ -68,9 +68,9 @@ public class ViewDetailActivity extends AppCompatActivity
         try{
 
             LayoutInflater inflater = LayoutInflater.from(this);
-            LinearLayout sub_linear;
+            LinearLayout sub_linear, guide_linear;
             ImageView imageView;
-            TextView category_tv, title_tv, class_tv, benefit_tv, minus_tv, limit_tv, guide_tv, contact_tv;
+            TextView category_tv, title_tv, class_tv, benefit_tv, minus_tv, limit_tv, guide_tv, contact_tv, viewdetail_tv;
 
 
             JSONArray jsonArray = new JSONArray(result);
@@ -86,6 +86,7 @@ public class ViewDetailActivity extends AppCompatActivity
                 jsonObject = jsonArray.getJSONObject(i);
                 sub_linear = (LinearLayout) inflater.inflate(R.layout.dialog_benefit, null, false);
                 sub_linear.setLayoutParams(subparams);
+                guide_linear = (LinearLayout) sub_linear.findViewById(R.id.guide_linear);
                 imageView = (ImageView) sub_linear.findViewById(R.id.imageView);
                 category_tv = (TextView) sub_linear.findViewById(R.id.category_tv);
                 title_tv = (TextView) sub_linear.findViewById(R.id.title_tv);
@@ -95,6 +96,20 @@ public class ViewDetailActivity extends AppCompatActivity
                 limit_tv = (TextView) sub_linear.findViewById(R.id.limit_tv);
                 guide_tv = (TextView) sub_linear.findViewById(R.id.guide_tv);
                 contact_tv = (TextView) sub_linear.findViewById(R.id.contact_tv);
+                viewdetail_tv = (TextView) sub_linear.findViewById(R.id.viewdetail_tv);
+                final LinearLayout finalGuide_linear = guide_linear;
+                viewdetail_tv.setOnClickListener(new TextView.OnClickListener() {
+                    public void onClick(View v) {
+                        if(finalGuide_linear.getVisibility() == View.VISIBLE){
+                            finalGuide_linear.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            finalGuide_linear.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
 
                 category_tv.setText(jsonObject.getString("event_category"));
                 logo_img = jsonObject.getString("logo_img");

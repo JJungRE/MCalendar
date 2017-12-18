@@ -9,10 +9,10 @@
         android:id="@+id/category_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_half_horizontal_margin"
-        android:gravity="center"
         android:text="category"
+        android:layout_marginTop="@dimen/activity_half_horizontal_margin"
         android:textColor="@color/main_black"
+        android:gravity="center"
         android:textSize="@dimen/main_xlarge_text_size"
         android:textStyle="bold" />
 
@@ -148,37 +148,6 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/limit_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_half_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.3"
-            android:gravity="left"
-            android:text="한도"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_middle_text_size"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/limit_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.7"
-            android:text="limit"
-            android:textColor="@color/main_black"
-            android:textSize="@dimen/main_small_text_size"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_half_horizontal_margin"
@@ -190,33 +159,32 @@
         <TextView
             android:id="@+id/viewdetail_tv"
             android:layout_width="0dp"
+            android:background="@drawable/bg_category_red"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/bg_category_red"
             android:gravity="center"
             android:text="상세설명 보기"
             android:textColor="@color/White"
             android:textSize="@dimen/main_middle_text_size" />
-
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/guide_linear"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/activity_half_horizontal_margin"
+        android:id="@+id/limit_linear"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
-        android:visibility="gone"
         android:weightSum="1">
 
         <TextView
-            android:id="@+id/guide_tv"
+            android:id="@+id/limit_tv"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="guide"
+            android:text="limit"
             android:textColor="@color/main_black"
             android:textSize="@dimen/main_small_text_size"
             android:textStyle="bold" />
@@ -224,12 +192,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/contact_linear"
+        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
-
         android:orientation="horizontal"
-        android:visibility="gone"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:weightSum="1">
 
         <TextView
@@ -245,9 +214,10 @@
         <TextView
             android:id="@+id/contact_tv"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
+            android:layout_height="wrap_content"
             android:layout_weight="0.7"
-            android:text=""
+            android:text="asdfasdfasdfdafs"
             android:textColor="@color/main_black"
             android:textSize="@dimen/main_small_text_size"
             android:textStyle="bold" />

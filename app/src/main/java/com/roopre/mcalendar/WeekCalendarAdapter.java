@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class WeekCalendarAdapter extends BaseAdapter {
 
@@ -130,11 +131,44 @@ public class WeekCalendarAdapter extends BaseAdapter {
         LinearLayout day_linear = (LinearLayout) convertView.findViewById(R.id.day_linear);
         day_linear.setTag(days.get(position).getDay());
         day_linear.setLayoutParams(tvparams);
+        Calendar cal = Calendar.getInstance();
+        int mYear = cal.get(Calendar.YEAR);
+        int mMonth = cal.get(Calendar.MONTH) +1 ;
+        int mDay = cal.get(Calendar.DATE);
+
+
         if (position == 6) {
-            day_linear.setBackgroundResource(R.drawable.border_all_line_gray);
+            if(Se_Application.strNotNull(days.get(position).getYear())){
+
+                if(mYear == Integer.parseInt(days.get(position).getYear()) && mMonth == Integer.parseInt(days.get(position).getMonth()) && mDay == Integer.parseInt(days.get(position).getDay()))
+                {
+                    day_linear.setBackgroundResource(R.drawable.border_all_line_gray_today);
+                }else
+                {
+                    day_linear.setBackgroundResource(R.drawable.border_all_line_gray);
+                }
+            }else
+            {
+                day_linear.setBackgroundResource(R.drawable.border_all_line_gray);
+            }
+
         } else {
-            day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_gray);
+            if(Se_Application.strNotNull(days.get(position).getYear())){
+                if(mYear == Integer.parseInt(days.get(position).getYear()) && mMonth == Integer.parseInt(days.get(position).getMonth()) && mDay == Integer.parseInt(days.get(position).getDay()))
+                {
+                    day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_gray_today);
+                }else
+                {
+                    day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_gray);
+                }
+            }else
+            {
+                day_linear.setBackgroundResource(R.drawable.border_left_top_right_line_gray);
+            }
+
+
         }
+
         if (position == 5) {
             dayTv.setTextColor(mContext.getResources().getColor(R.color.main_blue));
         } else if (position == 6) {

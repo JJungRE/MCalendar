@@ -26,7 +26,6 @@
         android:layout_height="match_parent">
 
     <include layout="@layout/main" />
-
         <RelativeLayout
             android:id="@+id/loading_layout"
             android:layout_width="match_parent"

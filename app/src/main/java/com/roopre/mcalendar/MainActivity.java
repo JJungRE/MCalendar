@@ -277,6 +277,9 @@ public class MainActivity extends AppCompatActivity
             mWeekDay = cal.get(Calendar.DAY_OF_WEEK) - 1;
             Log.d(TAG, "year = " + mYear + ", month = " + mMonth + ", day = " + mDay);
 
+            Se_Application.selectedYear = mYear;
+            Se_Application.selectedMonth = mMonth;
+
             month_tv.setText(Integer.toString(mMonth) + "월");
             Calendar mainCal = (Calendar) cal.clone();
             mainCal.set(Calendar.DAY_OF_MONTH, 1);

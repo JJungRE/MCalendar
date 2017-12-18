@@ -161,9 +161,9 @@ public class AllDetailActivity extends AppCompatActivity {
         try{
 
             LayoutInflater inflater = LayoutInflater.from(this);
-            LinearLayout sub_linear, guide_linear;
+            LinearLayout sub_linear, limit_linear, contact_linear;
             ImageView imageView;
-            TextView category_tv, title_tv, class_tv, benefit_tv, minus_tv, limit_tv, guide_tv, contact_tv;
+            TextView category_tv, title_tv, class_tv, benefit_tv, minus_tv, limit_tv, contact_tv, viewdetail_tv;
 
             JSONArray jsonArray = new JSONArray(result);
             JSONObject jsonObject = null;
@@ -174,8 +174,10 @@ public class AllDetailActivity extends AppCompatActivity {
             main_linear.removeAllViews();
             for(int i=0;i<jsonArray.length();i++){
                 jsonObject = jsonArray.getJSONObject(i);
-                sub_linear = (LinearLayout) inflater.inflate(R.layout.dialog_benefit, null, false);
+                sub_linear = (LinearLayout) inflater.inflate(R.layout.detail_benefit, null, false);
                 sub_linear.setLayoutParams(subparams);
+                limit_linear = (LinearLayout) sub_linear.findViewById(R.id.limit_linear);
+                contact_linear = (LinearLayout) sub_linear.findViewById(R.id.contact_linear);
                 imageView = (ImageView) sub_linear.findViewById(R.id.imageView);
                 category_tv = (TextView) sub_linear.findViewById(R.id.category_tv);
                 title_tv = (TextView) sub_linear.findViewById(R.id.title_tv);
@@ -183,9 +185,25 @@ public class AllDetailActivity extends AppCompatActivity {
                 benefit_tv = (TextView) sub_linear.findViewById(R.id.benefit_tv);
                 minus_tv = (TextView) sub_linear.findViewById(R.id.minus_tv);
                 limit_tv = (TextView) sub_linear.findViewById(R.id.limit_tv);
-                guide_linear = (LinearLayout) sub_linear.findViewById(R.id.guide_linear);
                 contact_tv = (TextView) sub_linear.findViewById(R.id.contact_tv);
 
+                viewdetail_tv = (TextView) sub_linear.findViewById(R.id.viewdetail_tv);
+                final LinearLayout finalLimit_linear = limit_linear;
+                final LinearLayout finalContact_linear = contact_linear;
+                viewdetail_tv.setOnClickListener(new TextView.OnClickListener() {
+                    public void onClick(View v) {
+                        if(finalLimit_linear.getVisibility() == View.VISIBLE){
+                            finalLimit_linear.setVisibility(View.GONE);
+                            finalContact_linear.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            finalLimit_linear.setVisibility(View.VISIBLE);
+                            finalContact_linear.setVisibility(View.VISIBLE);
+                        }
+
+                    }
+                });
                 category_tv.setText(jsonObject.getString("category"));
                 int resID =getResources().getIdentifier(jsonObject.getString("logo_img"), "drawable", "com.roopre.mcalendar");
                 Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
@@ -195,9 +213,6 @@ public class AllDetailActivity extends AppCompatActivity {
                 benefit_tv.setText(jsonObject.getString("benefit"));
                 minus_tv.setText(jsonObject.getString("minus"));
                 limit_tv.setText(jsonObject.getString("benefit_limit"));
-
-                guide_linear.setVisibility(View.GONE);
-                //guide_tv.setText(jsonObject.getString("guide"));
                 contact_tv.setText(jsonObject.getString("contact"));
                 main_linear.addView(sub_linear);
             }

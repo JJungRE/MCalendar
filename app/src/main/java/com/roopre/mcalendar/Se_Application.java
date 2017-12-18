@@ -40,6 +40,8 @@ public class Se_Application extends Application {
     public static RelativeLayout loading_layout;
     public static NewtonCradleLoading loading_bar;
 
+    public static int selectedMonth = 0;
+    public static int selectedYear = 0;
     public static String[] days = {"일", "월", "화", "수", "목", "금", "토"};
     public static String[] daysEng = {"SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"};
 

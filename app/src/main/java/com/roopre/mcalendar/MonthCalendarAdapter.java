@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MonthCalendarAdapter extends BaseAdapter {
 
@@ -35,7 +36,7 @@ public class MonthCalendarAdapter extends BaseAdapter {
     // 2
     @Override
     public int getCount() {
-        Log.d(TAG, "day.size = "+day.size());
+        Log.d(TAG, "day.size = " + day.size());
         return day.size();
     }
 
@@ -80,24 +81,23 @@ public class MonthCalendarAdapter extends BaseAdapter {
         textView3 = (TextView) convertView.findViewById(R.id.tv3);
 
 
-        if(!Se_Application.strNotNull(day.get(position).getTotal()) || Integer.parseInt(day.get(position).getTotal()) == 0){
+        if (!Se_Application.strNotNull(day.get(position).getTotal()) || Integer.parseInt(day.get(position).getTotal()) == 0) {
             linear1.setVisibility(View.INVISIBLE);
             linear2.setVisibility(View.GONE);
-        }
-        else if(Integer.parseInt(day.get(position).getTotal()) == 1){
+        } else if (Integer.parseInt(day.get(position).getTotal()) == 1) {
             linear1.setVisibility(View.VISIBLE);
             textView1.setVisibility(View.VISIBLE);
             textView1.setText(day.get(position).getTitle1());
             textView2.setVisibility(View.INVISIBLE);
             linear2.setVisibility(View.GONE);
-        }else if(Integer.parseInt(day.get(position).getTotal()) == 2){
+        } else if (Integer.parseInt(day.get(position).getTotal()) == 2) {
             linear1.setVisibility(View.VISIBLE);
             textView1.setVisibility(View.VISIBLE);
             textView1.setText(day.get(position).getTitle1());
             textView2.setVisibility(View.VISIBLE);
             textView2.setText(day.get(position).getTitle2());
             linear2.setVisibility(View.GONE);
-        }else if(Integer.parseInt(day.get(position).getTotal()) > 2){
+        } else if (Integer.parseInt(day.get(position).getTotal()) > 2) {
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.VISIBLE);
             textView3.setText(day.get(position).getTotal());
@@ -108,50 +108,71 @@ public class MonthCalendarAdapter extends BaseAdapter {
         day_linear.setTag(day.get(position).getDay());
         AbsListView.LayoutParams tvparams = (AbsListView.LayoutParams) day_linear.getLayoutParams();
         final TextView day_tv = (TextView) convertView.findViewById(R.id.day_tv);
-        if(position<=6){
-            tvparams = new AbsListView.LayoutParams(Width /7, yoilHeight);
+        if (position <= 6) {
+            tvparams = new AbsListView.LayoutParams(Width / 7, yoilHeight);
             //Log.d(TAG, "yoilHeight ="+yoilHeight);
-        }else
-        {
+        } else {
             if (day.size() <= 35) {
-                tvparams = new AbsListView.LayoutParams(Width /7, (Height-yoilHeight) / 4);
+                tvparams = new AbsListView.LayoutParams(Width / 7, (Height - yoilHeight) / 4);
             } else if (day.size() > 35 && day.size() <= 42) {
-                tvparams = new AbsListView.LayoutParams(Width/7, (Height-yoilHeight) / 5);
+                tvparams = new AbsListView.LayoutParams(Width / 7, (Height - yoilHeight) / 5);
             } else if (day.size() > 42) {
-                tvparams = new AbsListView.LayoutParams(Width/7, (Height-yoilHeight) / 6);
+                tvparams = new AbsListView.LayoutParams(Width / 7, (Height - yoilHeight) / 6);
             }
         }
         //Log.d(TAG, "day_linear Width =" + day_linear.getWidth());
         day_linear.setLayoutParams(tvparams);
-        if(position<=5){
+        if (position <= 5) {
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.GONE);
             day_linear.setBackgroundResource(R.drawable.border_yellow_lefttopbottom_gray);
             day_linear.setGravity(Gravity.CENTER);
             day_tv.setTextColor(Color.WHITE);
             day_tv.setTypeface(null, Typeface.BOLD);
-            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-        }else if(position ==6){
+            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        } else if (position == 6) {
             linear1.setVisibility(View.GONE);
             linear2.setVisibility(View.GONE);
             day_linear.setBackgroundResource(R.drawable.border_yellow_all_line_gray);
             day_linear.setGravity(Gravity.CENTER);
             day_tv.setTextColor(Color.WHITE);
             day_tv.setTypeface(null, Typeface.BOLD);
-            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP,16);
-        }
-        else
-        {
+            day_tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+        } else {
+            Calendar cal = Calendar.getInstance();
+            int mYear = cal.get(Calendar.YEAR);
+            int mMonth = cal.get(Calendar.MONTH) + 1;
+            int mDay = cal.get(Calendar.DATE);
+
             if ((position + 1) % 7 == 0) {
-                day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_gray);
+
+                if (Se_Application.strNotNull(day.get(position).getDay())) {
+                    if (mYear == Se_Application.selectedYear && mMonth == Se_Application.selectedMonth && mDay == Integer.parseInt(day.get(position).getDay())) {
+                        day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_gray_today);
+                    } else {
+                        day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_gray);
+                    }
+                }else{
+                    day_linear.setBackgroundResource(R.drawable.border_left_right_bottom_line_gray);
+                }
             } else {
-                day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_gray);
+                if (Se_Application.strNotNull(day.get(position).getDay())) {
+                    if (mYear == Se_Application.selectedYear && mMonth == Se_Application.selectedMonth && mDay == Integer.parseInt(day.get(position).getDay())) {
+                        day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_gray_today);
+                    } else {
+                        day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_gray);
+                    }
+                }
+                else
+                {
+                    day_linear.setBackgroundResource(R.drawable.border_left_bottom_line_gray);
+                }
+
             }
         }
-        if(position<=6){
+        if (position <= 6) {
             day_tv.setGravity(Gravity.CENTER);
-        }else
-        {
+        } else {
             day_tv.setGravity(Gravity.LEFT);
             if ((position + 1) % 7 == 1) {
                 day_tv.setTextColor(mContext.getResources().getColor(R.color.main_red));
