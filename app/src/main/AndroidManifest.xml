@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.roopre.mcalendar"
-    android:versionCode="4"
-    android:versionName="1.0.3">
+    android:versionCode="5"
+    android:versionName="1.0.4">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -41,7 +41,7 @@
         <activity
             android:name=".ViewDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.MyDialog"></activity>
+            android:theme="@style/Theme.MyDialog2"></activity>
 
         <activity
             android:name=".ViewListActivity"
@@ -80,11 +80,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity
-            android:name=".ViewBenefitActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

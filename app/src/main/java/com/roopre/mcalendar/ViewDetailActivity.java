@@ -33,6 +33,7 @@ public class ViewDetailActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
         setContentView(R.layout.activity_detail);
 
         seq = getIntent().getStringExtra("seq");
@@ -134,7 +135,7 @@ public class ViewDetailActivity extends AppCompatActivity
     @Override
     public void finish() {
         super.finish();
-        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
     }
     @Override
     public void onClick(View view) {

@@ -1,10 +1,10 @@
 package com.roopre.mcalendar;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -35,6 +35,8 @@ public class SetupActivity extends AppCompatActivity
     GridView gridView;
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> selectedList = new ArrayList<String>();
+
+    TextView version_tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +72,17 @@ public class SetupActivity extends AppCompatActivity
             pushOff.setTextColor(getResources().getColor(R.color.White));
         }
 
+        version_tv = (TextView) findViewById(R.id.version_tv);
+        PackageInfo info = null;
+        String versionName = "";
+        try {
+            info = getPackageManager().getPackageInfo(getApplicationContext().getPackageName(), 0);
+            versionName = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
 
+        version_tv.setText(versionName);
     }
 
     @Override

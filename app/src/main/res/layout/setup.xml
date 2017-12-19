@@ -92,78 +92,56 @@
 
     </FrameLayout>
 
-
-    <!--
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_half_horizontal_margin"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:layout_marginRight="@dimen/activity_half_horizontal_margin">
 
         <LinearLayout
-            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/activity_half_horizontal_margin"
-            android:background="@drawable/border_setup_black"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/border_setup_gray"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_vertical_margin"
+            android:weightSum="1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="0.6"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical"
+                android:text="버전정보"
+                android:textColor="@color/main_666666"
+                android:textSize="@dimen/main_middle_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/version_tv"
+                android:layout_width="0dp"
+                android:text="1.0.0"
+                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="@dimen/activity_half_horizontal_margin"
-                    android:paddingRight="@dimen/activity_half_horizontal_margin"
-                    android:weightSum="1"
-                    android:orientation="horizontal">
-
-                    <RadioButton
-                        android:id="@+id/all_radiobtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="모든 카테고리"
-                        android:textColor="@color/main_black"
-                        android:textSize="@dimen/main_middle_text_size"
-                        android:textStyle="bold" />
-
-                    <RadioButton
-                        android:id="@+id/custom_radiobtn"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.5"
-                        android:text="관심 카테고리 선택"
-                        android:textColor="@color/main_black"
-                        android:textSize="@dimen/main_middle_text_size"
-                        android:textStyle="bold" />
-                </RadioGroup>
-
-            </LinearLayout>
-
+                android:gravity="right"
+                android:layout_gravity="right"/>
 
         </LinearLayout>
 
-        <GridView
-            android:id="@+id/category_gridview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_marginTop="64dp"
-            android:padding="@dimen/activity_quarter_horizontal_margin"
-            android:background="@drawable/border_all_line_black"
-            android:layout_marginBottom="@dimen/activity_half_horizontal_margin"
-            android:gravity="center"
-            android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
-            android:verticalSpacing="@dimen/activity_quarter_horizontal_margin"
-            android:numColumns="5"
-            android:stretchMode="columnWidth" />
+        <TextView
+            android:id="@+id/setup_main_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/White"
+            android:paddingLeft="@dimen/activity_half_horizontal_margin"
+            android:paddingRight="@dimen/activity_half_horizontal_margin"
+            android:text="기타"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
 
-    </RelativeLayout>
--->
+    </FrameLayout>
+
 </LinearLayout>

@@ -36,6 +36,9 @@ public class ViewListActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+
+
         setContentView(R.layout.activity_list_view);
         seq = getIntent().getStringExtra("seq");
         Log.d(TAG, "seq = " + seq);
@@ -48,12 +51,14 @@ public class ViewListActivity extends AppCompatActivity
         skt_linear = (LinearLayout) findViewById(R.id.skt_linear);
         kt_linear = (LinearLayout) findViewById(R.id.kt_linear);
         lg_linear = (LinearLayout) findViewById(R.id.lg_linear);
+
+
+        SetInit();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        SetInit();
     }
 
     private void SetInit() {
@@ -82,6 +87,7 @@ public class ViewListActivity extends AppCompatActivity
             skt_linear.removeAllViews();
             kt_linear.removeAllViews();
             lg_linear.removeAllViews();
+            Bitmap bitmap = null;
             for (int i = 0; i < jsonArray.length(); i++) {
                 jsonObject = jsonArray.getJSONObject(i);
                 imageView = new ImageView(this);
@@ -96,7 +102,7 @@ public class ViewListActivity extends AppCompatActivity
 
                 logo_img = jsonObject.getString("logo_img");
                 int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
-                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
+                bitmap = BitmapFactory.decodeResource(getResources(), resID);
 
                 imageView.setBackgroundResource(R.drawable.border_all_line_black);
                 imageView.setAdjustViewBounds(true);
@@ -124,7 +130,7 @@ public class ViewListActivity extends AppCompatActivity
     @Override
     public void finish() {
         super.finish();
-        this.overridePendingTransition(R.anim.fadein, R.anim.fadeout);
+        this.overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
 
     @Override

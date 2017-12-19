@@ -40,6 +40,7 @@ public class AllDetailActivity extends AppCompatActivity {
     public void finish() {
         Log.d(TAG, "finish");
         super.finish();
+        overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
     }
 
     @Override
@@ -52,7 +53,6 @@ public class AllDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.all_detail);
-
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         Intent intent = getIntent();
         company = intent.getStringExtra("company");

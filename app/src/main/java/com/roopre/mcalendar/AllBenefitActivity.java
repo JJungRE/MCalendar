@@ -37,6 +37,7 @@ public class AllBenefitActivity extends AppCompatActivity
     GridView skt_gridView;
     GridView kt_gridView;
     GridView lg_gridView;
+
     ArrayList<String> skt_categoryList = new ArrayList<String>();
     ArrayList<String> kt_categoryList = new ArrayList<String>();
     ArrayList<String> lg_categoryList = new ArrayList<String>();
@@ -45,6 +46,14 @@ public class AllBenefitActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(Se_Application.preActivity.equals("Main")){
+            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            Se_Application.preActivity = "";
+        }
+        else{
+            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+            Se_Application.preActivity = "";
+        }
         setContentView(R.layout.all_benefit);
 
         Log.d(TAG, "onCreate");
@@ -75,14 +84,7 @@ public class AllBenefitActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume");
-        if(Se_Application.preActivity.equals("Main")){
-            overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-            Se_Application.preActivity = "";
-        }
-        else{
-            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
-            Se_Application.preActivity = "";
-        }
+
 
     }
     private void SetInit() {
@@ -207,7 +209,6 @@ public class AllBenefitActivity extends AppCompatActivity
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         //Log.d(TAG, "onActivityResult");
         if (requestCode == 0) {
             overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
