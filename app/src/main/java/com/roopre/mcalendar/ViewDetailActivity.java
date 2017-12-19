@@ -44,7 +44,6 @@ public class ViewDetailActivity extends AppCompatActivity
         main_linear = (LinearLayout) findViewById(R.id.main_linear);
 
         closeImage = (ImageView) findViewById(R.id.close_image);
-
         closeImage.setOnClickListener(this);
     }
 

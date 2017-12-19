@@ -24,9 +24,7 @@ public class ViewListActivity extends AppCompatActivity
 
     private String TAG = "ViewListActivity";
     private Menu menu;
-
     LinearLayout skt_linear, kt_linear, lg_linear;
-
     String[] seqList;
     String seq;
 
@@ -107,12 +105,10 @@ public class ViewListActivity extends AppCompatActivity
                 imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 imageView.setImageBitmap(bitmap);
 
-
                 LinearLayout.LayoutParams imageparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 imageparams.setMargins(sub_margin, sub_margin, sub_margin, sub_margin);
                 imageView.setLayoutParams(imageparams);
                 imageView.setPadding(10,10,10,10);
-
 
                 if (jsonObject.getString("company").equals("SKT")) {
                     skt_linear.addView(imageView);

@@ -3,7 +3,6 @@ package com.roopre.mcalendar;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,22 +54,22 @@ public class SplashActivity extends AppCompatActivity {
             Handler hd = new Handler();
             hd.postDelayed(new splashhandler(), 1000);
         } else {
-            Toast.makeText(this, "최신 버전은 " + latestVersion + "입니다.\n업데이트를 진행해주세요", Toast.LENGTH_SHORT).show();
-            final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
+            Toast.makeText(this, "최신 버전은 " + latestVersion + "입니다.\n정상적인 이용을 위해 업데이트를 부탁드립니다", Toast.LENGTH_LONG).show();
+            Handler hd = new Handler();
+            hd.postDelayed(new splashhandler(), 1000);
+            /*final String appPackageName = getPackageName(); // getPackageName() from Context or Activity object
             try {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
             } catch (android.content.ActivityNotFoundException anfe) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-            }
+            }*/
         }
 
 
     }
 
     public class VersionChecker extends AsyncTask<String, String, String> {
-
         String newVersion;
-
         @Override
         protected String doInBackground(String... params) {
 
