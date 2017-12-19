@@ -368,6 +368,7 @@ public class MainActivity extends AppCompatActivity
                         Bitmap tempBmp = null;
                         int count = 1;
                         String seq = "", category = "", title = "", startdate = "", enddate = "", logo_img = "";
+                        String company = "";
 
                         for (int i = 0; i < jarray.length(); i++) {
                             jObject = jarray.getJSONObject(i);
@@ -377,6 +378,7 @@ public class MainActivity extends AppCompatActivity
                             enddate = jObject.getString("enddate");
                             category = jObject.getString("event_category");
                             logo_img = jObject.getString("logo_img");
+                            company = jObject.getString("company");
 
                             int syear = Integer.parseInt(startdate.substring(0, 4));
                             int smonth = Integer.parseInt(startdate.substring(5, 7));
@@ -553,7 +555,7 @@ public class MainActivity extends AppCompatActivity
                                 Log.d(TAG, "&&& equals = "+category);
                             } else {
                                 Log.d(TAG, "else = "+category);
-                                mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
+                                mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
                                 count = count + 1;
                             }
                             tempBmp = bitmap;
@@ -588,7 +590,7 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
                             //Toast.makeText(MainActivity.this, mAdapter.getmItems().get(position).getSeq(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
+                            Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                             intent.putExtra("seq", mAdapter.getmItems().get(position).getSeq().toString());
                             startActivity(intent);
                         }
@@ -633,6 +635,7 @@ public class MainActivity extends AppCompatActivity
                         String logo_img = "";
                         String tempCategory = "", tempTitle = "", tempLogoImg = "";
                         Bitmap tempBmp = null;
+                        String company = "";
                         int count = 1;
                         for (int i = 0; i < jarray.length(); i++) {
 
@@ -643,6 +646,7 @@ public class MainActivity extends AppCompatActivity
                             enddate = jObject.getString("enddate");
                             category = jObject.getString("event_category");
                             logo_img = jObject.getString("logo_img");
+                            company = jObject.getString("company");
 
                             int syear = Integer.parseInt(startdate.substring(0, 4));
                             int smonth = Integer.parseInt(startdate.substring(5, 7));
@@ -997,7 +1001,7 @@ public class MainActivity extends AppCompatActivity
                             if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
                                 //
                             } else {
-                                mAdapter.addItem(Integer.toString(count), seq, bitmap, category, title);
+                                mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
                                 count = count + 1;
                             }
                             tempBmp = bitmap;
@@ -1028,7 +1032,7 @@ public class MainActivity extends AppCompatActivity
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
 
                             //Toast.makeText(MainActivity.this, mAdapter.getmItems().get(position).getSeq(), Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
+                            Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                             intent.putExtra("seq", mAdapter.getmItems().get(position).getSeq().toString());
                             startActivity(intent);
                         }

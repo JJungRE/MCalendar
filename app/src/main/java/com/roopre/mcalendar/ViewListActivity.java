@@ -24,7 +24,9 @@ public class ViewListActivity extends AppCompatActivity
 
     private String TAG = "ViewListActivity";
     private Menu menu;
+
     LinearLayout skt_linear, kt_linear, lg_linear;
+
     String[] seqList;
     String seq;
 
@@ -35,15 +37,11 @@ public class ViewListActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_view);
-
         seq = getIntent().getStringExtra("seq");
-
         Log.d(TAG, "seq = " + seq);
         seq = seq.replace("[", "");
         seq = seq.replace("]", "");
-
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
         closeImage = (ImageView) findViewById(R.id.close_image);
         closeImage.setOnClickListener(this);
 
@@ -121,7 +119,6 @@ public class ViewListActivity extends AppCompatActivity
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
