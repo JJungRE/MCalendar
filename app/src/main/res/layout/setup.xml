@@ -22,8 +22,8 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
                 android:layout_height="match_parent"
+                android:layout_weight="0.6"
                 android:gravity="left|center_vertical"
                 android:text="푸시알림"
                 android:textColor="@color/main_666666"
@@ -33,9 +33,9 @@
             <RadioGroup
                 android:id="@+id/toggle"
                 android:layout_width="0dp"
-                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
+                android:layout_weight="0.4"
                 android:background="@drawable/custom_radio"
                 android:checkedButton="@+id/offer"
                 android:gravity="right"
@@ -45,32 +45,32 @@
                     android:id="@+id/pushOff"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:paddingTop="@dimen/activity_quarter_horizontal_margin"
-                    android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-                    android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:paddingRight="@dimen/activity_vertical_margin"
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/toggle_radio_backgorund"
                     android:button="@null"
                     android:gravity="center"
+                    android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_quarter_horizontal_margin"
                     android:text="끄기"
-                    android:textColorHint="@color/main_gray"
-                    android:textColor="@color/main_gray" />
+                    android:textColor="@color/main_gray"
+                    android:textColorHint="@color/main_gray" />
 
                 <RadioButton
                     android:id="@+id/pushOn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:paddingTop="@dimen/activity_quarter_horizontal_margin"
                     android:layout_margin="2dp"
-                    android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
-                    android:paddingLeft="@dimen/activity_vertical_margin"
-                    android:paddingRight="@dimen/activity_vertical_margin"
+                    android:layout_weight="1"
                     android:background="@drawable/toggle_radio_backgorund"
                     android:button="@null"
                     android:gravity="center"
+                    android:paddingBottom="@dimen/activity_quarter_horizontal_margin"
+                    android:paddingLeft="@dimen/activity_vertical_margin"
+                    android:paddingRight="@dimen/activity_vertical_margin"
+                    android:paddingTop="@dimen/activity_quarter_horizontal_margin"
                     android:text="켜기"
                     android:textColor="@color/White" />
             </RadioGroup>
@@ -109,8 +109,8 @@
 
             <TextView
                 android:layout_width="0dp"
-                android:layout_weight="0.6"
                 android:layout_height="match_parent"
+                android:layout_weight="0.6"
                 android:gravity="left|center_vertical"
                 android:text="버전정보"
                 android:textColor="@color/main_666666"
@@ -120,11 +120,11 @@
             <TextView
                 android:id="@+id/version_tv"
                 android:layout_width="0dp"
-                android:text="1.0.0"
-                android:layout_weight="0.4"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_weight="0.4"
                 android:gravity="right"
-                android:layout_gravity="right"/>
+                android:text="1.0.0" />
 
         </LinearLayout>
 
@@ -142,5 +142,160 @@
             android:textStyle="bold" />
 
     </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_half_horizontal_margin">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/border_setup_gray"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_vertical_margin"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/skt_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="SKT" />
+
+            <Button
+                android:id="@+id/kt_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="KT" />
+
+            <Button
+                android:id="@+id/lg_bt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="LG" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/White"
+            android:paddingLeft="@dimen/activity_half_horizontal_margin"
+            android:paddingRight="@dimen/activity_half_horizontal_margin"
+            android:text="통신사 선택"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/category_fl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/activity_half_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_half_horizontal_margin"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_half_horizontal_margin"
+            android:layout_marginTop="26dp"
+            android:background="@drawable/border_setup_gray"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/activity_half_horizontal_margin"
+            android:paddingLeft="@dimen/activity_vertical_margin"
+            android:paddingRight="@dimen/activity_vertical_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/activity_half_horizontal_margin"
+                        android:paddingRight="@dimen/activity_half_horizontal_margin"
+                        android:weightSum="1">
+
+                        <RadioButton
+                            android:id="@+id/all_radiobtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="모든 카테고리"
+                            android:textColor="@color/main_black"
+                            android:textSize="@dimen/main_middle_text_size"
+                            android:textStyle="bold" />
+
+                        <RadioButton
+                            android:id="@+id/custom_radiobtn"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="0.5"
+                            android:text="관심 카테고리 선택"
+                            android:textColor="@color/main_black"
+                            android:textSize="@dimen/main_middle_text_size"
+                            android:textStyle="bold" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <GridView
+                android:id="@+id/category_gridview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/activity_quarter_horizontal_margin"
+                android:background="@drawable/border_all_line_black"
+                android:gravity="center"
+                android:horizontalSpacing="@dimen/activity_quarter_horizontal_margin"
+                android:numColumns="5"
+                android:padding="@dimen/activity_quarter_horizontal_margin"
+                android:stretchMode="columnWidth"
+                android:verticalSpacing="@dimen/activity_quarter_horizontal_margin" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:background="@color/White"
+            android:paddingLeft="@dimen/activity_half_horizontal_margin"
+            android:paddingRight="@dimen/activity_half_horizontal_margin"
+            android:text="카테고리 선택"
+            android:textColor="@color/main_black"
+            android:textSize="@dimen/main_large_text_size"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+
 
 </LinearLayout>
