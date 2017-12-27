@@ -162,21 +162,27 @@
                 android:id="@+id/skt_bt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_quarter_horizontal_margin"
                 android:layout_weight="1"
+                android:background="@drawable/border_button_grey"
                 android:text="SKT" />
 
             <Button
                 android:id="@+id/kt_bt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_quarter_horizontal_margin"
                 android:layout_weight="1"
+                android:background="@drawable/border_button_grey"
                 android:text="KT" />
 
             <Button
                 android:id="@+id/lg_bt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/activity_quarter_horizontal_margin"
                 android:layout_weight="1"
+                android:background="@drawable/border_button_grey"
                 android:text="LG" />
 
 
@@ -217,8 +223,7 @@
             android:paddingBottom="@dimen/activity_half_horizontal_margin"
             android:paddingLeft="@dimen/activity_vertical_margin"
             android:paddingRight="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin"
-            >
+            android:paddingTop="@dimen/activity_vertical_margin">
 
             <LinearLayout
                 android:layout_width="match_parent"

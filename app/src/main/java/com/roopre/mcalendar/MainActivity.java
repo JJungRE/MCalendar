@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
         month_tv = (TextView) findViewById(R.id.month_tv);
-           week_tv = (TextView) findViewById(R.id.week_tv);
+        week_tv = (TextView) findViewById(R.id.week_tv);
         month_tv.setOnClickListener(this);
         week_tv.setOnClickListener(this);
 
@@ -200,6 +200,7 @@ public class MainActivity extends AppCompatActivity
         SetInit();
         setupWindowAnimations();
     }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         monthDetector.onTouchEvent(event);
@@ -239,21 +240,21 @@ public class MainActivity extends AppCompatActivity
         final String server_url = "load_event.php";
         String urlSuffix = "";
         if (Se_Application.Localdb.get_dataS("month_week").equals("") || Se_Application.Localdb.get_dataS("month_week").equals("month")) {
-            urlSuffix = urlSuffix +"?month_week="+Se_Application.Localdb.get_dataS("month_week");
+            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company");
             String monthStartDay = String.format("%04d", cal.get(Calendar.YEAR)) + String.format("%02d", cal.get(Calendar.MONTH) + 1) + String.format("%02d", cal.getActualMinimum(Calendar.DAY_OF_MONTH));
             String monthLastDay = String.format("%04d", cal.get(Calendar.YEAR)) + String.format("%02d", cal.get(Calendar.MONTH) + 1) + String.format("%02d", cal.getActualMaximum(Calendar.DAY_OF_MONTH));
             Log.d(TAG, "monthStartDay = " + monthStartDay);
             Log.d(TAG, "monthLastDay = " + monthLastDay);
-            urlSuffix = urlSuffix +"&start="+monthStartDay;
-            urlSuffix = urlSuffix +"&last="+monthLastDay;
+            urlSuffix = urlSuffix + "&start=" + monthStartDay;
+            urlSuffix = urlSuffix + "&last=" + monthLastDay;
         } else if (Se_Application.Localdb.get_dataS("month_week").equals("week")) {
-            urlSuffix = urlSuffix +"?month_week="+Se_Application.Localdb.get_dataS("month_week");
+            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company");
             String weekStartDay = String.format("%04d", startCal.get(Calendar.YEAR)) + String.format("%02d", startCal.get(Calendar.MONTH) + 1) + String.format("%02d", startCal.get(Calendar.DATE));
             String weekLastDay = String.format("%04d", endCal.get(Calendar.YEAR)) + String.format("%02d", endCal.get(Calendar.MONTH) + 1) + String.format("%02d", endCal.get(Calendar.DATE));
             Log.d(TAG, "weekStartDay = " + weekStartDay);
             Log.d(TAG, "weekLastDay = " + weekLastDay);
-            urlSuffix = urlSuffix +"&start="+weekStartDay;
-            urlSuffix = urlSuffix +"&last="+weekLastDay;
+            urlSuffix = urlSuffix + "&start=" + weekStartDay;
+            urlSuffix = urlSuffix + "&last=" + weekLastDay;
         }
 
 
@@ -271,7 +272,7 @@ public class MainActivity extends AppCompatActivity
                 String s = params[0];
                 BufferedReader bufferedReader = null;
                 try {
-                    URL url = new URL(Se_Application.Server_URL+server_url + s);
+                    URL url = new URL(Se_Application.Server_URL + server_url + s);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
@@ -287,6 +288,7 @@ public class MainActivity extends AppCompatActivity
                 }
 
             }
+
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
@@ -552,9 +554,9 @@ public class MainActivity extends AppCompatActivity
                     mThread.join();*/
 
                             if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
-                                Log.d(TAG, "&&& equals = "+category);
+                                Log.d(TAG, "&&& equals = " + category);
                             } else {
-                                Log.d(TAG, "else = "+category);
+                                Log.d(TAG, "else = " + category);
                                 mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
                                 count = count + 1;
                             }
@@ -1080,7 +1082,6 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-
     //phone 뒤로가기 버튼 코드
     @Override
     public void onBackPressed() {
@@ -1269,6 +1270,7 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
     }
+
     private void onSwipeLeftMonth() {
         Log.d(TAG, "Month SwipeLeft()");
         cal.add(Calendar.MONTH, 1);
@@ -1290,6 +1292,7 @@ public class MainActivity extends AppCompatActivity
         Log.d(TAG, "Month SwipeBottom()");
         monthGridView.setVisibility(View.VISIBLE);
     }
+
     class WeekGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         private static final int SWIPE_THRESHOLD = 100;

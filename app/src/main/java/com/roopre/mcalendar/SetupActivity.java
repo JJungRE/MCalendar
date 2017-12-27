@@ -108,7 +108,23 @@ public class SetupActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
+
+        ButtonCheck();
         super.onResume();
+    }
+
+    private void ButtonCheck() {
+        if (Se_Application.Localdb.get_dataS("company").equals("skt")) {
+            skt_bt.setBackgroundResource(R.drawable.bg_category_red);
+
+        } else if (Se_Application.Localdb.get_dataS("company").equals("kt")) {
+            kt_bt.setBackgroundResource(R.drawable.bg_category_red);
+
+        } else if (Se_Application.Localdb.get_dataS("company").equals("lg")) {
+            lg_bt.setBackgroundResource(R.drawable.bg_category_red);
+        } else {
+            Log.d(TAG, "아직 선택된 통신사가 없음");
+        }
     }
 
     public void onClick(View v) {
@@ -116,33 +132,50 @@ public class SetupActivity extends AppCompatActivity
         switch (v.getId()) {
 
             case R.id.skt_bt:
-                Log.d("confirm", Se_Application.Localdb.get_dataS("company"));
+                skt_bt.setBackgroundResource(R.drawable.bg_category_red);
+                kt_bt.setBackgroundResource(R.drawable.border_button_grey);
+                lg_bt.setBackgroundResource(R.drawable.border_button_grey);
                 Se_Application.Localdb.set_dataS("company", "skt");
-//                skt_bt.setBackground(getDrawable());
+                CompanyProcess();
                 SetInit();
-
                 break;
 
             case R.id.kt_bt:
-                Log.d("confirm", Se_Application.Localdb.get_dataS("company"));
+                skt_bt.setBackgroundResource(R.drawable.border_button_grey);
+                kt_bt.setBackgroundResource(R.drawable.bg_category_red);
+                lg_bt.setBackgroundResource(R.drawable.border_button_grey);
                 Se_Application.Localdb.set_dataS("company", "kt");
+                CompanyProcess();
                 SetInit();
-
                 break;
 
             case R.id.lg_bt:
-                Log.d("confirm", Se_Application.Localdb.get_dataS("company"));
+                skt_bt.setBackgroundResource(R.drawable.border_button_grey);
+                kt_bt.setBackgroundResource(R.drawable.border_button_grey);
+                lg_bt.setBackgroundResource(R.drawable.bg_category_red);
                 Se_Application.Localdb.set_dataS("company", "lg");
+                CompanyProcess();
                 SetInit();
-
                 break;
         }
 
     }
 
-    private void Reset() {
-
+    private void CompanyProcess() {
+        String server_url = "set_company.php";
+        HashMap<String, String> send_arg = new HashMap<String, String>();
+        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+        send_arg.put("company", Se_Application.Localdb.get_dataS("company"));
+        Server_con serverCon = new Server_con(server_url, send_arg);
+        String result = serverCon.Receive_Server();
+        Log.d(TAG, result);
+        if (Se_Application.strNotNull(result)) {
+            Log.d(TAG, "Company select complete!!");
+        } else {
+            Log.d(TAG, "Do not set");
+        }
     }
+
 
     private void SetInit() {
 
@@ -151,7 +184,7 @@ public class SetupActivity extends AppCompatActivity
         send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
-        Log.d(TAG + " > load_user_pick", result);
+        Log.d(TAG, result);
         if (Se_Application.strNotNull(result)) {
             try {
                 JSONArray jsonArray = new JSONArray(result);
@@ -159,7 +192,7 @@ public class SetupActivity extends AppCompatActivity
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    if (jsonObject.getString("category").equals("all")) {
+                    if (jsonArray.length()<2) {
                         allRadio.setChecked(true);
                         selectedList.add(jsonObject.getString("category"));
                     } else {
@@ -170,6 +203,8 @@ public class SetupActivity extends AppCompatActivity
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.d(TAG, "PICK에 값이 없으면 안돼");
         }
 
 
@@ -178,7 +213,7 @@ public class SetupActivity extends AppCompatActivity
         send_arg.put("company", Se_Application.Localdb.get_dataS("company"));
         serverCon = new Server_con(server_url, send_arg);
         result = serverCon.Receive_Server();
-        Log.d(TAG + " > get_select_category", result);
+        Log.d(TAG, result);
 
         if (Se_Application.strNotNull(result)) {
             try {
@@ -197,6 +232,7 @@ public class SetupActivity extends AppCompatActivity
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
                         category = categoryList.get(position);
                         Log.d(TAG, "Click => " + categoryList.get(position));
+                        customRadio.setChecked(true);
                         String server_url = "set_category.php";
                         HashMap<String, String> send_arg = new HashMap<String, String>();
                         send_arg.put("type_", "custom");
@@ -208,6 +244,7 @@ public class SetupActivity extends AppCompatActivity
                         if (result.equals("success")) {
                             Log.d(TAG, "Result -> success");
                             category = "";
+                            customRadio.setChecked(true);
                             SetInit();
                         }
 
@@ -219,11 +256,10 @@ public class SetupActivity extends AppCompatActivity
             }
         }
 
-
         category_fl.setVisibility(View.VISIBLE);
 
-
     }
+
 
     @Override
     public void finish() {
@@ -315,11 +351,10 @@ public class SetupActivity extends AppCompatActivity
                     String server_url = "set_category.php";
                     HashMap<String, String> send_arg = new HashMap<String, String>();
                     send_arg.put("type_", "all");
-                    send_arg.put("category", "");
                     send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
                     Server_con serverCon = new Server_con(server_url, send_arg);
                     String result = serverCon.Receive_Server();
-                    Log.d(TAG+" > set_category", result);
+                    Log.d(TAG + " > set_category", result);
                     SetInit();
                 } else {
                     Log.d(TAG, "all_radio_btn -> unchecked");

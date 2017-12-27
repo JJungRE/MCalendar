@@ -62,12 +62,12 @@ public class SetupCategoryAdapter extends BaseAdapter {
         title_tv.setText(category.get(position));
         for (int i = 0; i < selected.size(); i++) {
             if (selected.get(i).equals("all")) {
-                linearlayout.setBackgroundResource(R.drawable.border_button_benefit);
+                linearlayout.setBackgroundResource(R.drawable.bg_category_red);
             } else {
                 if (title_tv.getText().toString().equals(selected.get(i))) {
-                    linearlayout.setBackgroundResource(R.drawable.border_button_benefit);
+                    linearlayout.setBackgroundResource(R.drawable.border_button_grey);
                 } else {
-                    //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
+//                    linearlayout.setBackgroundResource(R.drawable.bg_category_red);
                 }
             }
         }
