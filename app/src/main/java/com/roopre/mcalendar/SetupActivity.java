@@ -19,6 +19,7 @@ import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -32,11 +33,12 @@ public class SetupActivity extends AppCompatActivity
     private String TAG = "SetupActivity";
     RadioButton pushOn, pushOff, allRadio, customRadio;
     Menu menu;
+    boolean confirm;
+    FrameLayout category_fl;
 
     String category = "";
     GridView gridView;
     Button kt_bt, skt_bt, lg_bt;
-    FrameLayout category_fl;
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> selectedList = new ArrayList<String>();
 
@@ -87,8 +89,8 @@ public class SetupActivity extends AppCompatActivity
         }
 
         version_tv.setText(versionName);
-
         category_fl = (FrameLayout) findViewById(R.id.category_fl);
+
         gridView = (GridView) findViewById(R.id.category_gridview);
         allRadio = (RadioButton) findViewById(R.id.all_radiobtn);
         customRadio = (RadioButton) findViewById(R.id.custom_radiobtn);
@@ -108,20 +110,24 @@ public class SetupActivity extends AppCompatActivity
 
     @Override
     public void onResume() {
-
         ButtonCheck();
         super.onResume();
     }
 
     private void ButtonCheck() {
+
         if (Se_Application.Localdb.get_dataS("company").equals("skt")) {
             skt_bt.setBackgroundResource(R.drawable.bg_category_red);
+            SetInit();
 
         } else if (Se_Application.Localdb.get_dataS("company").equals("kt")) {
             kt_bt.setBackgroundResource(R.drawable.bg_category_red);
+            SetInit();
 
         } else if (Se_Application.Localdb.get_dataS("company").equals("lg")) {
             lg_bt.setBackgroundResource(R.drawable.bg_category_red);
+            SetInit();
+
         } else {
             Log.d(TAG, "아직 선택된 통신사가 없음");
         }
@@ -192,7 +198,7 @@ public class SetupActivity extends AppCompatActivity
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                    if (jsonArray.length()<2) {
+                    if (jsonObject.getString("category").equals("all")) {
                         allRadio.setChecked(true);
                         selectedList.add(jsonObject.getString("category"));
                     } else {
@@ -230,23 +236,37 @@ public class SetupActivity extends AppCompatActivity
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
+
                         category = categoryList.get(position);
                         Log.d(TAG, "Click => " + categoryList.get(position));
-                        customRadio.setChecked(true);
-                        String server_url = "set_category.php";
-                        HashMap<String, String> send_arg = new HashMap<String, String>();
-                        send_arg.put("type_", "custom");
-                        send_arg.put("category", category);
-                        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-                        Server_con serverCon = new Server_con(server_url, send_arg);
-                        String result = serverCon.Receive_Server();
-                        Log.d(TAG, "result = " + result);
-                        if (result.equals("success")) {
-                            Log.d(TAG, "Result -> success");
-                            category = "";
-                            customRadio.setChecked(true);
-                            SetInit();
+
+                        for(int i=0; i<categoryList.size(); i++){
+                           confirm = selectedList.contains(category);
                         }
+
+                        if (confirm) {
+
+                            Toast.makeText(SetupActivity.this, "같은놈 눌림", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            customRadio.setChecked(true);
+                            String server_url = "set_category.php";
+                            HashMap<String, String> send_arg = new HashMap<String, String>();
+                            send_arg.put("type_", "custom");
+                            send_arg.put("category", category);
+                            send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+                            Server_con serverCon = new Server_con(server_url, send_arg);
+                            String result = serverCon.Receive_Server();
+                            Log.d(TAG, "result = " + result);
+                            if (result.equals("success / success2")) {
+                                Log.d(TAG, "Result -> success");
+                                category = "";
+                                customRadio.setChecked(true);
+                                SetInit();
+                            }
+                        }
+
 
                     }
                 });

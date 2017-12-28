@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
     SetMainScheduleAdapter mAdapter;
     private String TAG = "MainActivity";
     private ListView mListView;
-    String point_ = "0", category, content, logo_img, memo, bt_confirm;
+    String point_ = "0", event_category, content, logo_img, memo, bt_confirm;
     TextView header_main_id, category_sd_tv, memo_sd_tv;
     ImageView img_sd_imav;
     LinearLayout header_linear;
@@ -240,7 +240,8 @@ public class MainActivity extends AppCompatActivity
         final String server_url = "load_event.php";
         String urlSuffix = "";
         if (Se_Application.Localdb.get_dataS("month_week").equals("") || Se_Application.Localdb.get_dataS("month_week").equals("month")) {
-            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company");
+            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company")
+                    + "&category=" + Se_Application.Localdb.get_dataS("category");
             String monthStartDay = String.format("%04d", cal.get(Calendar.YEAR)) + String.format("%02d", cal.get(Calendar.MONTH) + 1) + String.format("%02d", cal.getActualMinimum(Calendar.DAY_OF_MONTH));
             String monthLastDay = String.format("%04d", cal.get(Calendar.YEAR)) + String.format("%02d", cal.get(Calendar.MONTH) + 1) + String.format("%02d", cal.getActualMaximum(Calendar.DAY_OF_MONTH));
             Log.d(TAG, "monthStartDay = " + monthStartDay);
@@ -248,7 +249,8 @@ public class MainActivity extends AppCompatActivity
             urlSuffix = urlSuffix + "&start=" + monthStartDay;
             urlSuffix = urlSuffix + "&last=" + monthLastDay;
         } else if (Se_Application.Localdb.get_dataS("month_week").equals("week")) {
-            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company");
+            urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company")
+                    + "&category=" + Se_Application.Localdb.get_dataS("category");
             String weekStartDay = String.format("%04d", startCal.get(Calendar.YEAR)) + String.format("%02d", startCal.get(Calendar.MONTH) + 1) + String.format("%02d", startCal.get(Calendar.DATE));
             String weekLastDay = String.format("%04d", endCal.get(Calendar.YEAR)) + String.format("%02d", endCal.get(Calendar.MONTH) + 1) + String.format("%02d", endCal.get(Calendar.DATE));
             Log.d(TAG, "weekStartDay = " + weekStartDay);
@@ -361,43 +363,89 @@ public class MainActivity extends AppCompatActivity
                             monthDays.add(monthDayVO);
                         }
                     }
-                    try {
 
-                        JSONArray jarray = new JSONArray(s);
-                        JSONObject jObject = null;
+                    if (s==null) {
 
-                        String tempCategory = "", tempTitle = "", tempTitle2 = "", tempLogoImg = "";
-                        Bitmap tempBmp = null;
-                        int count = 1;
-                        String seq = "", category = "", title = "", startdate = "", enddate = "", logo_img = "";
-                        String company = "";
+                        Toast.makeText(MainActivity.this,"어허?",Toast.LENGTH_SHORT).show();
 
-                        for (int i = 0; i < jarray.length(); i++) {
-                            jObject = jarray.getJSONObject(i);
-                            seq = jObject.getString("seq");
-                            title = jObject.getString("event_title");
-                            startdate = jObject.getString("startdate");
-                            enddate = jObject.getString("enddate");
-                            category = jObject.getString("event_category");
-                            logo_img = jObject.getString("logo_img");
-                            company = jObject.getString("company");
+                    } else {
+                        try {
 
-                            int syear = Integer.parseInt(startdate.substring(0, 4));
-                            int smonth = Integer.parseInt(startdate.substring(5, 7));
-                            int sday = Integer.parseInt(startdate.substring(8, 10));
-                            int eyear = Integer.parseInt(enddate.substring(0, 4));
-                            int emonth = Integer.parseInt(enddate.substring(5, 7));
-                            int eday = Integer.parseInt(enddate.substring(8, 10));
+                            JSONArray jarray = new JSONArray(s);
+                            JSONObject jObject = null;
 
-                            int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
-                            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
-                            Log.d(TAG, "syear = " + syear + ", smonth = " + smonth + " ,  sday = " + sday + ", eyear = " + eyear + " , emonth = " + emonth + " ,eday = " + eday);
+                            String tempCategory = "", tempTitle = "", tempTitle2 = "", tempLogoImg = "";
+                            Bitmap tempBmp = null;
+                            int count = 1;
+                            String seq = "", event_category = "", title = "", startdate = "", enddate = "", logo_img = "";
+                            String company = "";
 
-                            for (int j = monthStartPosition; j < monthEndPosition; j++) {
-                                if (cal.get(Calendar.YEAR) == syear) {
-                                    if (cal.get(Calendar.MONTH) + 1 == smonth) {
-                                        monthDayVO = monthDays.get(j);
-                                        if (Integer.parseInt(monthDayVO.getDay()) >= sday) {
+                            for (int i = 0; i < jarray.length(); i++) {
+                                jObject = jarray.getJSONObject(i);
+                                seq = jObject.getString("seq");
+                                title = jObject.getString("event_title");
+                                startdate = jObject.getString("startdate");
+                                enddate = jObject.getString("enddate");
+                                event_category = jObject.getString("event_category");
+                                logo_img = jObject.getString("logo_img");
+                                company = jObject.getString("company");
+
+                                int syear = Integer.parseInt(startdate.substring(0, 4));
+                                int smonth = Integer.parseInt(startdate.substring(5, 7));
+                                int sday = Integer.parseInt(startdate.substring(8, 10));
+                                int eyear = Integer.parseInt(enddate.substring(0, 4));
+                                int emonth = Integer.parseInt(enddate.substring(5, 7));
+                                int eday = Integer.parseInt(enddate.substring(8, 10));
+
+                                int resID = getResources().getIdentifier(logo_img, "drawable", "com.roopre.mcalendar");
+                                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), resID);
+
+                                for (int j = monthStartPosition; j < monthEndPosition; j++) {
+                                    if (cal.get(Calendar.YEAR) == syear) {
+                                        if (cal.get(Calendar.MONTH) + 1 == smonth) {
+                                            monthDayVO = monthDays.get(j);
+                                            if (Integer.parseInt(monthDayVO.getDay()) >= sday) {
+                                                if (cal.get(Calendar.YEAR) < eyear) {
+                                                    monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                                    monthDayVO.getSeqList().add(seq);
+                                                    if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                                        if (monthDayVO.getTitle1().equals("")) {
+                                                            monthDayVO.setTitle1(title);
+                                                        } else if (monthDayVO.getTitle2().equals("")) {
+                                                            monthDayVO.setTitle2(title);
+                                                        }
+                                                    }
+                                                    monthDays.set(j, monthDayVO);
+                                                } else if (cal.get(Calendar.YEAR) == eyear) {
+                                                    if (cal.get(Calendar.MONTH) + 1 < emonth) {
+                                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                                        monthDayVO.getSeqList().add(seq);
+                                                        if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                                            if (monthDayVO.getTitle1().equals("")) {
+                                                                monthDayVO.setTitle1(title);
+                                                            } else if (monthDayVO.getTitle2().equals("")) {
+                                                                monthDayVO.setTitle2(title);
+                                                            }
+                                                        }
+                                                        monthDays.set(j, monthDayVO);
+                                                    } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
+                                                        if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
+                                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
+                                                            monthDayVO.getSeqList().add(seq);
+                                                            if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
+                                                                if (monthDayVO.getTitle1().equals("")) {
+                                                                    monthDayVO.setTitle1(title);
+                                                                } else if (monthDayVO.getTitle2().equals("")) {
+                                                                    monthDayVO.setTitle2(title);
+                                                                }
+                                                            }
+                                                            monthDays.set(j, monthDayVO);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else if (cal.get(Calendar.MONTH) + 1 > smonth) {
+                                            monthDayVO = monthDays.get(j);
                                             if (cal.get(Calendar.YEAR) < eyear) {
                                                 monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
                                                 monthDayVO.getSeqList().add(seq);
@@ -437,7 +485,7 @@ public class MainActivity extends AppCompatActivity
                                                 }
                                             }
                                         }
-                                    } else if (cal.get(Calendar.MONTH) + 1 > smonth) {
+                                    } else if (cal.get(Calendar.YEAR) > syear) {
                                         monthDayVO = monthDays.get(j);
                                         if (cal.get(Calendar.YEAR) < eyear) {
                                             monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
@@ -464,7 +512,6 @@ public class MainActivity extends AppCompatActivity
                                                 monthDays.set(j, monthDayVO);
                                             } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
                                                 if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
-                                                    Log.d(TAG, "monthDayVO.getDay() = " + monthDayVO.getDay());
                                                     monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
                                                     monthDayVO.getSeqList().add(seq);
                                                     if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
@@ -479,48 +526,7 @@ public class MainActivity extends AppCompatActivity
                                             }
                                         }
                                     }
-                                } else if (cal.get(Calendar.YEAR) > syear) {
-                                    monthDayVO = monthDays.get(j);
-                                    if (cal.get(Calendar.YEAR) < eyear) {
-                                        monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                        monthDayVO.getSeqList().add(seq);
-                                        if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
-                                            if (monthDayVO.getTitle1().equals("")) {
-                                                monthDayVO.setTitle1(title);
-                                            } else if (monthDayVO.getTitle2().equals("")) {
-                                                monthDayVO.setTitle2(title);
-                                            }
-                                        }
-                                        monthDays.set(j, monthDayVO);
-                                    } else if (cal.get(Calendar.YEAR) == eyear) {
-                                        if (cal.get(Calendar.MONTH) + 1 < emonth) {
-                                            monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                            monthDayVO.getSeqList().add(seq);
-                                            if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
-                                                if (monthDayVO.getTitle1().equals("")) {
-                                                    monthDayVO.setTitle1(title);
-                                                } else if (monthDayVO.getTitle2().equals("")) {
-                                                    monthDayVO.setTitle2(title);
-                                                }
-                                            }
-                                            monthDays.set(j, monthDayVO);
-                                        } else if (cal.get(Calendar.MONTH) + 1 == emonth) {
-                                            if (Integer.parseInt(monthDayVO.getDay()) <= eday) {
-                                                monthDayVO.setTotal(Integer.toString(Integer.parseInt(monthDayVO.getTotal()) + 1));
-                                                monthDayVO.getSeqList().add(seq);
-                                                if (!(monthDayVO.getTitle1().equals(title) || monthDayVO.getTitle2().equals(title))) {
-                                                    if (monthDayVO.getTitle1().equals("")) {
-                                                        monthDayVO.setTitle1(title);
-                                                    } else if (monthDayVO.getTitle2().equals("")) {
-                                                        monthDayVO.setTitle2(title);
-                                                    }
-                                                }
-                                                monthDays.set(j, monthDayVO);
-                                            }
-                                        }
-                                    }
                                 }
-                            }
 
                     /*
                     Thread mThread = new Thread() {
@@ -553,23 +559,22 @@ public class MainActivity extends AppCompatActivity
                     mThread.start();
                     mThread.join();*/
 
-                            if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
-                                Log.d(TAG, "&&& equals = " + category);
-                            } else {
-                                Log.d(TAG, "else = " + category);
-                                mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
-                                count = count + 1;
+                                if (tempCategory.equals(event_category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
+                                } else {
+                                    mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
+                                    count = count + 1;
+                                }
+                                tempBmp = bitmap;
+                                tempCategory = event_category;
+                                tempTitle = title;
+                                tempLogoImg = logo_img;
                             }
-                            tempBmp = bitmap;
-                            tempCategory = category;
-                            tempTitle = title;
-                            tempLogoImg = logo_img;
-                            Log.d(TAG, "category = " + category + ", title = " + title);
-                        }
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
+
 
                     MonthCalendarAdapter monthCalendarAdapter = new MonthCalendarAdapter(getApplicationContext(), monthDays);
                     monthGridView.setAdapter(monthCalendarAdapter);
@@ -578,7 +583,6 @@ public class MainActivity extends AppCompatActivity
                         public void onItemClick(AdapterView parent, View view, int position, long id) {
 
                             if (monthDays.get(position).getSeqList().toString().length() > 2) {
-                                Log.d(TAG, "Click Day => " + monthDays.get(position));
                                 //Toast.makeText(MainActivity.this, monthDays.get(position).getSeqList().toString(), Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(MainActivity.this, ViewListActivity.class);
                                 intent.putExtra("seq", monthDays.get(position).getSeqList().toString());
@@ -630,7 +634,7 @@ public class MainActivity extends AppCompatActivity
                         JSONObject jObject = null;
 
                         String seq = "";
-                        String category = "";
+                        String event_category = "";
                         String title = "";
                         String startdate = "";
                         String enddate = "";
@@ -646,7 +650,7 @@ public class MainActivity extends AppCompatActivity
                             title = jObject.getString("event_title");
                             startdate = jObject.getString("startdate");
                             enddate = jObject.getString("enddate");
-                            category = jObject.getString("event_category");
+                            event_category = jObject.getString("event_category");
                             logo_img = jObject.getString("logo_img");
                             company = jObject.getString("company");
 
@@ -1000,14 +1004,14 @@ public class MainActivity extends AppCompatActivity
                                 }
                             }
 
-                            if (tempCategory.equals(category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
+                            if (tempCategory.equals(event_category) && tempTitle.equals(title) && tempLogoImg.equals(logo_img)) {
                                 //
                             } else {
                                 mAdapter.addItem(Integer.toString(count), seq, bitmap, company, title);
                                 count = count + 1;
                             }
                             tempBmp = bitmap;
-                            tempCategory = category;
+                            tempCategory = event_category;
                             tempTitle = title;
                             tempLogoImg = logo_img;
                         }
@@ -1042,7 +1046,6 @@ public class MainActivity extends AppCompatActivity
                 }
 
                 if (getIntent().hasExtra("seq")) {
-                    Log.d(TAG, "seq exist");
                     Intent intent = new Intent(MainActivity.this, ViewDetailActivity.class);
                     intent.putExtra("seq", getIntent().getStringExtra("seq"));
                     getIntent().removeExtra("seq");
@@ -1186,13 +1189,11 @@ public class MainActivity extends AppCompatActivity
                 weekGridView.setVisibility(View.VISIBLE);
                 break;
             case R.id.month_left_btn:
-                Log.d(TAG, "left");
                 cal.add(Calendar.MONTH, -1);
                 SetInit();
                 //Toast.makeText(this, "Left Clicked", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.month_right_btn:
-                Log.d(TAG, "right");
                 cal.add(Calendar.MONTH, 1);
                 SetInit();
                 //Toast.makeText(this, "Right Clicked", Toast.LENGTH_SHORT).show();
@@ -1272,24 +1273,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onSwipeLeftMonth() {
-        Log.d(TAG, "Month SwipeLeft()");
         cal.add(Calendar.MONTH, 1);
         SetInit();
     }
 
     private void onSwipeRightMonth() {
-        Log.d(TAG, "Month SwipeRight()");
         cal.add(Calendar.MONTH, -1);
         SetInit();
     }
 
     private void onSwipeTopMonth() {
-        Log.d(TAG, "Month SwipeTop()");
         monthGridView.setVisibility(View.GONE);
     }
 
     private void onSwipeBottomMonth() {
-        Log.d(TAG, "Month SwipeBottom()");
         monthGridView.setVisibility(View.VISIBLE);
     }
 
@@ -1331,26 +1328,22 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void onSwipeLeft() {
-        Log.d(TAG, "Week SwipeLeft()");
         startCal.add(Calendar.DATE, 7);
         endCal.add(Calendar.DATE, 7);
         SetInit();
     }
 
     private void onSwipeRight() {
-        Log.d(TAG, "Week SwipeRight()");
         startCal.add(Calendar.DATE, -7);
         endCal.add(Calendar.DATE, -7);
         SetInit();
     }
 
     private void onSwipeTop() {
-        Log.d(TAG, "Week SwipeTop()");
         weekGridView.setVisibility(View.GONE);
     }
 
     private void onSwipeBottom() {
-        Log.d(TAG, "Week SwipeBottom()");
         weekGridView.setVisibility(View.VISIBLE);
     }
 }
