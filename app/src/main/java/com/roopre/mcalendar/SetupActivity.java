@@ -4,6 +4,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -36,12 +38,13 @@ public class SetupActivity extends AppCompatActivity
     boolean confirm;
     FrameLayout category_fl;
 
-    String category = "";
+    String category = "", type;
     GridView gridView;
     Button kt_bt, skt_bt, lg_bt;
     ArrayList<String> categoryList = new ArrayList<String>();
     ArrayList<String> selectedList = new ArrayList<String>();
-
+    SetupCategoryAdapter setupCategoryAdapter;
+    String company = "";
     TextView version_tv;
 
     @Override
@@ -105,151 +108,156 @@ public class SetupActivity extends AppCompatActivity
         allRadio.setOnCheckedChangeListener(this);
         customRadio.setOnCheckedChangeListener(this);
 
+        company = Se_Application.Localdb.get_dataS("company");
 
     }
 
     @Override
     public void onResume() {
+        Log.d(TAG, "0. onResume");
         ButtonCheck();
         super.onResume();
     }
 
     private void ButtonCheck() {
-
-        if (Se_Application.Localdb.get_dataS("company").equals("skt")) {
+        Log.d(TAG, "1. ButtonCheck");
+        if (company.equals("skt")) {
             skt_bt.setBackgroundResource(R.drawable.bg_category_red);
-            SetInit();
-
-        } else if (Se_Application.Localdb.get_dataS("company").equals("kt")) {
+        } else if (company.equals("kt")) {
             kt_bt.setBackgroundResource(R.drawable.bg_category_red);
-            SetInit();
-
-        } else if (Se_Application.Localdb.get_dataS("company").equals("lg")) {
+        } else if (company.equals("lg")) {
             lg_bt.setBackgroundResource(R.drawable.bg_category_red);
-            SetInit();
-
         } else {
             Log.d(TAG, "아직 선택된 통신사가 없음");
+        }
+        if (Se_Application.strNotNull(company)) {
+            SetInitBefore();
         }
     }
 
     public void onClick(View v) {
-
         switch (v.getId()) {
-
             case R.id.skt_bt:
+                company = "skt";
                 skt_bt.setBackgroundResource(R.drawable.bg_category_red);
                 kt_bt.setBackgroundResource(R.drawable.border_button_grey);
                 lg_bt.setBackgroundResource(R.drawable.border_button_grey);
-                Se_Application.Localdb.set_dataS("company", "skt");
-                CompanyProcess();
-                SetInit();
                 break;
-
             case R.id.kt_bt:
+                company = "kt";
                 skt_bt.setBackgroundResource(R.drawable.border_button_grey);
                 kt_bt.setBackgroundResource(R.drawable.bg_category_red);
                 lg_bt.setBackgroundResource(R.drawable.border_button_grey);
-                Se_Application.Localdb.set_dataS("company", "kt");
-                CompanyProcess();
-                SetInit();
                 break;
-
             case R.id.lg_bt:
+                company = "lg";
                 skt_bt.setBackgroundResource(R.drawable.border_button_grey);
                 kt_bt.setBackgroundResource(R.drawable.border_button_grey);
                 lg_bt.setBackgroundResource(R.drawable.bg_category_red);
-                Se_Application.Localdb.set_dataS("company", "lg");
-                CompanyProcess();
-                SetInit();
                 break;
         }
+        SetCategory();
 
     }
 
     private void CompanyProcess() {
+        Log.d(TAG, "4. CompanyProcess");
         String server_url = "set_company.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
         send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-        send_arg.put("company", Se_Application.Localdb.get_dataS("company"));
+        send_arg.put("company", company);
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
-        Log.d(TAG, result);
+        //Log.d(TAG, result);
         if (Se_Application.strNotNull(result)) {
-            Log.d(TAG, "Company select complete!!");
+            type = Se_Application.Localdb.get_dataS("type_");
+            Se_Application.Localdb.set_dataS("company", company);
+            SetInitBefore();
+            //Log.d(TAG, "Company select complete!!");
         } else {
-            Log.d(TAG, "Do not set");
+            //Log.d(TAG, "Do not set");
         }
     }
 
-
-    private void SetInit() {
-
-        String server_url = "load_user_pick.php";
+    private void SetCategory() {
+        String server_url = "set_category.php";
         HashMap<String, String> send_arg = new HashMap<String, String>();
+        send_arg.put("type_", "all");
         send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
         Server_con serverCon = new Server_con(server_url, send_arg);
         String result = serverCon.Receive_Server();
-        Log.d(TAG, result);
-        if (Se_Application.strNotNull(result)) {
-            try {
-                JSONArray jsonArray = new JSONArray(result);
-                selectedList.clear();
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+        Log.d(TAG + " > set_category", result);
 
-                    if (jsonObject.getString("category").equals("all")) {
-                        allRadio.setChecked(true);
-                        selectedList.add(jsonObject.getString("category"));
-                    } else {
-                        customRadio.setChecked(true);
-                        selectedList.add(jsonObject.getString("category"));
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            Log.d(TAG, "PICK에 값이 없으면 안돼");
-        }
+        CompanyProcess();
 
+    }
 
-        server_url = "get_select_category.php";
-        send_arg = new HashMap<String, String>();
+    private void SetInitBefore() {
+        Log.d(TAG, "2. SetInitBefore");
+        String server_url = "get_select_category.php";
+        HashMap<String, String> send_arg = new HashMap<String, String>();
         send_arg.put("company", Se_Application.Localdb.get_dataS("company"));
-        serverCon = new Server_con(server_url, send_arg);
-        result = serverCon.Receive_Server();
+        Server_con serverCon = new Server_con(server_url, send_arg);
+        String result = serverCon.Receive_Server();
         Log.d(TAG, result);
 
         if (Se_Application.strNotNull(result)) {
             try {
                 JSONArray jsonArray = new JSONArray(result);
                 categoryList.clear();
+                selectedList.clear();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
                     categoryList.add(jsonObject.getString("category"));
                 }
 
-
-                SetupCategoryAdapter setupCategoryAdapter = new SetupCategoryAdapter(this, categoryList, selectedList);
+                setupCategoryAdapter = new SetupCategoryAdapter(this, categoryList, selectedList);
                 gridView.setAdapter(setupCategoryAdapter);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView parent, View view, int position, long id) {
-
                         category = categoryList.get(position);
                         Log.d(TAG, "Click => " + categoryList.get(position));
 
-                        for(int i=0; i<categoryList.size(); i++){
-                           confirm = selectedList.contains(category);
+                        if(view.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.border_button_grey).getConstantState())){
+                            Toast.makeText(SetupActivity.this, category +" 해제", Toast.LENGTH_SHORT).show();
+                            view.setBackgroundResource(R.drawable.bg_category_red);
+                            selectedList.remove("'"+category+"'");
+                            Se_Application.Localdb.set_dataS("category", selectedList.toString());
+                            //Log.d(TAG, "onItemClick -> selectedList ->"+selectedList);
+                            //Log.d(TAG, "onItemClick -> category ->"+category);
+                            if(selectedList.size()==0){
+                                allRadio.setChecked(true);
+                            }
+                            else
+                            {
+                                customRadio.setChecked(true);
+
+                                String server_url = "set_category.php";
+                                HashMap<String, String> send_arg = new HashMap<String, String>();
+                                send_arg.put("type_", "delete");
+                                send_arg.put("category", category);
+                                send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+                                Server_con serverCon = new Server_con(server_url, send_arg);
+                                String result = serverCon.Receive_Server();
+                                Log.d(TAG, "result = " + result);
+                                if (result.equals("success / success2")) {
+                                    Log.d(TAG, "Result -> success");
+                                    category = "";
+                                    customRadio.setChecked(true);
+                                    //이부분을 확인하기 내보내서 작업을 해야할 것으로 보임
+                                }
+                            }
+
                         }
-
-                        if (confirm) {
-
-                            Toast.makeText(SetupActivity.this, "같은놈 눌림", Toast.LENGTH_SHORT).show();
-
-                        } else {
-
+                        else
+                        {
+                            if(selectedList.contains("all")){
+                                selectedList.remove("all");
+                            }
+                            selectedList.add("'"+category+"'");
+                            Toast.makeText(SetupActivity.this, category +" 선택", Toast.LENGTH_SHORT).show();
+                            view.setBackgroundResource(R.drawable.border_button_grey);
                             customRadio.setChecked(true);
                             String server_url = "set_category.php";
                             HashMap<String, String> send_arg = new HashMap<String, String>();
@@ -261,23 +269,72 @@ public class SetupActivity extends AppCompatActivity
                             Log.d(TAG, "result = " + result);
                             if (result.equals("success / success2")) {
                                 Log.d(TAG, "Result -> success");
+                                Se_Application.Localdb.set_dataS("category", selectedList.toString());
                                 category = "";
                                 customRadio.setChecked(true);
-                                SetInit();
                             }
                         }
-
-
                     }
                 });
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            category_fl.setVisibility(View.VISIBLE);
+            SetInit();
         }
+    }
 
-        category_fl.setVisibility(View.VISIBLE);
+    private void SetInit() {
+        String server_url = "load_user_pick.php";
+        HashMap<String, String> send_arg = new HashMap<String, String>();
+        send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+        Server_con serverCon = new Server_con(server_url, send_arg);
+        String result = serverCon.Receive_Server();
+        if (Se_Application.strNotNull(result)) {
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final JSONObject jsonObject = jsonArray.getJSONObject(i);
 
+                    if (jsonObject.getString("category").equals("all")) {
+                        allRadio.setChecked(true);
+                        if(!selectedList.contains("all")){
+                            selectedList.add(jsonObject.getString("category"));
+                        }
+                        //Log.d(TAG, "SetInit -> category = all " + Se_Application.Localdb.get_dataS("category"));
+
+                        Se_Application.Localdb.set_dataS("category", selectedList.toString());
+                    } else {
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                for(int j=0;j<categoryList.size();j++){
+                                    try {
+                                        if(categoryList.get(j).equals(jsonObject.getString("category")))
+                                        {
+                                            gridView.getChildAt(j).setBackgroundResource(R.drawable.border_button_grey);
+                                        }
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                        }, 500);
+                        customRadio.setChecked(true);
+                        selectedList.add("'"+jsonObject.getString("category")+"'");
+                        //Log.d(TAG, "SetInit -> category = custom " + Se_Application.Localdb.get_dataS("category"));
+                        Se_Application.Localdb.set_dataS("category", selectedList.toString());
+                    }
+
+
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d(TAG, "PICK에 값이 없으면 안돼");
+        }
     }
 
 
@@ -342,12 +399,12 @@ public class SetupActivity extends AppCompatActivity
                     Se_Application.Localdb.set_dataB("push", true);
                     pushOn.setTextColor(getResources().getColor(R.color.White));
                     pushOff.setTextColor(getResources().getColor(R.color.main_gray));
-                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                    //Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 } else {
                     Se_Application.Localdb.set_dataB("push", false);
                     pushOn.setTextColor(getResources().getColor(R.color.main_gray));
                     pushOff.setTextColor(getResources().getColor(R.color.White));
-                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                    //Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 }
                 break;
 
@@ -356,26 +413,20 @@ public class SetupActivity extends AppCompatActivity
                     Se_Application.Localdb.set_dataB("push", false);
                     pushOn.setTextColor(getResources().getColor(R.color.main_gray));
                     pushOff.setTextColor(getResources().getColor(R.color.White));
-                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                    //Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 } else {
                     Se_Application.Localdb.set_dataB("push", true);
                     pushOn.setTextColor(getResources().getColor(R.color.White));
                     pushOff.setTextColor(getResources().getColor(R.color.main_gray));
-                    Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
+                    //Log.d(TAG, "Push : " + Se_Application.Localdb.get_dataB("push"));
                 }
                 break;
 
             case R.id.all_radiobtn:
+                Log.d(TAG, "5. all radiobtn");
                 if (isChecked) {
                     Log.d(TAG, "all_radio_btn -> checked");
-                    String server_url = "set_category.php";
-                    HashMap<String, String> send_arg = new HashMap<String, String>();
-                    send_arg.put("type_", "all");
-                    send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-                    Server_con serverCon = new Server_con(server_url, send_arg);
-                    String result = serverCon.Receive_Server();
-                    Log.d(TAG + " > set_category", result);
-                    SetInit();
+                    SetCategory();
                 } else {
                     Log.d(TAG, "all_radio_btn -> unchecked");
                 }

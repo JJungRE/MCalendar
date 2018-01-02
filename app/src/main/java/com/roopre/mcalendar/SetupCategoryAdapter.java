@@ -64,10 +64,10 @@ public class SetupCategoryAdapter extends BaseAdapter {
             if (selected.get(i).equals("all")) {
                 linearlayout.setBackgroundResource(R.drawable.bg_category_red);
             } else {
-                if (title_tv.getText().toString().equals(selected.get(i))) {
+                if (title_tv.getText().toString().equals(selected.get(i).replace("'",""))) {
                     linearlayout.setBackgroundResource(R.drawable.border_button_grey);
                 } else {
-//                    linearlayout.setBackgroundResource(R.drawable.bg_category_red);
+                    //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
                 }
             }
         }

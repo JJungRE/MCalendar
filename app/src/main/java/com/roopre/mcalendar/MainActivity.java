@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity
         //2017-11-29 종민추가
         monthGridView = (GridView) findViewById(R.id.month_grid_view);
         weekGridView = (GridView) findViewById(R.id.week_grid_view);
-
         monthDetector = new GestureDetectorCompat(this, new MonthGestureListener());
         weekDetector = new GestureDetectorCompat(this, new WeekGestureListener());
         monthGridView.setOnTouchListener(new View.OnTouchListener() {
@@ -238,6 +237,16 @@ public class MainActivity extends AppCompatActivity
     private void dataSetting() {
 
         final String server_url = "load_event.php";
+        Log.d(TAG, "load_event -> category = " + Se_Application.Localdb.get_dataS("category"));
+        String tempCategory = null;
+//        try{
+//            //tempCategory = URLEncoder.encode(Se_Application.Localdb.get_dataS("category"), "UTF-8");
+//            tempCategory = Se_Application.Localdb.get_dataS("category");
+//        } catch(Exception e){
+//            e.printStackTrace();
+//        }
+        Log.d(TAG, "tempCategory = "+tempCategory);
+
         String urlSuffix = "";
         if (Se_Application.Localdb.get_dataS("month_week").equals("") || Se_Application.Localdb.get_dataS("month_week").equals("month")) {
             urlSuffix = urlSuffix + "?month_week=" + Se_Application.Localdb.get_dataS("month_week") + "&company=" + Se_Application.Localdb.get_dataS("company")
@@ -259,14 +268,12 @@ public class MainActivity extends AppCompatActivity
             urlSuffix = urlSuffix + "&last=" + weekLastDay;
         }
 
-
         class Draw extends AsyncTask<String, Void, String> {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 loading_layout.setVisibility(View.VISIBLE);
             }
-
 
             @Override
             protected String doInBackground(String... params) {
@@ -275,6 +282,7 @@ public class MainActivity extends AppCompatActivity
                 BufferedReader bufferedReader = null;
                 try {
                     URL url = new URL(Se_Application.Server_URL + server_url + s);
+                    Log.d(TAG, "urlSuffix = " + url);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
@@ -294,7 +302,8 @@ public class MainActivity extends AppCompatActivity
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                Log.d(TAG, "month_week =" + Se_Application.Localdb.get_dataS("month_week"));
+                Log.d(TAG, "load_event -> " + s);
+                //Log.d(TAG, "month_week =" + Se_Application.Localdb.get_dataS("month_week"));
                 if (Se_Application.Localdb.get_dataS("month_week").equals("") || Se_Application.Localdb.get_dataS("month_week").equals("month")) {
                     CalendarView("month");
                     monthDays.clear();
@@ -364,9 +373,8 @@ public class MainActivity extends AppCompatActivity
                         }
                     }
 
-                    if (s==null) {
-
-                        Toast.makeText(MainActivity.this,"어허?",Toast.LENGTH_SHORT).show();
+                    if (s == null) {
+                        Toast.makeText(MainActivity.this, "데이터가 없습니다", Toast.LENGTH_SHORT).show();
 
                     } else {
                         try {
@@ -1346,4 +1354,150 @@ public class MainActivity extends AppCompatActivity
     private void onSwipeBottom() {
         weekGridView.setVisibility(View.VISIBLE);
     }
+
+    public static final String escapeHTML(String s) {
+        StringBuffer sb = new StringBuffer();
+        int n = s.length();
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '<':
+                    sb.append("&lt;");
+                    break;
+                case '>':
+                    sb.append("&gt;");
+                    break;
+                case '&':
+                    sb.append("&amp;");
+                    break;
+                case '"':
+                    sb.append("&quot;");
+                    break;
+                case 'à':
+                    sb.append("&agrave;");
+                    break;
+                case 'À':
+                    sb.append("&Agrave;");
+                    break;
+                case 'â':
+                    sb.append("&acirc;");
+                    break;
+                case 'Â':
+                    sb.append("&Acirc;");
+                    break;
+                case 'ä':
+                    sb.append("&auml;");
+                    break;
+                case 'Ä':
+                    sb.append("&Auml;");
+                    break;
+                case 'å':
+                    sb.append("&aring;");
+                    break;
+                case 'Å':
+                    sb.append("&Aring;");
+                    break;
+                case 'æ':
+                    sb.append("&aelig;");
+                    break;
+                case 'Æ':
+                    sb.append("&AElig;");
+                    break;
+                case 'ç':
+                    sb.append("&ccedil;");
+                    break;
+                case 'Ç':
+                    sb.append("&Ccedil;");
+                    break;
+                case 'é':
+                    sb.append("&eacute;");
+                    break;
+                case 'É':
+                    sb.append("&Eacute;");
+                    break;
+                case 'è':
+                    sb.append("&egrave;");
+                    break;
+                case 'È':
+                    sb.append("&Egrave;");
+                    break;
+                case 'ê':
+                    sb.append("&ecirc;");
+                    break;
+                case 'Ê':
+                    sb.append("&Ecirc;");
+                    break;
+                case 'ë':
+                    sb.append("&euml;");
+                    break;
+                case 'Ë':
+                    sb.append("&Euml;");
+                    break;
+                case 'ï':
+                    sb.append("&iuml;");
+                    break;
+                case 'Ï':
+                    sb.append("&Iuml;");
+                    break;
+                case 'ô':
+                    sb.append("&ocirc;");
+                    break;
+                case 'Ô':
+                    sb.append("&Ocirc;");
+                    break;
+                case 'ö':
+                    sb.append("&ouml;");
+                    break;
+                case 'Ö':
+                    sb.append("&Ouml;");
+                    break;
+                case 'ø':
+                    sb.append("&oslash;");
+                    break;
+                case 'Ø':
+                    sb.append("&Oslash;");
+                    break;
+                case 'ß':
+                    sb.append("&szlig;");
+                    break;
+                case 'ù':
+                    sb.append("&ugrave;");
+                    break;
+                case 'Ù':
+                    sb.append("&Ugrave;");
+                    break;
+                case 'û':
+                    sb.append("&ucirc;");
+                    break;
+                case 'Û':
+                    sb.append("&Ucirc;");
+                    break;
+                case 'ü':
+                    sb.append("&uuml;");
+                    break;
+                case 'Ü':
+                    sb.append("&Uuml;");
+                    break;
+                case '®':
+                    sb.append("&reg;");
+                    break;
+                case '©':
+                    sb.append("&copy;");
+                    break;
+                case '€':
+                    sb.append("&euro;");
+                    break;
+                // be carefull with this one (non-breaking whitee space)
+                case ' ':
+                    sb.append("&nbsp;");
+                    break;
+
+                default:
+                    sb.append(c);
+                    break;
+            }
+        }
+        return sb.toString();
+    }
+
 }
