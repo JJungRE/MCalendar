@@ -192,6 +192,15 @@ public class SetupActivity extends AppCompatActivity
 
     }
 
+    private void ExecuteCategoryAdapter() {
+        Log.d("confirm in adapter", String.valueOf(selectedList));
+
+//        setupCategoryAdapter = new SetupCategoryAdapter(this, categoryList, selectedList);
+        setupCategoryAdapter.notifyDataSetChanged();
+        gridView.invalidateViews();
+        gridView.setAdapter(setupCategoryAdapter);
+    }
+
     private void SetInitBefore() {
         Log.d(TAG, "2. SetInitBefore");
         String server_url = "get_select_category.php";
@@ -211,6 +220,8 @@ public class SetupActivity extends AppCompatActivity
                     categoryList.add(jsonObject.getString("category"));
                 }
 
+//                ExecuteCategoryAdapter();
+
                 setupCategoryAdapter = new SetupCategoryAdapter(this, categoryList, selectedList);
                 gridView.setAdapter(setupCategoryAdapter);
                 gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -219,45 +230,12 @@ public class SetupActivity extends AppCompatActivity
                         category = categoryList.get(position);
                         Log.d(TAG, "Click => " + categoryList.get(position));
 
-                        if(view.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.border_button_grey).getConstantState())){
-                            Toast.makeText(SetupActivity.this, category +" 해제", Toast.LENGTH_SHORT).show();
+
+                        if (view.getBackground().getConstantState().equals(getResources().getDrawable(R.drawable.border_button_grey).getConstantState())) {
+
+                            selectedList.add("'" + category + "'");
+                            Toast.makeText(SetupActivity.this, category + " 선택", Toast.LENGTH_SHORT).show();
                             view.setBackgroundResource(R.drawable.bg_category_red);
-                            selectedList.remove("'"+category+"'");
-                            Se_Application.Localdb.set_dataS("category", selectedList.toString());
-                            //Log.d(TAG, "onItemClick -> selectedList ->"+selectedList);
-                            //Log.d(TAG, "onItemClick -> category ->"+category);
-                            if(selectedList.size()==0){
-                                allRadio.setChecked(true);
-                            }
-                            else
-                            {
-                                customRadio.setChecked(true);
-
-                                String server_url = "set_category.php";
-                                HashMap<String, String> send_arg = new HashMap<String, String>();
-                                send_arg.put("type_", "delete");
-                                send_arg.put("category", category);
-                                send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
-                                Server_con serverCon = new Server_con(server_url, send_arg);
-                                String result = serverCon.Receive_Server();
-                                Log.d(TAG, "result = " + result);
-                                if (result.equals("success / success2")) {
-                                    Log.d(TAG, "Result -> success");
-                                    category = "";
-                                    customRadio.setChecked(true);
-                                    //이부분을 확인하기 내보내서 작업을 해야할 것으로 보임
-                                }
-                            }
-
-                        }
-                        else
-                        {
-                            if(selectedList.contains("all")){
-                                selectedList.remove("all");
-                            }
-                            selectedList.add("'"+category+"'");
-                            Toast.makeText(SetupActivity.this, category +" 선택", Toast.LENGTH_SHORT).show();
-                            view.setBackgroundResource(R.drawable.border_button_grey);
                             customRadio.setChecked(true);
                             String server_url = "set_category.php";
                             HashMap<String, String> send_arg = new HashMap<String, String>();
@@ -272,6 +250,67 @@ public class SetupActivity extends AppCompatActivity
                                 Se_Application.Localdb.set_dataS("category", selectedList.toString());
                                 category = "";
                                 customRadio.setChecked(true);
+                            }
+
+                        } else {
+
+                            if (selectedList.contains("all")) {
+
+                                selectedList.remove("all");
+                                selectedList.add("'" + category + "'");
+                                Log.d("confirm in all", String.valueOf(selectedList));
+                                ExecuteCategoryAdapter();
+
+//                                selectedList.add("'" + category + "'");
+                                Toast.makeText(SetupActivity.this, category + " 선택", Toast.LENGTH_SHORT).show();
+                                customRadio.setChecked(true);
+                                view.setBackgroundResource(R.drawable.bg_category_red);
+
+                                String server_url = "set_category.php";
+                                HashMap<String, String> send_arg = new HashMap<String, String>();
+                                send_arg.put("type_", "custom");
+                                send_arg.put("category", category);
+                                send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+                                Server_con serverCon = new Server_con(server_url, send_arg);
+                                String result = serverCon.Receive_Server();
+                                Log.d(TAG, "result = " + result);
+                                if (result.equals("success / success2")) {
+                                    Log.d(TAG, "Result -> success");
+                                    Se_Application.Localdb.set_dataS("category", selectedList.toString());
+                                    category = "";
+                                    customRadio.setChecked(true);
+                                }
+                                SetInit();
+
+
+                            } else {
+                                Toast.makeText(SetupActivity.this, category + " 해제", Toast.LENGTH_SHORT).show();
+                                view.setBackgroundResource(R.drawable.border_button_grey);
+                                selectedList.remove("'" + category + "'");
+                                Se_Application.Localdb.set_dataS("category", selectedList.toString());
+                                //Log.d(TAG, "onItemClick -> selectedList ->"+selectedList);
+                                //Log.d(TAG, "onItemClick -> category ->"+category);
+                                if (selectedList.size() == 0) {
+                                    allRadio.setChecked(true);
+                                } else {
+                                    customRadio.setChecked(true);
+
+                                    String server_url = "set_category.php";
+                                    HashMap<String, String> send_arg = new HashMap<String, String>();
+                                    send_arg.put("type_", "delete");
+                                    send_arg.put("category", category);
+                                    send_arg.put("userid", Se_Application.Localdb.get_dataS("userid"));
+                                    Server_con serverCon = new Server_con(server_url, send_arg);
+                                    String result = serverCon.Receive_Server();
+                                    Log.d(TAG, "result = " + result);
+                                    if (result.equals("success / success2")) {
+                                        Log.d(TAG, "Result -> success");
+                                        category = "";
+                                        customRadio.setChecked(true);
+                                        //이부분을 확인하기 내보내서 작업을 해야할 것으로 보임
+                                    }
+                                }
+
                             }
                         }
                     }
@@ -298,7 +337,7 @@ public class SetupActivity extends AppCompatActivity
 
                     if (jsonObject.getString("category").equals("all")) {
                         allRadio.setChecked(true);
-                        if(!selectedList.contains("all")){
+                        if (!selectedList.contains("all")) {
                             selectedList.add(jsonObject.getString("category"));
                         }
                         //Log.d(TAG, "SetInit -> category = all " + Se_Application.Localdb.get_dataS("category"));
@@ -309,11 +348,11 @@ public class SetupActivity extends AppCompatActivity
                         handler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                for(int j=0;j<categoryList.size();j++){
+                                for (int j = 0; j < categoryList.size(); j++) {
                                     try {
-                                        if(categoryList.get(j).equals(jsonObject.getString("category")))
-                                        {
-                                            gridView.getChildAt(j).setBackgroundResource(R.drawable.border_button_grey);
+                                        if (categoryList.get(j).equals(jsonObject.getString("category"))) {
+                                            Log.d("confirm SetInit Handler", "in");
+                                            gridView.getChildAt(j).setBackgroundResource(R.drawable.bg_category_red);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -322,7 +361,7 @@ public class SetupActivity extends AppCompatActivity
                             }
                         }, 500);
                         customRadio.setChecked(true);
-                        selectedList.add("'"+jsonObject.getString("category")+"'");
+                        selectedList.add("'" + jsonObject.getString("category") + "'");
                         //Log.d(TAG, "SetInit -> category = custom " + Se_Application.Localdb.get_dataS("category"));
                         Se_Application.Localdb.set_dataS("category", selectedList.toString());
                     }
@@ -443,3 +482,4 @@ public class SetupActivity extends AppCompatActivity
     }
 
 }
+

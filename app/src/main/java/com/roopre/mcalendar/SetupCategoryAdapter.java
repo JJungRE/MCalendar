@@ -60,15 +60,20 @@ public class SetupCategoryAdapter extends BaseAdapter {
         LinearLayout linearlayout = (LinearLayout) convertView.findViewById(R.id.linear);
         TextView title_tv = (TextView) convertView.findViewById(R.id.title_tv);
         title_tv.setText(category.get(position));
+
         for (int i = 0; i < selected.size(); i++) {
+//            Log.d("confirm adapter select size",Integer.toString(selected.size()));
+
             if (selected.get(i).equals("all")) {
                 linearlayout.setBackgroundResource(R.drawable.bg_category_red);
+
             } else {
-                if (title_tv.getText().toString().equals(selected.get(i).replace("'",""))) {
+
+//                if (title_tv.getText().toString().equals(selected.get(i).replace("'",""))) {
                     linearlayout.setBackgroundResource(R.drawable.border_button_grey);
-                } else {
+//                } else {
                     //linearlayout.setBackgroundResource(R.drawable.bg_category_red);
-                }
+//                }
             }
         }
         return convertView;
